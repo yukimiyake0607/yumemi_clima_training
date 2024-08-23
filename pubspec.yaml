@@ -1,0 +1,20 @@
+name: flutter_training
+description: "A new Flutter project."
+publish_to: 'none'
+version: 0.1.0
+
+environment:
+  sdk: ^3.5.1
+  flutter: ^3.24.1
+
+dependencies:
+  flutter:
+    sdk: flutter
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  yumemi_lints: ^2.2.0
+
+flutter:
+  uses-material-design: true
