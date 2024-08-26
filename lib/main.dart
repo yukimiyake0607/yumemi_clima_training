@@ -9,8 +9,15 @@ class MainApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const MaterialApp(
-      home: HomeScreen(),
+    return MaterialApp(
+      home: const HomeScreen(),
+      theme: ThemeData(
+        colorScheme: ColorScheme.fromSeed(
+          seedColor: Colors.blue,
+          error: Colors.red,
+          primary: Colors.blue,
+        ),
+      ),
     );
   }
 }
@@ -40,10 +47,12 @@ class HomeScreen extends StatelessWidget {
                         padding: const EdgeInsets.symmetric(vertical: 16),
                         child: Text(
                           '**℃',
-                          style:
-                              Theme.of(context).textTheme.labelLarge?.copyWith(
-                                    color: Colors.blue,
-                                  ),
+                          style: Theme.of(context)
+                              .textTheme
+                              .labelLarge
+                              ?.copyWith(
+                                color: Theme.of(context).colorScheme.primary,
+                              ),
                         ),
                       ),
                       Padding(
@@ -52,7 +61,7 @@ class HomeScreen extends StatelessWidget {
                           '**℃',
                           style:
                               Theme.of(context).textTheme.labelLarge?.copyWith(
-                                    color: Colors.red,
+                                    color: Theme.of(context).colorScheme.error,
                                   ),
                         ),
                       ),
