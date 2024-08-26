@@ -18,11 +18,11 @@ class HomeScreen extends StatelessWidget {
                     aspectRatio: 1 / 1,
                     child: Placeholder(),
                   ),
-                  Row(
-                    children: [
-                      Expanded(
-                        child: Padding(
-                          padding: const EdgeInsets.symmetric(vertical: 16),
+                  Padding(
+                    padding: const EdgeInsets.symmetric(vertical: 16),
+                    child: Row(
+                      children: [
+                        Expanded(
                           child: Text(
                             '**℃',
                             textAlign: TextAlign.center,
@@ -34,10 +34,7 @@ class HomeScreen extends StatelessWidget {
                                 ),
                           ),
                         ),
-                      ),
-                      Expanded(
-                        child: Padding(
-                          padding: const EdgeInsets.symmetric(vertical: 16),
+                        Expanded(
                           child: Text(
                             '**℃',
                             textAlign: TextAlign.center,
