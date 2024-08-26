@@ -46,10 +46,29 @@ class HomeScreen extends StatelessWidget {
                                 ),
                           ),
                         ),
-                      ),
-                    ],
+                      ],
+                    ),
                   ),
                   const SizedBox(height: 80),
+                  Padding(
+                    padding: const EdgeInsets.symmetric(vertical: 16),
+                    child: Row(
+                      children: [
+                        Expanded(
+                          child: TextButton(
+                            onPressed: () {},
+                            child: const Text('Close'),
+                          ),
+                        ),
+                        Expanded(
+                          child: TextButton(
+                            onPressed: () {},
+                            child: const Text('Reload'),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
                 ],
               ),
             ),
