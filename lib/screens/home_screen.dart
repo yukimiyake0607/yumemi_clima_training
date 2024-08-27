@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/rendering.dart';
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});
@@ -6,74 +7,93 @@ class HomeScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: LayoutBuilder(
-        builder: (context, constraints) {
-          return Center(
-            child: FractionallySizedBox(
-              widthFactor: 0.5,
-              child: Column(
+      body: Center(
+        child: FractionallySizedBox(
+          widthFactor: 0.5,
+          child: LayoutBuilder(
+            builder: (context, constrains) {
+              return Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  const AspectRatio(
-                    aspectRatio: 1 / 1,
-                    child: Placeholder(),
+                  const Expanded(
+                    child: SizedBox(),
                   ),
-                  Padding(
-                    padding: const EdgeInsets.symmetric(vertical: 16),
-                    child: Row(
+                  Flexible(
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        Expanded(
-                          child: Text(
-                            '**℃',
-                            textAlign: TextAlign.center,
-                            style: Theme.of(context)
-                                .textTheme
-                                .labelLarge
-                                ?.copyWith(
-                                  color: Theme.of(context).colorScheme.primary,
-                                ),
-                          ),
+                        const AspectRatio(
+                          aspectRatio: 1 / 1,
+                          child: Placeholder(),
                         ),
-                        Expanded(
-                          child: Text(
-                            '**℃',
-                            textAlign: TextAlign.center,
-                            style: Theme.of(context)
-                                .textTheme
-                                .labelLarge
-                                ?.copyWith(
-                                  color: Theme.of(context).colorScheme.error,
+                        Padding(
+                          padding: const EdgeInsets.symmetric(vertical: 16),
+                          child: Row(
+                            children: [
+                              Expanded(
+                                child: Text(
+                                  '**℃',
+                                  textAlign: TextAlign.center,
+                                  style: Theme.of(context)
+                                      .textTheme
+                                      .labelLarge
+                                      ?.copyWith(
+                                        color: Theme.of(context)
+                                            .colorScheme
+                                            .primary,
+                                      ),
                                 ),
+                              ),
+                              Expanded(
+                                child: Text(
+                                  '**℃',
+                                  textAlign: TextAlign.center,
+                                  style: Theme.of(context)
+                                      .textTheme
+                                      .labelLarge
+                                      ?.copyWith(
+                                        color:
+                                            Theme.of(context).colorScheme.error,
+                                      ),
+                                ),
+                              ),
+                            ],
                           ),
                         ),
                       ],
                     ),
                   ),
-                  const SizedBox(height: 80),
-                  Padding(
-                    padding: const EdgeInsets.symmetric(vertical: 16),
-                    child: Row(
+                  Expanded(
+                    child: Column(
                       children: [
-                        Expanded(
-                          child: TextButton(
-                            onPressed: () {},
-                            child: const Text('Close'),
-                          ),
-                        ),
-                        Expanded(
-                          child: TextButton(
-                            onPressed: () {},
-                            child: const Text('Reload'),
+                        const SizedBox(height: 80),
+                        Padding(
+                          padding: const EdgeInsets.symmetric(vertical: 16),
+                          child: Row(
+                            children: [
+                              Expanded(
+                                child: TextButton(
+                                  onPressed: () {},
+                                  child: const Text('Close'),
+                                ),
+                              ),
+                              Expanded(
+                                child: TextButton(
+                                  onPressed: () {},
+                                  child: const Text('Reload'),
+                                ),
+                              ),
+                            ],
                           ),
                         ),
                       ],
                     ),
                   ),
                 ],
-              ),
-            ),
-          );
-        },
+              );
+            },
+          ),
+        ),
       ),
     );
   }
