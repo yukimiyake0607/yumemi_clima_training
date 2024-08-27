@@ -1,6 +1,12 @@
 import 'package:flutter/material.dart';
 
-class HomeScreen extends StatelessWidget {
+enum WeatherCondition {
+  sunny,
+  cloudy,
+  rainy,
+}
+
+class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
 
   @override
