@@ -2,18 +2,26 @@ name: Review Assign
 
 on:
   pull_request:
-    types: [ opened, ready_for_review ]
+    types: [opened, ready_for_review]
 
 env:
-  REVIEWERS: ''
+  REVIEWERS: 'morikann'
 
 jobs:
   assign:
     runs-on: ubuntu-latest
+    permissions:
+      pull-requests: write
+    
     steps:
-      # https://github.com/hkusu/review-assign-action
-      - uses: hkusu/review-assign-action@v1
+      - name: Checkout
+        uses: actions/checkout@v3
+
+      - name: Assign Reviewer
+        uses: hkusu/review-assign-action@v1
         with:
           assignees: ${{ github.actor }}
           reviewers: ${{ env.REVIEWERS }}
           ready-comment: 'Ready for review :rocket:'
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
