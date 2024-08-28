@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:yumemi_weather/yumemi_weather.dart';
@@ -35,9 +36,9 @@ class _HomeScreenState extends State<HomeScreen> {
   String? errorMessage;
 
   @override
-  void initState() {
+  Future<void> initState() async {
     super.initState();
-    _getWeather();
+    await _getWeather();
   }
 
   Future<void> _getWeather() async {
@@ -157,5 +158,14 @@ class _HomeScreenState extends State<HomeScreen> {
         ),
       ],
     );
+  }
+
+  @override
+  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
+    super.debugFillProperties(properties);
+    properties.add(DiagnosticsProperty<YumemiWeather>('yumemiWeather', yumemiWeather));
+    properties.add(EnumProperty<WeatherCondition?>('weatherCondition', weatherCondition));
+    properties.add(DiagnosticsProperty<bool>('isLoading', isLoading));
+    properties.add(StringProperty('errorMessage', errorMessage));
   }
 }
