@@ -31,14 +31,14 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen> {
   final YumemiWeather yumemiWeather = YumemiWeather();
-  WeatherCondition? weatherCondition;
+  WeatherCondition weatherCondition = WeatherCondition.sunny;
   bool isLoading = false;
   String? errorMessage;
 
   @override
-  Future<void> initState() async {
+  void initState() {
     super.initState();
-    await _getWeather();
+    _getWeather();
   }
 
   Future<void> _getWeather() async {
@@ -107,10 +107,8 @@ class _HomeScreenState extends State<HomeScreen> {
         errorMessage!,
         style: TextStyle(color: Theme.of(context).colorScheme.error),
       );
-    } else if (weatherCondition != null) {
-      return SvgPicture.asset(weatherCondition!.svgAsset);
     } else {
-      return const Text('No weather data');
+      return SvgPicture.asset(weatherCondition.svgAsset);
     }
   }
 
@@ -163,8 +161,10 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   void debugFillProperties(DiagnosticPropertiesBuilder properties) {
     super.debugFillProperties(properties);
-    properties.add(DiagnosticsProperty<YumemiWeather>('yumemiWeather', yumemiWeather));
-    properties.add(EnumProperty<WeatherCondition?>('weatherCondition', weatherCondition));
+    properties.add(
+        DiagnosticsProperty<YumemiWeather>('yumemiWeather', yumemiWeather));
+    properties.add(
+        EnumProperty<WeatherCondition?>('weatherCondition', weatherCondition));
     properties.add(DiagnosticsProperty<bool>('isLoading', isLoading));
     properties.add(StringProperty('errorMessage', errorMessage));
   }
