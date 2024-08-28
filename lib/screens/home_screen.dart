@@ -80,91 +80,80 @@ class _HomeScreenState extends State<HomeScreen> {
       body: Center(
         child: FractionallySizedBox(
           widthFactor: 0.5,
-          child: LayoutBuilder(
-            builder: (context, constrains) {
-              return Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  const Expanded(
-                    child: SizedBox(),
-                  ),
-                  Flexible(
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        const AspectRatio(
-                          aspectRatio: 1 / 1,
-                          child: Placeholder(),
-                        ),
-                        Padding(
-                          padding: const EdgeInsets.symmetric(vertical: 16),
-                          child: Row(
-                            children: [
-                              Expanded(
-                                child: Text(
-                                  '**℃',
-                                  textAlign: TextAlign.center,
-                                  style: Theme.of(context)
-                                      .textTheme
-                                      .labelLarge
-                                      ?.copyWith(
-                                        color: Theme.of(context)
-                                            .colorScheme
-                                            .primary,
-                                      ),
-                                ),
-                              ),
-                              Expanded(
-                                child: Text(
-                                  '**℃',
-                                  textAlign: TextAlign.center,
-                                  style: Theme.of(context)
-                                      .textTheme
-                                      .labelLarge
-                                      ?.copyWith(
-                                        color:
-                                            Theme.of(context).colorScheme.error,
-                                      ),
-                                ),
-                              ),
-                            ],
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                  Expanded(
-                    child: Column(
-                      children: [
-                        const SizedBox(height: 80),
-                        Padding(
-                          padding: const EdgeInsets.symmetric(vertical: 16),
-                          child: Row(
-                            children: [
-                              Expanded(
-                                child: TextButton(
-                                  onPressed: () {},
-                                  child: const Text('Close'),
-                                ),
-                              ),
-                              Expanded(
-                                child: TextButton(
-                                  onPressed: () {},
-                                  child: const Text('Reload'),
-                                ),
-                              ),
-                            ],
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                ],
-              );
-            },
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              AspectRatio(
+                aspectRatio: 1,
+                child: _buildWeatherDisplay(),
+              ),
+              const SizedBox(height: 16),
+              _buildTemperatureDisplay(),
+              const SizedBox(height: 80),
+              _buildButtons(),
+            ],
           ),
         ),
       ),
+    );
+  }
+
+  Widget _buildWeatherDisplay() {
+    if (isLoading) {
+      return const CircularProgressIndicator();
+    } else if (errorMessage != null) {
+      return Text(errorMessage!,
+          style: TextStyle(color: Theme.of(context).colorScheme.error));
+    } else if (weatherCondition != null) {
+      return SvgPicture.asset(weatherCondition!.svgAsset);
+    } else {
+      return const Text('No weather data');
+    }
+  }
+
+  Widget _buildTemperatureDisplay() {
+    return Row(
+      children: [
+        Expanded(
+          child: Text(
+            '**℃',
+            textAlign: TextAlign.center,
+            style: Theme.of(context).textTheme.labelLarge?.copyWith(
+                  color: Theme.of(context).colorScheme.primary,
+                ),
+          ),
+        ),
+        Expanded(
+          child: Text(
+            '**℃',
+            textAlign: TextAlign.center,
+            style: Theme.of(context).textTheme.labelLarge?.copyWith(
+                  color: Theme.of(context).colorScheme.error,
+                ),
+          ),
+        ),
+      ],
+    );
+  }
+
+  Widget _buildButtons() {
+    return Row(
+      children: [
+        Expanded(
+          child: TextButton(
+            onPressed: () {
+              // Implement close functionality
+            },
+            child: const Text('Close'),
+          ),
+        ),
+        Expanded(
+          child: TextButton(
+            onPressed: _getWeather,
+            child: const Text('Reload'),
+          ),
+        ),
+      ],
     );
   }
 }
