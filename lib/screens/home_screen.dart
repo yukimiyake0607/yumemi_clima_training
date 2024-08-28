@@ -102,8 +102,10 @@ class _HomeScreenState extends State<HomeScreen> {
     if (isLoading) {
       return const CircularProgressIndicator();
     } else if (errorMessage != null) {
-      return Text(errorMessage!,
-          style: TextStyle(color: Theme.of(context).colorScheme.error));
+      return Text(
+        errorMessage!,
+        style: TextStyle(color: Theme.of(context).colorScheme.error),
+      );
     } else if (weatherCondition != null) {
       return SvgPicture.asset(weatherCondition!.svgAsset);
     } else {
