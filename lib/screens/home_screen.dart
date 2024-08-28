@@ -35,12 +35,6 @@ class _HomeScreenState extends State<HomeScreen> {
   bool isLoading = false;
   String? errorMessage;
 
-  @override
-  void initState() {
-    super.initState();
-    _getWeather();
-  }
-
   Future<void> _getWeather() async {
     setState(() {
       isLoading = true;
