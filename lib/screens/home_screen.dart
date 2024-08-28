@@ -25,6 +25,56 @@ class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
 
   @override
+  State<HomeScreen> createState() => _HomeScreenState();
+}
+
+class _HomeScreenState extends State<HomeScreen> {
+  final YumemiWeather yumemiWeather = YumemiWeather();
+  WeatherCondition? weatherCondition;
+  bool isLoading = false;
+  String? errorMessage;
+
+  @override
+  void initState() {
+    super.initState();
+    _getWeather();
+  }
+
+  Future<void> _getWeather() async {
+    setState(() {
+      isLoading = true;
+      errorMessage = null;
+    });
+
+    try {
+      final condition = yumemiWeather.fetchSimpleWeather();
+      setState(() {
+        switch (condition) {
+          case 'sunny':
+            weatherCondition = WeatherCondition.sunny;
+            break;
+          case 'cloudy':
+            weatherCondition = WeatherCondition.cloudy;
+            break;
+          case 'rainy':
+            weatherCondition = WeatherCondition.rainy;
+            break;
+          default:
+            throw Exception('Unknown weather condition: $condition');
+        }
+      });
+    } catch (e) {
+      setState(() {
+        errorMessage = 'Error fetching weather: $e';
+      });
+    } finally {
+      setState(() {
+        isLoading = false;
+      });
+    }
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: Center(
