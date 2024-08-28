@@ -8,7 +8,7 @@ enum WeatherCondition {
   rainy,
 }
 
-extension WeatherConditionExtention on WeatherCondition {
+extension WeatherConditionExtension on WeatherCondition {
   String get svgAsset {
     switch (this) {
       case WeatherCondition.sunny:
@@ -16,7 +16,7 @@ extension WeatherConditionExtention on WeatherCondition {
       case WeatherCondition.cloudy:
         return 'assets/cloudy.svg';
       case WeatherCondition.rainy:
-        return 'assets/rainy';
+        return 'assets/rainy.svg';
     }
   }
 }
