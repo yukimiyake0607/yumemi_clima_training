@@ -35,7 +35,7 @@ class _HomeScreenState extends State<HomeScreen> {
   bool isLoading = false;
   String? errorMessage;
 
-@override
+  @override
   void initState() {
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((_) async {
@@ -144,7 +144,9 @@ class _HomeScreenState extends State<HomeScreen> {
       children: [
         Expanded(
           child: TextButton(
-            onPressed: () {},
+            onPressed: () {
+              Navigator.pop(context);
+            },
             child: const Text('Close'),
           ),
         ),
