@@ -11,39 +11,21 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v4
-        with:
-          fetch-depth: 0
-
-      - name: Fetch flutter config
-        uses: kuhnroyal/flutter-fvm-config-action@v1
-        id: fvm-config-action
 
       - name: Setup flutter
         uses: subosito/flutter-action@v2
         with:
-          flutter-version: ${{ steps.fvm-config-action.outputs.FLUTTER_VERSION }}
-          channel: ${{ steps.fvm-config-action.outputs.FLUTTER_CHANNEL }}
-          cache: true
-          cache-key: flutter-${{ steps.fvm-config-action.outputs.FLUTTER_VERSION }}-${{ steps.fvm-config-action.outputs.FLUTTER_CHANNEL }}
-
-      - name: Cache dependencies
-        uses: actions/cache@v3
-        with:
-          path: |
-            ${{ env.PUB_CACHE }}
-            ${{ github.workspace }}/.dart_tool
-          key: ${{ runner.os }}-pub-${{ hashFiles('**/pubspec.lock') }}
-          restore-keys: |
-            ${{ runner.os }}-pub-
+          flutter-version: '3.24.1'
+          channel: 'stable' 
 
       - name: Install dependencies
         run: flutter pub get
 
       - name: Analyze project source
-        run: flutter analyze --no-fatal-infos
+        run: flutter analyze
 
       - name: Run tests
-        run: flutter test --no-pub --machine > test_report.log
+        run: flutter test --machine > test_report.log
         continue-on-error: true
 
       - name: Report test results
