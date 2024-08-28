@@ -142,9 +142,7 @@ class _HomeScreenState extends State<HomeScreen> {
       children: [
         Expanded(
           child: TextButton(
-            onPressed: () {
-              // Implement close functionality
-            },
+            onPressed: () {},
             child: const Text('Close'),
           ),
         ),
