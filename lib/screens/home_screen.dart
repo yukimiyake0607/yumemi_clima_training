@@ -38,9 +38,7 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   void initState() {
     super.initState();
-    WidgetsBinding.instance.addPostFrameCallback((_) async {
-      await _getWeather();
-    });
+    _getWeather();
   }
 
   Future<void> _getWeather() async {
