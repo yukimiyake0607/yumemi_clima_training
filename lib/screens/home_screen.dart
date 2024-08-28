@@ -160,9 +160,11 @@ class _HomeScreenState extends State<HomeScreen> {
   void debugFillProperties(DiagnosticPropertiesBuilder properties) {
     super.debugFillProperties(properties);
     properties.add(
-        DiagnosticsProperty<YumemiWeather>('yumemiWeather', yumemiWeather));
+      DiagnosticsProperty<YumemiWeather>('yumemiWeather', yumemiWeather),
+    );
     properties.add(
-        EnumProperty<WeatherCondition?>('weatherCondition', weatherCondition));
+      EnumProperty<WeatherCondition?>('weatherCondition', weatherCondition),
+    );
     properties.add(DiagnosticsProperty<bool>('isLoading', isLoading));
     properties.add(StringProperty('errorMessage', errorMessage));
   }
