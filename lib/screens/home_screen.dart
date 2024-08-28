@@ -35,10 +35,12 @@ class _HomeScreenState extends State<HomeScreen> {
   bool isLoading = false;
   String? errorMessage;
 
-  @override
+@override
   void initState() {
     super.initState();
-    _getWeather();
+    WidgetsBinding.instance.addPostFrameCallback((_) async {
+      await _getWeather();
+    });
   }
 
   Future<void> _getWeather() async {
