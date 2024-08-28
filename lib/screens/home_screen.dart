@@ -58,7 +58,7 @@ class _HomeScreenState extends State<HomeScreen> {
             throw Exception('Unknown weather condition: $condition');
         }
       });
-    } catch (e) {
+    } on Exception catch (e) {
       setState(() {
         errorMessage = 'Error fetching weather: $e';
       });
