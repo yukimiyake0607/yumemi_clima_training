@@ -23,8 +23,11 @@ class _LoadingScreenState extends State<LoadingScreen> {
         Future.delayed(const Duration(milliseconds: 500), () {
           if (mounted) {
             unawaited(
-              Navigator.of(context)
-                  .push(MaterialPageRoute(builder: (_) => const HomeScreen())),
+              Navigator.of(context).push(
+                MaterialPageRoute(
+                  builder: (_) => HomeScreen(onReturn: _navigateToHomeScreen),
+                ),
+              ),
             );
           }
         });
