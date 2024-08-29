@@ -57,9 +57,13 @@ class _HomeScreenState extends State<HomeScreen> {
 }
 
 class _ButtonRow extends StatelessWidget {
-  const _ButtonRow({required VoidCallback getWeather})
-      : _onReloadButtonPressed = getWeather;
+  const _ButtonRow({
+    required VoidCallback getWeather,
+    required VoidCallback onReturn,
+  })  : _onReturn = onReturn,
+        _onReloadButtonPressed = getWeather;
   final VoidCallback _onReloadButtonPressed;
+  final VoidCallback _onReturn;
 
   @override
   Widget build(BuildContext context) {
@@ -69,6 +73,7 @@ class _ButtonRow extends StatelessWidget {
           child: TextButton(
             onPressed: () {
               Navigator.pop(context);
+              _onReturn();
             },
             child: const Text('Close'),
           ),
