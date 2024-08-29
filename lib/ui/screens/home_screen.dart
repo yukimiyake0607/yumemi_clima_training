@@ -6,7 +6,10 @@ import 'package:flutter_training/ui/extensions/weather_condition_ext.dart';
 import 'package:yumemi_weather/yumemi_weather.dart';
 
 class HomeScreen extends StatefulWidget {
-  const HomeScreen({super.key});
+  const HomeScreen({required void Function() onReturn, super.key})
+      : _onReturn = onReturn;
+
+  final VoidCallback _onReturn;
 
   @override
   State<HomeScreen> createState() => _HomeScreenState();
