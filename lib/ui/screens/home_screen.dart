@@ -44,7 +44,10 @@ class _HomeScreenState extends State<HomeScreen> {
               const SizedBox(height: 16),
               const _TemperatureRow(),
               const SizedBox(height: 80),
-              _ButtonRow(getWeather: _getWeather),
+              _ButtonRow(
+                getWeather: _getWeather,
+                onReturn: widget._onReturn,
+              ),
             ],
           ),
         ),
