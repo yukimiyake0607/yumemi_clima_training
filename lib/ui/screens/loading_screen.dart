@@ -13,25 +13,7 @@ class _LoadingScreenState extends State<LoadingScreen>
   @override
   void initState() {
     super.initState();
-    _navigateToHomeScreen();
-  }
-
-  void _navigateToHomeScreen() {
-    unawaited(
-      WidgetsBinding.instance.endOfFrame.then((_) {
-        Future.delayed(const Duration(milliseconds: 500), () {
-          if (mounted) {
-            unawaited(
-              Navigator.of(context).push(
-                MaterialPageRoute(
-                  builder: (_) => HomeScreen(onReturn: _navigateToHomeScreen),
-                ),
-              ),
-            );
-          }
-        });
-      }),
-    );
+    navigateToHomeScreen();
   }
 
   @override
