@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_training/models/navigate_to_homescreen_mixin.dart';
 
@@ -13,7 +15,7 @@ class _LoadingScreenState extends State<LoadingScreen>
   @override
   void initState() {
     super.initState();
-    navigateToHomeScreen();
+    unawaited(navigateToHomeScreen());
   }
 
   @override
