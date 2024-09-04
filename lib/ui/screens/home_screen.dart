@@ -17,7 +17,7 @@ class _HomeScreenState extends State<HomeScreen> {
   WeatherCondition? _weatherCondition;
 
   Future<void> _getWeather() async {
-    final condition = _yumemiWeather.fetchSimpleWeather();
+    final condition = _yumemiWeather.fetchThrowsWeather('tokyo');
     setState(() {
       _weatherCondition = WeatherCondition.from(condition);
     });
