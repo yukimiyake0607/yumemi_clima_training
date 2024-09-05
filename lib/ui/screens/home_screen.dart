@@ -44,6 +44,7 @@ class _HomeScreenState extends State<HomeScreen> {
     await showDialog<void>(
       context: context,
       barrierDismissible: false,
+
       builder: (context) {
         return AlertDialog(
           title: Text(errorMessage),
