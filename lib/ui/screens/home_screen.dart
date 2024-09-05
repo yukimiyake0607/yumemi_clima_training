@@ -25,26 +25,28 @@ class _HomeScreenState extends State<HomeScreen> {
       setState(() {
         _weatherCondition = WeatherCondition.from(condition);
       });
-    } on YumemiWeatherError catch (e) {
-      unawaited(
-        showDialog(
-          context: context,
-          builder: (context) {
-            return AlertDialog(
-              title: Text('$e'),
-              actions: [
-                TextButton(
-                  onPressed: () {
-                    Navigator.of(context).pop();
-                  },
-                  child: const Text('OK'),
-                ),
-              ],
-            );
-          },
-        ),
-      );
+    } on YumemiWeatherError {
+      await _showDialog();
     }
+  }
+
+  Future<void> _showDialog() async {
+    await showDialog<void>(
+      context: context,
+      builder: (context) {
+        return AlertDialog(
+          title: const Text('天気情報を取得できませんでした'),
+          actions: [
+            TextButton(
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+              child: const Text('OK'),
+            ),
+          ],
+        );
+      },
+    );
   }
 
   @override
