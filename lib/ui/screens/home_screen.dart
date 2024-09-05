@@ -31,6 +31,7 @@ class _HomeScreenState extends State<HomeScreen> {
     await showDialog<void>(
       context: context,
       barrierDismissible: false,
+
       builder: (context) {
         return AlertDialog(
           title: const Text('天気情報を取得できませんでした'),
