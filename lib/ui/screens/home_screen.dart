@@ -32,7 +32,8 @@ class _HomeScreenState extends State<HomeScreen> {
       final weatherCondition =
           jsonDecode(weatherConditionOfJson) as Map<String, dynamic>;
       setState(() {
-        _weatherCondition = WeatherCondition.from(condition);
+        final weather = weatherCondition['weather_condition'];
+        _weatherCondition = WeatherCondition.from(weather);
       });
     } on YumemiWeatherError {
       await _showDialog();
