@@ -142,7 +142,7 @@ class _TemperatureRow extends StatelessWidget {
       children: [
         Expanded(
           child: Text(
-            '**℃',
+            _lowTemp != null ? '$_lowTemp℃' : '**℃',
             textAlign: TextAlign.center,
             style: Theme.of(context).textTheme.labelLarge?.copyWith(
                   color: Theme.of(context).colorScheme.primary,
@@ -151,7 +151,7 @@ class _TemperatureRow extends StatelessWidget {
         ),
         Expanded(
           child: Text(
-            '**℃',
+            _highTemp != null ? '$_highTemp℃' : '**℃',
             textAlign: TextAlign.center,
             style: Theme.of(context).textTheme.labelLarge?.copyWith(
                   color: Theme.of(context).colorScheme.error,
