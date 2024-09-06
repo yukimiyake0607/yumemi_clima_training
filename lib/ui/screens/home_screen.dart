@@ -40,13 +40,13 @@ class _HomeScreenState extends State<HomeScreen> {
     }
   }
 
-  Future<void> _showDialog() async {
+  Future<void> _showDialog(String title) async {
     await showDialog<void>(
       context: context,
       barrierDismissible: false,
       builder: (context) {
         return AlertDialog(
-          title: const Text('天気情報を取得できませんでした'),
+          title: Text(title),
           actions: [
             TextButton(
               onPressed: () {
