@@ -3,7 +3,7 @@ enum WeatherCondition {
   cloudy,
   rainy;
 
-  factory WeatherCondition.from(String value) {
+  factory WeatherCondition.from(dynamic value) {
     return WeatherCondition.values.singleWhere((condition) {
       return condition.name == value;
     });
