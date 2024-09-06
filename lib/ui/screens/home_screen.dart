@@ -44,13 +44,13 @@ class _HomeScreenState extends State<HomeScreen> {
     }
   }
 
-  Future<void> _showDialog(String title) async {
+  Future<void> _showDialog(String errorMessage) async {
     await showDialog<void>(
       context: context,
       barrierDismissible: false,
       builder: (context) {
         return AlertDialog(
-          title: Text(title),
+          title: Text(errorMessage),
           actions: [
             TextButton(
               onPressed: () {
