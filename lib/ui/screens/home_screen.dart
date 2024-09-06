@@ -132,7 +132,9 @@ class _ButtonRow extends StatelessWidget {
 }
 
 class _TemperatureRow extends StatelessWidget {
-  const _TemperatureRow();
+  const _TemperatureRow(this._lowTemp, this._highTemp);
+  final String? _lowTemp;
+  final String? _highTemp;
 
   @override
   Widget build(BuildContext context) {
