@@ -35,8 +35,12 @@ class _HomeScreenState extends State<HomeScreen> {
         final weather = weatherCondition['weather_condition'];
         _weatherCondition = WeatherCondition.from(weather);
       });
-    } on YumemiWeatherError {
-      await _showDialog();
+    } on YumemiWeatherError catch (e) {
+      if (e == YumemiWeatherError.unknown) {
+        await _showDialog('もう一度お試しください');
+      } else if (e == YumemiWeatherError.invalidParameter) {
+        await _showDialog('天気情報を取得できませんでした');
+      }
     }
   }
 
