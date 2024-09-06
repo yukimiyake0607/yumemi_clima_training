@@ -19,6 +19,8 @@ class HomeScreen extends StatefulWidget {
 class _HomeScreenState extends State<HomeScreen> {
   final YumemiWeather _yumemiWeather = YumemiWeather();
   WeatherCondition? _weatherCondition;
+  String? _lowTemperature;
+  String? _highTemperature;
 
   final String _jsonString = '''
 {
