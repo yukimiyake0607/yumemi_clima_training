@@ -28,7 +28,9 @@ class _HomeScreenState extends State<HomeScreen> {
 
   Future<void> _getWeather() async {
     try {
-      final condition = _yumemiWeather.fetchWeather('tokyo');
+      final weatherConditionOfJson = _yumemiWeather.fetchWeather(_jsonString);
+      final weatherCondition =
+          jsonDecode(weatherConditionOfJson) as Map<String, dynamic>;
       setState(() {
         _weatherCondition = WeatherCondition.from(condition);
       });
