@@ -23,15 +23,6 @@ class _HomeScreenState extends State<HomeScreen> {
   int? _lowTemperature;
   int? _highTemperature;
   final YumemiWeather _yumemiWeather = YumemiWeather();
-  WeatherCondition? _weatherCondition;
-  String? _lowTemperature;
-  String? _highTemperature;
-
-  final String _jsonString = '''
-{
-    "area": "tokyo",
-    "date": "2020-04-01T12:00:00+09:00"
-}''';
 
   Future<void> _getWeather() async {
     try {
