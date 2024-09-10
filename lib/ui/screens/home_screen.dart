@@ -93,7 +93,10 @@ class _HomeScreenState extends State<HomeScreen> {
                     : SvgPicture.asset(_weatherCondition!.svgAsset),
               ),
               const SizedBox(height: 16),
-              _TemperatureRow(_lowTemperature, _highTemperature),
+              _TemperatureRow(
+                _lowTemperature,
+                _highTemperature,
+              ),
               const SizedBox(height: 80),
               _ButtonRow(
                 getWeather: _getWeather,
@@ -142,8 +145,8 @@ class _ButtonRow extends StatelessWidget {
 
 class _TemperatureRow extends StatelessWidget {
   const _TemperatureRow(this._lowTemp, this._highTemp);
-  final String? _lowTemp;
-  final String? _highTemp;
+  final int? _lowTemp;
+  final int? _highTemp;
 
   @override
   Widget build(BuildContext context) {
