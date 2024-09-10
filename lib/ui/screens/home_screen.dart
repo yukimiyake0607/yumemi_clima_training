@@ -7,6 +7,7 @@ import 'package:flutter_training/models/weather_condition_request.dart';
 import 'package:flutter_training/models/weather_condition_response.dart';
 import 'package:flutter_training/ui/extensions/weather_condition_ext.dart';
 import 'package:flutter_training/ui/widgets/button_row.dart';
+import 'package:flutter_training/ui/widgets/temperature_row.dart';
 import 'package:yumemi_weather/yumemi_weather.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -85,7 +86,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     : SvgPicture.asset(_weatherCondition!.svgAsset),
               ),
               const SizedBox(height: 16),
-              _TemperatureRow(
+              TemperatureRow(
                 _lowTemperature,
                 _highTemperature,
               ),
@@ -98,38 +99,6 @@ class _HomeScreenState extends State<HomeScreen> {
           ),
         ),
       ),
-    );
-  }
-}
-
-class _TemperatureRow extends StatelessWidget {
-  const _TemperatureRow(this._lowTemp, this._highTemp);
-  final int? _lowTemp;
-  final int? _highTemp;
-
-  @override
-  Widget build(BuildContext context) {
-    return Row(
-      children: [
-        Expanded(
-          child: Text(
-            _lowTemp != null ? '$_lowTemp℃' : '**℃',
-            textAlign: TextAlign.center,
-            style: Theme.of(context).textTheme.labelLarge?.copyWith(
-                  color: Theme.of(context).colorScheme.primary,
-                ),
-          ),
-        ),
-        Expanded(
-          child: Text(
-            _highTemp != null ? '$_highTemp℃' : '**℃',
-            textAlign: TextAlign.center,
-            style: Theme.of(context).textTheme.labelLarge?.copyWith(
-                  color: Theme.of(context).colorScheme.error,
-                ),
-          ),
-        ),
-      ],
     );
   }
 }
