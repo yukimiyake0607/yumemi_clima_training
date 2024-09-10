@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 class TemperatureRow extends StatelessWidget {
-  const TemperatureRow(this._lowTemp, this._highTemp);
+  const TemperatureRow(this._lowTemp, this._highTemp, {super.key});
   final int? _lowTemp;
   final int? _highTemp;
 

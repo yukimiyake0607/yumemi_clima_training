@@ -4,6 +4,7 @@ class ButtonRow extends StatelessWidget {
   const ButtonRow({
     required VoidCallback getWeather,
     required VoidCallback onReturn,
+    super.key,
   })  : _onReturn = onReturn,
         _onReloadButtonPressed = getWeather;
   final VoidCallback _onReloadButtonPressed;
