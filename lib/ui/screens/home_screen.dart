@@ -43,9 +43,9 @@ class _HomeScreenState extends State<HomeScreen> {
           jsonDecode(weatherConditionOfRequest) as Map<String, dynamic>;
       final response = WeatherConditionResponse.fromJson(weatherConditionOfMap);
       setState(() {
-        final weather = weatherCondition['weather_condition'];
-        _lowTemperature = weatherCondition['min_temperature'].toString();
-        _highTemperature = weatherCondition['max_temperature'].toString();
+        final weather = response.weatherCondition;
+        _lowTemperature = response.minTemperature;
+        _highTemperature = response.maxTemperature;
         _weatherCondition = WeatherCondition.from(weather);
       });
     } on YumemiWeatherError catch (e) {
