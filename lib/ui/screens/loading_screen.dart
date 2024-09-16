@@ -20,10 +20,8 @@ class _LoadingScreenState extends State<LoadingScreen>
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: Container(
-        color: Colors.green,
-      ),
+    return const Scaffold(
+      backgroundColor: Colors.green,
     );
   }
 }
