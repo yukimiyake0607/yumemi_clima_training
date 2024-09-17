@@ -102,10 +102,10 @@ class _ButtonRow extends StatelessWidget {
   const _ButtonRow({
     required VoidCallback getWeather,
     required VoidCallback onReturn,
-  })  : _onReturn = onReturn,
+  })  : _onCloseButtonPressed = onReturn,
         _onReloadButtonPressed = getWeather;
   final VoidCallback _onReloadButtonPressed;
-  final VoidCallback _onReturn;
+  final VoidCallback _onCloseButtonPressed;
 
   @override
   Widget build(BuildContext context) {
@@ -115,7 +115,7 @@ class _ButtonRow extends StatelessWidget {
           child: TextButton(
             onPressed: () {
               Navigator.pop(context);
-              _onReturn();
+              _onCloseButtonPressed();
             },
             child: const Text('Close'),
           ),
