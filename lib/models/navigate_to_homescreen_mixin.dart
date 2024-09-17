@@ -1,6 +1,5 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
-import 'package:flutter_training/ui/screens/home_screen.dart';
 
 mixin AfterLayoutMixin<T extends StatefulWidget> on State<T> {
   Future<void> navigateToHomeScreen() async {
