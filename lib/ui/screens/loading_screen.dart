@@ -30,7 +30,6 @@ class _LoadingScreenState extends State<LoadingScreen> with AfterLayoutMixin {
   @override
   Future<void> navigateToHomeScreen() {
     return _navigateToHomeScreen();
-
   }
 
   @override
