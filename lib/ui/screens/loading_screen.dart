@@ -34,6 +34,7 @@ class _LoadingScreenState extends State<LoadingScreen> {
         },
       ),
     );
+    await _navigateToHomeScreen();
   }
 
   @override
