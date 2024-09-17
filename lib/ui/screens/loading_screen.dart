@@ -14,24 +14,25 @@ class _LoadingScreenState extends State<LoadingScreen> {
   @override
   void initState() {
     super.initState();
-    _navigateToHomeScreen();
+    unawaited(
+      WidgetsBinding.instance.endOfFrame.then(
+        (_) => _navigateToHomeScreen(),
+      ),
+    );
   }
 
-  void _navigateToHomeScreen() {
-    unawaited(
-      WidgetsBinding.instance.endOfFrame.then((_) {
-        Future.delayed(const Duration(milliseconds: 500), () {
-          if (mounted) {
-            unawaited(
-              Navigator.of(context).push(
-                MaterialPageRoute(
-                  builder: (_) => HomeScreen(onReturn: _navigateToHomeScreen),
-                ),
-              ),
-            );
-          }
-        });
-      }),
+  Future<void> _navigateToHomeScreen() async {
+    await Future<void>.delayed(const Duration(milliseconds: 500));
+
+    if (!mounted) {
+      return;
+    }
+    await Navigator.of(context).push(
+      MaterialPageRoute<void>(
+        builder: (context) {
+          return const HomeScreen();
+        },
+      ),
     );
   }
 
