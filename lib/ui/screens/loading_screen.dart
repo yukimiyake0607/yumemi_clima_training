@@ -1,7 +1,7 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
-import 'package:flutter_training/models/navigate_to_homescreen_mixin.dart';
+import 'package:flutter_training/ui/mixins/navigate_to_homescreen_mixin.dart';
 import 'package:flutter_training/ui/screens/home_screen.dart';
 
 class LoadingScreen extends StatefulWidget {
