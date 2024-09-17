@@ -11,8 +11,7 @@ class LoadingScreen extends StatefulWidget {
   State<LoadingScreen> createState() => _LoadingScreenState();
 }
 
-class _LoadingScreenState extends State<LoadingScreen>
-    with NavigateToHomescreenMixin {
+class _LoadingScreenState extends State<LoadingScreen> with AfterLayoutMixin {
   @override
   void initState() {
     super.initState();
