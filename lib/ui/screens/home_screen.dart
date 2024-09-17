@@ -7,10 +7,7 @@ import 'package:flutter_training/ui/extensions/weather_condition_ext.dart';
 import 'package:yumemi_weather/yumemi_weather.dart';
 
 class HomeScreen extends StatefulWidget {
-  const HomeScreen({required VoidCallback onReturn, super.key})
-      : _onReturn = onReturn;
-
-  final VoidCallback _onReturn;
+  const HomeScreen({super.key});
 
   @override
   State<HomeScreen> createState() => _HomeScreenState();
@@ -88,7 +85,6 @@ class _HomeScreenState extends State<HomeScreen> {
               const SizedBox(height: 80),
               _ButtonRow(
                 getWeather: _getWeather,
-                onReturn: widget._onReturn,
               ),
             ],
           ),
@@ -101,11 +97,8 @@ class _HomeScreenState extends State<HomeScreen> {
 class _ButtonRow extends StatelessWidget {
   const _ButtonRow({
     required VoidCallback getWeather,
-    required VoidCallback onReturn,
-  })  : _onCloseButtonPressed = onReturn,
-        _onReloadButtonPressed = getWeather;
+  }) : _onReloadButtonPressed = getWeather;
   final VoidCallback _onReloadButtonPressed;
-  final VoidCallback _onCloseButtonPressed;
 
   @override
   Widget build(BuildContext context) {
@@ -115,7 +108,6 @@ class _ButtonRow extends StatelessWidget {
           child: TextButton(
             onPressed: () {
               Navigator.pop(context);
-              _onCloseButtonPressed();
             },
             child: const Text('Close'),
           ),
