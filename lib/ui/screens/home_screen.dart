@@ -11,10 +11,7 @@ import 'package:flutter_training/ui/widgets/temperature_row.dart';
 import 'package:yumemi_weather/yumemi_weather.dart';
 
 class HomeScreen extends StatefulWidget {
-  const HomeScreen({required VoidCallback onReturn, super.key})
-      : _onReturn = onReturn;
-
-  final VoidCallback _onReturn;
+  const HomeScreen({super.key});
 
   @override
   State<HomeScreen> createState() => _HomeScreenState();
@@ -109,7 +106,6 @@ class _HomeScreenState extends State<HomeScreen> {
               const SizedBox(height: 80),
               ButtonRow(
                 getWeather: _getWeather,
-                onReturn: widget._onReturn,
               ),
             ],
           ),
