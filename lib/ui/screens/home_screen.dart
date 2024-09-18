@@ -2,14 +2,10 @@ import 'dart:async';
 import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:flutter_training/models/request/weather_condition_request.dart';
-import 'package:flutter_training/models/response/weather_condition_response.dart';
 import 'package:flutter_training/models/weather_condition.dart';
 import 'package:flutter_training/models/weather_request.dart';
 import 'package:flutter_training/ui/extensions/api_error_ext.dart';
 import 'package:flutter_training/ui/extensions/weather_condition_ext.dart';
-import 'package:flutter_training/ui/widgets/button_row.dart';
-import 'package:flutter_training/ui/widgets/temperature_row.dart';
 import 'package:yumemi_weather/yumemi_weather.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -24,9 +20,6 @@ class _HomeScreenState extends State<HomeScreen> {
   int? _lowTemperature;
   int? _highTemperature;
   final YumemiWeather _yumemiWeather = YumemiWeather();
-  WeatherCondition? _weatherCondition;
-  int? _lowTemperature;
-  int? _highTemperature;
 
   static final WeatherRequest _weatherRequest =
       WeatherRequest(area: 'tokyo', date: DateTime.now());
@@ -83,12 +76,12 @@ class _HomeScreenState extends State<HomeScreen> {
                     : SvgPicture.asset(_weatherCondition!.svgAsset),
               ),
               const SizedBox(height: 16),
-              TemperatureRow(
+              _TemperatureRow(
                 _lowTemperature,
                 _highTemperature,
               ),
               const SizedBox(height: 80),
-              ButtonRow(
+              _ButtonRow(
                 getWeather: _getWeather,
               ),
             ],
