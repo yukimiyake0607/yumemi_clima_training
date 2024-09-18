@@ -6,6 +6,7 @@ import 'package:flutter_training/models/request/weather_condition_request.dart';
 import 'package:flutter_training/models/response/weather_condition_response.dart';
 import 'package:flutter_training/models/weather_condition.dart';
 import 'package:flutter_training/models/weather_request.dart';
+import 'package:flutter_training/ui/extensions/api_error_ext.dart';
 import 'package:flutter_training/ui/extensions/weather_condition_ext.dart';
 import 'package:flutter_training/ui/widgets/button_row.dart';
 import 'package:flutter_training/ui/widgets/temperature_row.dart';
@@ -34,8 +35,7 @@ class _HomeScreenState extends State<HomeScreen> {
   Future<void> _getWeather() async {
     try {
       final weatherDataOfJson = _yumemiWeather.fetchWeather(_request);
-      final weatherData =
-          jsonDecode(weatherDataOfJson) as Map<String, dynamic>;
+      final weatherData = jsonDecode(weatherDataOfJson) as Map<String, dynamic>;
       setState(() {
         final weather = weatherData['weather_condition'] as String;
         _lowTemperature = weatherData['min_temperature'] as int?;
@@ -43,38 +43,7 @@ class _HomeScreenState extends State<HomeScreen> {
         _weatherCondition = WeatherCondition.from(weather);
       });
     } on YumemiWeatherError catch (e) {
-      await _errorMessage(e);
-    }
-  }
-
-  Future<WeatherConditionResponse> _fetchWeatherCondition() async {
-    final request =
-        WeatherConditionRequest(area: 'Tokyo', date: DateTime.now());
-    final json = jsonEncode(request);
-    final weatherConditionOfRequest = _yumemiWeather.fetchWeather(json);
-    final weatherConditionOfMap =
-        jsonDecode(weatherConditionOfRequest) as Map<String, dynamic>;
-    final response = WeatherConditionResponse.fromJson(weatherConditionOfMap);
-    return response;
-  }
-
-  void _updateWeatherState(WeatherConditionResponse response) {
-    setState(() {
-      final weather = response.weatherCondition;
-      _lowTemperature = response.minTemperature;
-      _highTemperature = response.maxTemperature;
-      _weatherCondition = WeatherCondition.from(weather);
-    });
-  }
-
-  Future<void> _errorMessage(YumemiWeatherError e) async {
-    switch (e) {
-      case YumemiWeatherError.invalidParameter:
-        await _showDialog('もう一度お試しください');
-        break;
-      case YumemiWeatherError.unknown:
-        await _showDialog('天気情報を取得できませんでした');
-        break;
+      await _showDialog(e.message);
     }
   }
 
