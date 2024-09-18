@@ -5,6 +5,7 @@ import 'package:flutter_svg/svg.dart';
 import 'package:flutter_training/models/request/weather_condition_request.dart';
 import 'package:flutter_training/models/response/weather_condition_response.dart';
 import 'package:flutter_training/models/weather_condition.dart';
+import 'package:flutter_training/models/weather_request.dart';
 import 'package:flutter_training/ui/extensions/weather_condition_ext.dart';
 import 'package:flutter_training/ui/widgets/button_row.dart';
 import 'package:flutter_training/ui/widgets/temperature_row.dart';
@@ -26,15 +27,13 @@ class _HomeScreenState extends State<HomeScreen> {
   int? _lowTemperature;
   int? _highTemperature;
 
-  final String _jsonString = '''
-{
-    "area": "tokyo",
-    "date": "2020-04-01T12:00:00+09:00"
-}''';
+  static final WeatherRequest _weatherRequest =
+      WeatherRequest(area: 'tokyo', date: DateTime.now());
+  final _request = jsonEncode(_weatherRequest.toJson());
 
   Future<void> _getWeather() async {
     try {
-      final weatherConditionOfJson = _yumemiWeather.fetchWeather(_jsonString);
+      final weatherConditionOfJson = _yumemiWeather.fetchWeather(_request);
       final weatherCondition =
           jsonDecode(weatherConditionOfJson) as Map<String, dynamic>;
       setState(() {
