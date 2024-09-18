@@ -31,7 +31,7 @@ class _HomeScreenState extends State<HomeScreen> {
       final weatherCondition =
           jsonDecode(weatherConditionOfJson) as Map<String, dynamic>;
       setState(() {
-        final weather = weatherCondition['weather_condition'];
+        final weather = weatherCondition['weather_condition'] as String;
         _lowTemperature = weatherCondition['min_temperature'].toString();
         _highTemperature = weatherCondition['max_temperature'].toString();
         _weatherCondition = WeatherCondition.from(weather);
