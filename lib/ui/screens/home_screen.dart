@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:flutter_training/models/weather_condition.dart';
 import 'package:flutter_training/models/weather_request.dart';
+import 'package:flutter_training/ui/extensions/api_error_ext.dart';
 import 'package:flutter_training/ui/extensions/weather_condition_ext.dart';
 import 'package:yumemi_weather/yumemi_weather.dart';
 
@@ -27,8 +28,7 @@ class _HomeScreenState extends State<HomeScreen> {
   Future<void> _getWeather() async {
     try {
       final weatherDataOfJson = _yumemiWeather.fetchWeather(_request);
-      final weatherData =
-          jsonDecode(weatherDataOfJson) as Map<String, dynamic>;
+      final weatherData = jsonDecode(weatherDataOfJson) as Map<String, dynamic>;
       setState(() {
         final weather = weatherData['weather_condition'] as String;
         _lowTemperature = weatherData['min_temperature'] as int?;
@@ -36,11 +36,7 @@ class _HomeScreenState extends State<HomeScreen> {
         _weatherCondition = WeatherCondition.from(weather);
       });
     } on YumemiWeatherError catch (e) {
-      if (e == YumemiWeatherError.unknown) {
-        await _showDialog('もう一度お試しください');
-      } else if (e == YumemiWeatherError.invalidParameter) {
-        await _showDialog('天気情報を取得できませんでした');
-      }
+      await _showDialog(e.message);
     }
   }
 
