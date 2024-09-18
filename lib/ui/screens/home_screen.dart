@@ -22,6 +22,15 @@ class _HomeScreenState extends State<HomeScreen> {
   int? _lowTemperature;
   int? _highTemperature;
   final YumemiWeather _yumemiWeather = YumemiWeather();
+  WeatherCondition? _weatherCondition;
+  int? _lowTemperature;
+  int? _highTemperature;
+
+  final String _jsonString = '''
+{
+    "area": "tokyo",
+    "date": "2020-04-01T12:00:00+09:00"
+}''';
 
   Future<void> _getWeather() async {
     try {
@@ -29,9 +38,9 @@ class _HomeScreenState extends State<HomeScreen> {
       final weatherCondition =
           jsonDecode(weatherConditionOfJson) as Map<String, dynamic>;
       setState(() {
-        final weather = weatherCondition['weather_condition'];
-        _lowTemperature = weatherCondition['min_temperature'].toString();
-        _highTemperature = weatherCondition['max_temperature'].toString();
+        final weather = weatherCondition['weather_condition'] as String;
+        _lowTemperature = weatherCondition['min_temperature'] as int?;
+        _highTemperature = weatherCondition['max_temperature'] as int?;
         _weatherCondition = WeatherCondition.from(weather);
       });
     } on YumemiWeatherError catch (e) {
@@ -118,6 +127,67 @@ class _HomeScreenState extends State<HomeScreen> {
           ),
         ),
       ),
+    );
+  }
+}
+
+class _ButtonRow extends StatelessWidget {
+  const _ButtonRow({
+    required VoidCallback getWeather,
+  }) : _onReloadButtonPressed = getWeather;
+  final VoidCallback _onReloadButtonPressed;
+
+  @override
+  Widget build(BuildContext context) {
+    return Row(
+      children: [
+        Expanded(
+          child: TextButton(
+            onPressed: () {
+              Navigator.pop(context);
+            },
+            child: const Text('Close'),
+          ),
+        ),
+        Expanded(
+          child: TextButton(
+            onPressed: _onReloadButtonPressed,
+            child: const Text('Reload'),
+          ),
+        ),
+      ],
+    );
+  }
+}
+
+class _TemperatureRow extends StatelessWidget {
+  const _TemperatureRow(this._lowTemp, this._highTemp);
+  final int? _lowTemp;
+  final int? _highTemp;
+
+  @override
+  Widget build(BuildContext context) {
+    return Row(
+      children: [
+        Expanded(
+          child: Text(
+            _lowTemp != null ? '$_lowTemp℃' : '**℃',
+            textAlign: TextAlign.center,
+            style: Theme.of(context).textTheme.labelLarge?.copyWith(
+                  color: Theme.of(context).colorScheme.primary,
+                ),
+          ),
+        ),
+        Expanded(
+          child: Text(
+            _highTemp != null ? '$_highTemp℃' : '**℃',
+            textAlign: TextAlign.center,
+            style: Theme.of(context).textTheme.labelLarge?.copyWith(
+                  color: Theme.of(context).colorScheme.error,
+                ),
+          ),
+        ),
+      ],
     );
   }
 }
