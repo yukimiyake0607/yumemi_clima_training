@@ -16,8 +16,8 @@ class HomeScreen extends StatefulWidget {
 class _HomeScreenState extends State<HomeScreen> {
   final YumemiWeather _yumemiWeather = YumemiWeather();
   WeatherCondition? _weatherCondition;
-  String? _lowTemperature;
-  String? _highTemperature;
+  int? _lowTemperature;
+  int? _highTemperature;
 
   final String _jsonString = '''
 {
@@ -32,8 +32,8 @@ class _HomeScreenState extends State<HomeScreen> {
           jsonDecode(weatherConditionOfJson) as Map<String, dynamic>;
       setState(() {
         final weather = weatherCondition['weather_condition'] as String;
-        _lowTemperature = weatherCondition['min_temperature'].toString();
-        _highTemperature = weatherCondition['max_temperature'].toString();
+        _lowTemperature = weatherCondition['min_temperature'] as int?;
+        _highTemperature = weatherCondition['max_temperature'] as int?;
         _weatherCondition = WeatherCondition.from(weather);
       });
     } on YumemiWeatherError catch (e) {
@@ -125,8 +125,8 @@ class _ButtonRow extends StatelessWidget {
 
 class _TemperatureRow extends StatelessWidget {
   const _TemperatureRow(this._lowTemp, this._highTemp);
-  final String? _lowTemp;
-  final String? _highTemp;
+  final int? _lowTemp;
+  final int? _highTemp;
 
   @override
   Widget build(BuildContext context) {
