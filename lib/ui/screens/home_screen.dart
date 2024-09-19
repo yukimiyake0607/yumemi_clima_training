@@ -1,10 +1,9 @@
 import 'dart:async';
-import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:flutter_training/data/repository/weather_repository.dart';
 import 'package:flutter_training/models/response/weather_condition_response.dart';
 import 'package:flutter_training/models/weather_condition.dart';
-import 'package:flutter_training/models/weather_request.dart';
 import 'package:flutter_training/ui/extensions/api_error_ext.dart';
 import 'package:flutter_training/ui/extensions/weather_condition_ext.dart';
 import 'package:flutter_training/ui/widgets/button_row.dart';
@@ -22,24 +21,15 @@ class _HomeScreenState extends State<HomeScreen> {
   WeatherCondition? _weatherCondition;
   int? _lowTemperature;
   int? _highTemperature;
-  final YumemiWeather _yumemiWeather = YumemiWeather();
+  final WeatherRepository _weatherRepository = WeatherRepository();
 
   Future<void> _getWeather() async {
     try {
-      final weatherData = await _fetchWeather();
+      final weatherData = await _weatherRepository.getWeather();
       await updateState(weatherData);
     } on YumemiWeatherError catch (e) {
       await _showDialog(e.message);
     }
-  }
-
-  Future<WeatherConditionResponse> _fetchWeather() async {
-    final weatherRequest = WeatherRequest(area: 'tokyo', date: DateTime.now());
-    final request = jsonEncode(weatherRequest.toJson());
-    final weatherDataOfJson = _yumemiWeather.fetchWeather(request);
-    final response = jsonDecode(weatherDataOfJson) as Map<String, dynamic>;
-    final weatherData = WeatherConditionResponse.fromJson(response);
-    return weatherData;
   }
 
   Future<void> updateState(WeatherConditionResponse weatherData) async {
