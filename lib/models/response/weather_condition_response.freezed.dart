@@ -131,9 +131,7 @@ class __$$WeatherConditionResponseImplCopyWithImpl<$Res>
 
 /// @nodoc
 @JsonSerializable()
-class _$WeatherConditionResponseImpl
-    with DiagnosticableTreeMixin
-    implements _WeatherConditionResponse {
+class _$WeatherConditionResponseImpl implements _WeatherConditionResponse {
   const _$WeatherConditionResponseImpl(
       {required this.weatherCondition,
       required this.maxTemperature,
@@ -150,18 +148,8 @@ class _$WeatherConditionResponseImpl
   final int minTemperature;
 
   @override
-  String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
+  String toString() {
     return 'WeatherConditionResponse(weatherCondition: $weatherCondition, maxTemperature: $maxTemperature, minTemperature: $minTemperature)';
-  }
-
-  @override
-  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
-    super.debugFillProperties(properties);
-    properties
-      ..add(DiagnosticsProperty('type', 'WeatherConditionResponse'))
-      ..add(DiagnosticsProperty('weatherCondition', weatherCondition))
-      ..add(DiagnosticsProperty('maxTemperature', maxTemperature))
-      ..add(DiagnosticsProperty('minTemperature', minTemperature));
   }
 
   @override
