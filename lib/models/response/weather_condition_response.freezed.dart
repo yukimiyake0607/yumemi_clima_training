@@ -21,7 +21,7 @@ WeatherConditionResponse _$WeatherConditionResponseFromJson(
 
 /// @nodoc
 mixin _$WeatherConditionResponse {
-  String get weatherCondition => throw _privateConstructorUsedError;
+  WeatherCondition get weatherCondition => throw _privateConstructorUsedError;
   int get maxTemperature => throw _privateConstructorUsedError;
   int get minTemperature => throw _privateConstructorUsedError;
 
@@ -41,7 +41,10 @@ abstract class $WeatherConditionResponseCopyWith<$Res> {
           $Res Function(WeatherConditionResponse) then) =
       _$WeatherConditionResponseCopyWithImpl<$Res, WeatherConditionResponse>;
   @useResult
-  $Res call({String weatherCondition, int maxTemperature, int minTemperature});
+  $Res call(
+      {WeatherCondition weatherCondition,
+      int maxTemperature,
+      int minTemperature});
 }
 
 /// @nodoc
@@ -68,7 +71,7 @@ class _$WeatherConditionResponseCopyWithImpl<$Res,
       weatherCondition: null == weatherCondition
           ? _value.weatherCondition
           : weatherCondition // ignore: cast_nullable_to_non_nullable
-              as String,
+              as WeatherCondition,
       maxTemperature: null == maxTemperature
           ? _value.maxTemperature
           : maxTemperature // ignore: cast_nullable_to_non_nullable
@@ -90,7 +93,10 @@ abstract class _$$WeatherConditionResponseImplCopyWith<$Res>
       __$$WeatherConditionResponseImplCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({String weatherCondition, int maxTemperature, int minTemperature});
+  $Res call(
+      {WeatherCondition weatherCondition,
+      int maxTemperature,
+      int minTemperature});
 }
 
 /// @nodoc
@@ -116,7 +122,7 @@ class __$$WeatherConditionResponseImplCopyWithImpl<$Res>
       weatherCondition: null == weatherCondition
           ? _value.weatherCondition
           : weatherCondition // ignore: cast_nullable_to_non_nullable
-              as String,
+              as WeatherCondition,
       maxTemperature: null == maxTemperature
           ? _value.maxTemperature
           : maxTemperature // ignore: cast_nullable_to_non_nullable
@@ -141,7 +147,7 @@ class _$WeatherConditionResponseImpl implements _WeatherConditionResponse {
       _$$WeatherConditionResponseImplFromJson(json);
 
   @override
-  final String weatherCondition;
+  final WeatherCondition weatherCondition;
   @override
   final int maxTemperature;
   @override
@@ -189,7 +195,7 @@ class _$WeatherConditionResponseImpl implements _WeatherConditionResponse {
 
 abstract class _WeatherConditionResponse implements WeatherConditionResponse {
   const factory _WeatherConditionResponse(
-      {required final String weatherCondition,
+      {required final WeatherCondition weatherCondition,
       required final int maxTemperature,
       required final int minTemperature}) = _$WeatherConditionResponseImpl;
 
@@ -197,7 +203,7 @@ abstract class _WeatherConditionResponse implements WeatherConditionResponse {
       _$WeatherConditionResponseImpl.fromJson;
 
   @override
-  String get weatherCondition;
+  WeatherCondition get weatherCondition;
   @override
   int get maxTemperature;
   @override
