@@ -120,9 +120,7 @@ class __$$WeatherConditionRequestImplCopyWithImpl<$Res>
 
 /// @nodoc
 @JsonSerializable()
-class _$WeatherConditionRequestImpl
-    with DiagnosticableTreeMixin
-    implements _WeatherConditionRequest {
+class _$WeatherConditionRequestImpl implements _WeatherConditionRequest {
   const _$WeatherConditionRequestImpl({required this.area, required this.date});
 
   factory _$WeatherConditionRequestImpl.fromJson(Map<String, dynamic> json) =>
@@ -134,17 +132,8 @@ class _$WeatherConditionRequestImpl
   final DateTime date;
 
   @override
-  String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
+  String toString() {
     return 'WeatherConditionRequest(area: $area, date: $date)';
-  }
-
-  @override
-  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
-    super.debugFillProperties(properties);
-    properties
-      ..add(DiagnosticsProperty('type', 'WeatherConditionRequest'))
-      ..add(DiagnosticsProperty('area', area))
-      ..add(DiagnosticsProperty('date', date));
   }
 
   @override
