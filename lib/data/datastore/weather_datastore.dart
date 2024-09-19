@@ -4,7 +4,8 @@ import 'package:flutter_training/models/weather_request.dart';
 import 'package:yumemi_weather/yumemi_weather.dart';
 
 class WeatherDatastore {
-  final YumemiWeather _yumemiWeather = YumemiWeather();
+  WeatherDatastore(this._yumemiWeather);
+  final YumemiWeather _yumemiWeather;
 
   Future<String> fetchWeather(WeatherRequest weatherRequest) async {
     final request = jsonEncode(weatherRequest);

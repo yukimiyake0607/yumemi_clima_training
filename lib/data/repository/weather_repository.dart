@@ -5,7 +5,8 @@ import 'package:flutter_training/models/response/weather_condition_response.dart
 import 'package:flutter_training/models/weather_request.dart';
 
 class WeatherRepository {
-  final WeatherDatastore weatherDatastore = WeatherDatastore();
+  WeatherRepository(this.weatherDatastore);
+  final WeatherDatastore weatherDatastore;
 
   Future<WeatherConditionResponse> getWeather() async {
     final weatherRequest = WeatherRequest(area: 'tokyo', date: DateTime.now());
