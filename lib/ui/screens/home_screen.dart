@@ -76,12 +76,12 @@ class _HomeScreenState extends State<HomeScreen> {
                     : SvgPicture.asset(_weatherCondition!.svgAsset),
               ),
               const SizedBox(height: 16),
-              _TemperatureRow(
+              TemperatureRow(
                 _lowTemperature,
                 _highTemperature,
               ),
               const SizedBox(height: 80),
-              _ButtonRow(
+              ButtonRow(
                 getWeather: _getWeather,
               ),
             ],
