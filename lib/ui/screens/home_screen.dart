@@ -41,7 +41,9 @@ class _HomeScreenState extends State<HomeScreen> {
               const SizedBox(height: 16),
               const _TemperatureRow(),
               const SizedBox(height: 80),
-              _ButtonRow(getWeather: _getWeather),
+              _ButtonRow(
+                getWeather: _getWeather,
+              ),
             ],
           ),
         ),
@@ -51,8 +53,9 @@ class _HomeScreenState extends State<HomeScreen> {
 }
 
 class _ButtonRow extends StatelessWidget {
-  const _ButtonRow({required VoidCallback getWeather})
-      : _onReloadButtonPressed = getWeather;
+  const _ButtonRow({
+    required VoidCallback getWeather,
+  }) : _onReloadButtonPressed = getWeather;
   final VoidCallback _onReloadButtonPressed;
 
   @override
