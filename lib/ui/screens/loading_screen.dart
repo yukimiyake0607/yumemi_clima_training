@@ -14,7 +14,6 @@ class LoadingScreen extends StatefulWidget {
 class _LoadingScreenState extends State<LoadingScreen> with AfterLayoutMixin {
   Future<void> _navigateToHomeScreen() async {
     await Future<void>.delayed(const Duration(milliseconds: 500));
-
     if (!mounted) {
       return;
     }
@@ -31,6 +30,7 @@ class _LoadingScreenState extends State<LoadingScreen> with AfterLayoutMixin {
   @override
   Future<void> navigateToHomeScreen() {
     return _navigateToHomeScreen();
+
   }
 
   @override
