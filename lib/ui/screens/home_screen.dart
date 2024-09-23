@@ -27,8 +27,20 @@ class _HomeScreenState extends State<HomeScreen> {
 
   Future<void> _getWeather() async {
     try {
+      // 今後
       final weatherData = await _weatherRepository.getWeather();
       await updateState(weatherData);
+      // 反映し次第消す
+      final weatherDataOfJson = _yumemiWeather.fetchWeather(_request);
+      final weatherData = jsonDecode(weatherDataOfJson) as Map<String, dynamic>;
+      setState(() {
+        final weatherCondition = weatherData['weather_condition'].toString();
+        _lowTemperature =
+            int.tryParse(weatherData['min_temperature'].toString());
+        _highTemperature =
+            int.tryParse(weatherData['max_temperature'].toString());
+        _weatherCondition = WeatherCondition.from(weatherCondition);
+      });
     } on YumemiWeatherError catch (e) {
       await _showDialog(e.message);
     }
