@@ -1,7 +1,6 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:flutter_training/data/datastore/weather_datastore.dart';
 import 'package:flutter_training/data/repository/weather_repository.dart';
 import 'package:flutter_training/models/response/weather_condition_response.dart';
 import 'package:flutter_training/models/weather_condition.dart';
@@ -23,7 +22,7 @@ class _HomeScreenState extends State<HomeScreen> {
   int? _lowTemperature;
   int? _highTemperature;
   final WeatherRepository _weatherRepository =
-      WeatherRepository(WeatherDatastore(YumemiWeather()));
+      WeatherRepository(YumemiWeather());
 
   Future<void> _getWeather() async {
     try {
