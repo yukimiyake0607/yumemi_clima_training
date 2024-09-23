@@ -31,8 +31,10 @@ class _HomeScreenState extends State<HomeScreen> {
       final weatherData = jsonDecode(weatherDataOfJson) as Map<String, dynamic>;
       setState(() {
         final weather = weatherData['weather_condition'] as String;
-        _lowTemperature = weatherData['min_temperature'] as int?;
-        _highTemperature = weatherData['max_temperature'] as int?;
+        _lowTemperature =
+            int.tryParse(weatherData['min_temperature'].toString());
+        _highTemperature =
+            int.tryParse(weatherData['max_temperature'].toString());
         _weatherCondition = WeatherCondition.from(weather);
       });
     } on YumemiWeatherError catch (e) {
