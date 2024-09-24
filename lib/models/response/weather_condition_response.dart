@@ -7,9 +7,9 @@ part 'weather_condition_response.g.dart';
 @freezed
 class WeatherConditionResponse with _$WeatherConditionResponse {
   const factory WeatherConditionResponse({
-    required WeatherCondition weatherCondition,
-    required int maxTemperature,
-    required int minTemperature,
+    required WeatherCondition? weatherCondition,
+    required int? maxTemperature,
+    required int? minTemperature,
   }) = _WeatherConditionResponse;
 
   factory WeatherConditionResponse.fromJson(Map<String, dynamic> json) =>
