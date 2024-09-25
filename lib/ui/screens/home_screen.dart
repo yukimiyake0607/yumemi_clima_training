@@ -1,11 +1,14 @@
 import 'dart:async';
-import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:flutter_training/data/repository/weather_repository.dart';
+import 'package:flutter_training/models/response/weather_condition_response.dart';
 import 'package:flutter_training/models/weather_condition.dart';
-import 'package:flutter_training/models/weather_request.dart';
 import 'package:flutter_training/ui/extensions/api_error_ext.dart';
 import 'package:flutter_training/ui/extensions/weather_condition_ext.dart';
+import 'package:flutter_training/ui/widgets/button_row.dart';
+import 'package:flutter_training/ui/widgets/temperature_row.dart';
 import 'package:yumemi_weather/yumemi_weather.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -16,30 +19,27 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-  final YumemiWeather _yumemiWeather = YumemiWeather();
   WeatherCondition? _weatherCondition;
   int? _lowTemperature;
   int? _highTemperature;
-
-  static final WeatherRequest _weatherRequest =
-      WeatherRequest(area: 'tokyo', date: DateTime.now());
-  final _request = jsonEncode(_weatherRequest.toJson());
+  final WeatherRepository _weatherRepository =
+      WeatherRepository(YumemiWeather());
 
   Future<void> _getWeather() async {
     try {
-      final weatherDataOfJson = _yumemiWeather.fetchWeather(_request);
-      final weatherData = jsonDecode(weatherDataOfJson) as Map<String, dynamic>;
-      setState(() {
-        final weatherCondition = weatherData['weather_condition'].toString();
-        _lowTemperature =
-            int.tryParse(weatherData['min_temperature'].toString());
-        _highTemperature =
-            int.tryParse(weatherData['max_temperature'].toString());
-        _weatherCondition = WeatherCondition.from(weatherCondition);
-      });
+      final weatherData = await _weatherRepository.getWeather();
+      await updateState(weatherData);
     } on YumemiWeatherError catch (e) {
       await _showDialog(e.message);
     }
+  }
+
+  Future<void> updateState(WeatherConditionResponse weatherData) async {
+    setState(() {
+      _lowTemperature = weatherData.minTemperature;
+      _highTemperature = weatherData.maxTemperature;
+      _weatherCondition = weatherData.weatherCondition;
+    });
   }
 
   Future<void> _showDialog(String errorMessage) async {
@@ -78,76 +78,18 @@ class _HomeScreenState extends State<HomeScreen> {
                     : SvgPicture.asset(_weatherCondition!.svgAsset),
               ),
               const SizedBox(height: 16),
-              _TemperatureRow(_lowTemperature, _highTemperature),
+              TemperatureRow(
+                _lowTemperature,
+                _highTemperature,
+              ),
               const SizedBox(height: 80),
-              _ButtonRow(
+              ButtonRow(
                 getWeather: _getWeather,
               ),
             ],
           ),
         ),
       ),
-    );
-  }
-}
-
-class _ButtonRow extends StatelessWidget {
-  const _ButtonRow({
-    required VoidCallback getWeather,
-  }) : _onReloadButtonPressed = getWeather;
-  final VoidCallback _onReloadButtonPressed;
-
-  @override
-  Widget build(BuildContext context) {
-    return Row(
-      children: [
-        Expanded(
-          child: TextButton(
-            onPressed: () {
-              Navigator.pop(context);
-            },
-            child: const Text('Close'),
-          ),
-        ),
-        Expanded(
-          child: TextButton(
-            onPressed: _onReloadButtonPressed,
-            child: const Text('Reload'),
-          ),
-        ),
-      ],
-    );
-  }
-}
-
-class _TemperatureRow extends StatelessWidget {
-  const _TemperatureRow(this._lowTemp, this._highTemp);
-  final int? _lowTemp;
-  final int? _highTemp;
-
-  @override
-  Widget build(BuildContext context) {
-    return Row(
-      children: [
-        Expanded(
-          child: Text(
-            _lowTemp != null ? '$_lowTemp℃' : '**℃',
-            textAlign: TextAlign.center,
-            style: Theme.of(context).textTheme.labelLarge?.copyWith(
-                  color: Theme.of(context).colorScheme.primary,
-                ),
-          ),
-        ),
-        Expanded(
-          child: Text(
-            _highTemp != null ? '$_highTemp℃' : '**℃',
-            textAlign: TextAlign.center,
-            style: Theme.of(context).textTheme.labelLarge?.copyWith(
-                  color: Theme.of(context).colorScheme.error,
-                ),
-          ),
-        ),
-      ],
     );
   }
 }
