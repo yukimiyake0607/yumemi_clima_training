@@ -1,7 +1,10 @@
 import 'dart:async';
+import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:flutter_training/models/weather_condition.dart';
+import 'package:flutter_training/models/weather_request.dart';
+import 'package:flutter_training/ui/extensions/api_error_ext.dart';
 import 'package:flutter_training/ui/extensions/weather_condition_ext.dart';
 import 'package:yumemi_weather/yumemi_weather.dart';
 
@@ -15,25 +18,37 @@ class HomeScreen extends StatefulWidget {
 class _HomeScreenState extends State<HomeScreen> {
   final YumemiWeather _yumemiWeather = YumemiWeather();
   WeatherCondition? _weatherCondition;
+  int? _lowTemperature;
+  int? _highTemperature;
+
+  static final WeatherRequest _weatherRequest =
+      WeatherRequest(area: 'tokyo', date: DateTime.now());
+  final _request = jsonEncode(_weatherRequest.toJson());
 
   Future<void> _getWeather() async {
     try {
-      final condition = _yumemiWeather.fetchThrowsWeather('tokyo');
+      final weatherDataOfJson = _yumemiWeather.fetchWeather(_request);
+      final weatherData = jsonDecode(weatherDataOfJson) as Map<String, dynamic>;
       setState(() {
-        _weatherCondition = WeatherCondition.from(condition);
+        final weatherCondition = weatherData['weather_condition'].toString();
+        _lowTemperature =
+            int.tryParse(weatherData['min_temperature'].toString());
+        _highTemperature =
+            int.tryParse(weatherData['max_temperature'].toString());
+        _weatherCondition = WeatherCondition.from(weatherCondition);
       });
-    } on YumemiWeatherError {
-      await _showDialog();
+    } on YumemiWeatherError catch (e) {
+      await _showDialog(e.message);
     }
   }
 
-  Future<void> _showDialog() async {
+  Future<void> _showDialog(String errorMessage) async {
     await showDialog<void>(
       context: context,
       barrierDismissible: false,
       builder: (context) {
         return AlertDialog(
-          title: const Text('天気情報を取得できませんでした'),
+          title: Text(errorMessage),
           actions: [
             TextButton(
               onPressed: () {
@@ -63,7 +78,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     : SvgPicture.asset(_weatherCondition!.svgAsset),
               ),
               const SizedBox(height: 16),
-              const _TemperatureRow(),
+              _TemperatureRow(_lowTemperature, _highTemperature),
               const SizedBox(height: 80),
               _ButtonRow(
                 getWeather: _getWeather,
@@ -106,7 +121,9 @@ class _ButtonRow extends StatelessWidget {
 }
 
 class _TemperatureRow extends StatelessWidget {
-  const _TemperatureRow();
+  const _TemperatureRow(this._lowTemp, this._highTemp);
+  final int? _lowTemp;
+  final int? _highTemp;
 
   @override
   Widget build(BuildContext context) {
@@ -114,7 +131,7 @@ class _TemperatureRow extends StatelessWidget {
       children: [
         Expanded(
           child: Text(
-            '**℃',
+            _lowTemp != null ? '$_lowTemp℃' : '**℃',
             textAlign: TextAlign.center,
             style: Theme.of(context).textTheme.labelLarge?.copyWith(
                   color: Theme.of(context).colorScheme.primary,
@@ -123,7 +140,7 @@ class _TemperatureRow extends StatelessWidget {
         ),
         Expanded(
           child: Text(
-            '**℃',
+            _highTemp != null ? '$_highTemp℃' : '**℃',
             textAlign: TextAlign.center,
             style: Theme.of(context).textTheme.labelLarge?.copyWith(
                   color: Theme.of(context).colorScheme.error,
