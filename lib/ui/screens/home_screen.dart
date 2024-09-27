@@ -11,41 +11,16 @@ import 'package:yumemi_weather/yumemi_weather.dart';
 class HomeScreen extends ConsumerWidget {
   const HomeScreen({super.key});
 
-  @override
-  State<HomeScreen> createState() => _HomeScreenState();
-}
-
-class _HomeScreenState extends State<HomeScreen> {
-  WeatherCondition? _weatherCondition;
-  int? _lowTemperature;
-  int? _highTemperature;
-  final WeatherRepository _weatherRepository =
-      WeatherRepository(YumemiWeather());
-
-  Future<void> _getWeather() async {
-    try {
-      final weatherData = await _weatherRepository.getWeather();
-      await updateState(weatherData);
-    } on YumemiWeatherError catch (e) {
-      await _showDialog(e.message);
-    }
-  }
-
-  Future<void> updateState(WeatherConditionResponse weatherData) async {
-    setState(() {
-      _lowTemperature = weatherData.minTemperature;
-      _highTemperature = weatherData.maxTemperature;
-      _weatherCondition = weatherData.weatherCondition;
-    });
-  }
-
-  Future<void> _showDialog(String errorMessage) async {
+  Future<void> _showDialog(
+    BuildContext context,
+    YumemiWeatherError errorMessage,
+  ) async {
     await showDialog<void>(
       context: context,
       barrierDismissible: false,
       builder: (context) {
         return AlertDialog(
-          title: Text(errorMessage),
+          title: Text(errorMessage.message),
           actions: [
             TextButton(
               onPressed: () {
