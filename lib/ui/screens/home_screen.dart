@@ -52,28 +52,14 @@ class HomeScreen extends ConsumerWidget {
     );
     return Scaffold(
       body: Center(
-        child: FractionallySizedBox(
-          widthFactor: 0.5,
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              AspectRatio(
-                aspectRatio: 1,
-                child: _weatherCondition == null
-                    ? const Placeholder()
-                    : SvgPicture.asset(_weatherCondition!.svgAsset),
-              ),
-              const SizedBox(height: 16),
-              TemperatureRow(
-                _lowTemperature,
-                _highTemperature,
-              ),
-              const SizedBox(height: 80),
-              ButtonRow(
-                getWeather: _getWeather,
-              ),
-            ],
-          ),
+        child: weatherData.when(
+          data: (weatherData) => WeatherWidget(data: weatherData, ref: ref),
+          error: (error, stackTrace) {
+            return weatherData.value != null
+                ? WeatherWidget(data: weatherData.value!, ref: ref)
+                : null;
+          },
+          loading: () => const CircularProgressIndicator(),
         ),
       ),
     );
