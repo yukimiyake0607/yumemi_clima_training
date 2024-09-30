@@ -12,6 +12,7 @@ WeatherRepository weatherRepository(WeatherRepositoryRef ref) {
   return WeatherRepository(YumemiWeather());
 }
 
+
 class WeatherRepository {
   WeatherRepository(this._yumemiWeather);
   final YumemiWeather _yumemiWeather;
