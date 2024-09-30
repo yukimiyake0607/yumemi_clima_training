@@ -1,6 +1,17 @@
-# 天気予報の状態管理
+# 天気予報の状態管理とアーキテクチャ
 
 ## Riverpod導入前
+
+```mermaid
+graph TD;
+    HomeScreen-->WeatherRequest;
+    WeatherRequest-->YumemiWeather;
+```
+
+- HomeScreenはweatherRequestに依存しており、WeatherRequestはYumemiWeatherに依存している。
+- HomeScreenはWeatherRepositoryのgetWeatherからWeatherConditionResponseを受け取り、setStateを使用して画面の再描画をおこなう。
+
+## Riverpod導入後
 
 ```mermaid
 flowchart TB
@@ -27,4 +38,7 @@ flowchart TB
   weatherNotifierProvider[[weatherNotifierProvider]];
 ```
 
-## Riverpod導入後
+### HomeScreen
+- weatherNotifierProviderをreadして、getWeatherを実行
+- weatherNotifierProviderをwatchして、データの取得に成功すると返されたweatherDataを基に画面を更新
+- weatherNotifierProviderをlistenして、error時にエラーダイアログを表示
