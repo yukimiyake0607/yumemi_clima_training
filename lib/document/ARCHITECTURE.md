@@ -2,6 +2,7 @@
 
 ## Riverpod導入前
 
+```mermaid
 flowchart TB
   subgraph Arrows
     direction LR
@@ -24,5 +25,6 @@ flowchart TB
   weatherNotifierProvider ==> HomeScreen;
   weatherNotifierProvider --> HomeScreen;
   weatherNotifierProvider[[weatherNotifierProvider]];
+```
 
 ## Riverpod導入後
