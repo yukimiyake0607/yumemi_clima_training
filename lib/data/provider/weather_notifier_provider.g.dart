@@ -1,6 +1,6 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-// ignore_for_file: type=lint, duplicate_ignore
+// ignore_for_file: type=lint
 
 part of 'weather_notifier_provider.dart';
 
@@ -8,7 +8,7 @@ part of 'weather_notifier_provider.dart';
 // RiverpodGenerator
 // **************************************************************************
 
-String _$weatherNotifierHash() => r'b0bbdaedc8b6799828d6d6ac486e7ae4a28a219d';
+String _$weatherNotifierHash() => r'5019c478ad674e1ac212fa1b9c026e5934c0da1f';
 
 /// See also [WeatherNotifier].
 @ProviderFor(WeatherNotifier)
