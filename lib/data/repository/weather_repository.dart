@@ -12,7 +12,6 @@ WeatherRepository weatherRepository(WeatherRepositoryRef ref) {
   return WeatherRepository(YumemiWeather());
 }
 
-
 class WeatherRepository {
   WeatherRepository(this._yumemiWeather);
   final YumemiWeather _yumemiWeather;
@@ -20,10 +19,15 @@ class WeatherRepository {
   Future<WeatherConditionResponse> getWeather(
     WeatherRequest weatherRequest,
   ) async {
-    final request = jsonEncode(weatherRequest);
+    final request = toJsonString(weatherRequest);
     final weatherDataOfJson = _yumemiWeather.fetchWeather(request);
     final response = jsonDecode(weatherDataOfJson) as Map<String, dynamic>;
     final weatherData = WeatherConditionResponse.fromJson(response);
     return weatherData;
+  }
+
+  String toJsonString(WeatherRequest weatherRequest) {
+    final request = jsonEncode(weatherRequest);
+    return request;
   }
 }
