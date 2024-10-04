@@ -21,7 +21,7 @@ class WeatherRepository {
   ) async {
     final request = toJsonString(weatherRequest);
     final weatherDataOfJson = _yumemiWeather.fetchWeather(request);
-    final response = jsonDecode(weatherDataOfJson) as Map<String, dynamic>;
+    final response = toMap(weatherDataOfJson);
     final weatherData = WeatherConditionResponse.fromJson(response);
     return weatherData;
   }
@@ -29,5 +29,10 @@ class WeatherRepository {
   String toJsonString(WeatherRequest weatherRequest) {
     final request = jsonEncode(weatherRequest);
     return request;
+  }
+
+  Map<String, dynamic> toMap(String weatherDataOfJson) {
+    final response = jsonDecode(weatherDataOfJson) as Map<String, dynamic>;
+    return response;
   }
 }
