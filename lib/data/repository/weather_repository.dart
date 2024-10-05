@@ -16,13 +16,13 @@ class WeatherRepository {
   WeatherRepository(this._yumemiWeather);
   final YumemiWeather _yumemiWeather;
 
-  Future<WeatherConditionResponse> getWeather(
+  Future<WeatherResponse> getWeather(
     WeatherRequest weatherRequest,
   ) async {
     final request = toJsonString(weatherRequest);
     final weatherDataOfJson = _yumemiWeather.fetchWeather(request);
     final response = toMap(weatherDataOfJson);
-    final weatherData = WeatherConditionResponse.fromJson(response);
+    final weatherData = WeatherResponse.fromJson(response);
     return weatherData;
   }
 

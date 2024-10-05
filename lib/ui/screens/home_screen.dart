@@ -38,7 +38,7 @@ class HomeScreen extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final weatherData = ref.watch(weatherNotifierProvider);
 
-    ref.listen<AsyncValue<WeatherConditionResponse>>(
+    ref.listen<AsyncValue<WeatherResponse>>(
       weatherNotifierProvider,
       (_, next) async {
         next.whenOrNull(
