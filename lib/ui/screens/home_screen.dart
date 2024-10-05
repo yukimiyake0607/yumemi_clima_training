@@ -53,10 +53,10 @@ class HomeScreen extends ConsumerWidget {
     return Scaffold(
       body: Center(
         child: weatherData.when(
-          data: (weatherData) => WeatherWidget(data: weatherData, ref: ref),
+          data: (weatherData) => WeatherWidget(data: weatherData),
           error: (error, stackTrace) {
             return weatherData.value != null
-                ? WeatherWidget(data: weatherData.value!, ref: ref)
+                ? WeatherWidget(data: weatherData.value!)
                 : null;
           },
           loading: () => const CircularProgressIndicator(),

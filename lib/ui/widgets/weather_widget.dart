@@ -7,19 +7,16 @@ import 'package:flutter_training/ui/extensions/weather_condition_ext.dart';
 import 'package:flutter_training/ui/widgets/button_row.dart';
 import 'package:flutter_training/ui/widgets/temperature_row.dart';
 
-class WeatherWidget extends StatelessWidget {
+class WeatherWidget extends ConsumerWidget {
   const WeatherWidget({
     required WeatherResponse data,
-    required WidgetRef ref,
     super.key,
-  })  : _ref = ref,
-        _data = data;
+  }) : _data = data;
 
   final WeatherResponse _data;
-  final WidgetRef _ref;
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     return FractionallySizedBox(
       widthFactor: 0.5,
       child: Column(
@@ -38,7 +35,7 @@ class WeatherWidget extends StatelessWidget {
           ),
           const SizedBox(height: 80),
           ButtonRow(
-            getWeather: _ref.read(weatherNotifierProvider.notifier).getWeather,
+            getWeather: ref.read(weatherNotifierProvider.notifier).getWeather,
           ),
         ],
       ),
