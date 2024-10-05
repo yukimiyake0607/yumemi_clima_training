@@ -11,7 +11,7 @@ import 'package:yumemi_weather/yumemi_weather.dart';
 class HomeScreen extends ConsumerWidget {
   const HomeScreen({super.key});
 
-  Future<void> _showDialog(
+  Future<void> _showErrorDialog(
     BuildContext context,
     String errorMessage,
   ) async {
@@ -44,7 +44,7 @@ class HomeScreen extends ConsumerWidget {
         next.whenOrNull(
           error: (error, stackTrace) {
             if (error is YumemiWeatherError) {
-              _showDialog(context, error.message);
+              _showErrorDialog(context, error.message);
             }
           },
         );
