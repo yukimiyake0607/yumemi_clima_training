@@ -9,8 +9,8 @@ part 'weather_notifier_provider.g.dart';
 @riverpod
 class WeatherNotifier extends _$WeatherNotifier {
   @override
-  FutureOr<WeatherConditionResponse> build() {
-    return const WeatherConditionResponse(
+  FutureOr<WeatherResponse> build() {
+    return const WeatherResponse(
       weatherCondition: null,
       maxTemperature: null,
       minTemperature: null,

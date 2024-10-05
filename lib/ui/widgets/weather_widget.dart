@@ -9,13 +9,13 @@ import 'package:flutter_training/ui/widgets/temperature_row.dart';
 
 class WeatherWidget extends StatelessWidget {
   const WeatherWidget({
-    required WeatherConditionResponse data,
+    required WeatherResponse data,
     required WidgetRef ref,
     super.key,
   })  : _ref = ref,
         _data = data;
 
-  final WeatherConditionResponse _data;
+  final WeatherResponse _data;
   final WidgetRef _ref;
 
   @override

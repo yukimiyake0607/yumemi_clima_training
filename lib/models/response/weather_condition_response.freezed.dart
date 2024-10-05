@@ -14,32 +14,31 @@ T _$identity<T>(T value) => value;
 final _privateConstructorUsedError = UnsupportedError(
     'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#adding-getters-and-methods-to-our-models');
 
-WeatherConditionResponse _$WeatherConditionResponseFromJson(
-    Map<String, dynamic> json) {
+WeatherResponse _$WeatherResponseFromJson(Map<String, dynamic> json) {
   return _WeatherConditionResponse.fromJson(json);
 }
 
 /// @nodoc
-mixin _$WeatherConditionResponse {
+mixin _$WeatherResponse {
   WeatherCondition? get weatherCondition => throw _privateConstructorUsedError;
   int? get maxTemperature => throw _privateConstructorUsedError;
   int? get minTemperature => throw _privateConstructorUsedError;
 
-  /// Serializes this WeatherConditionResponse to a JSON map.
+  /// Serializes this WeatherResponse to a JSON map.
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
 
-  /// Create a copy of WeatherConditionResponse
+  /// Create a copy of WeatherResponse
   /// with the given fields replaced by the non-null parameter values.
   @JsonKey(includeFromJson: false, includeToJson: false)
-  $WeatherConditionResponseCopyWith<WeatherConditionResponse> get copyWith =>
+  $WeatherResponseCopyWith<WeatherResponse> get copyWith =>
       throw _privateConstructorUsedError;
 }
 
 /// @nodoc
-abstract class $WeatherConditionResponseCopyWith<$Res> {
-  factory $WeatherConditionResponseCopyWith(WeatherConditionResponse value,
-          $Res Function(WeatherConditionResponse) then) =
-      _$WeatherConditionResponseCopyWithImpl<$Res, WeatherConditionResponse>;
+abstract class $WeatherResponseCopyWith<$Res> {
+  factory $WeatherResponseCopyWith(
+          WeatherResponse value, $Res Function(WeatherResponse) then) =
+      _$WeatherResponseCopyWithImpl<$Res, WeatherResponse>;
   @useResult
   $Res call(
       {WeatherCondition? weatherCondition,
@@ -48,17 +47,16 @@ abstract class $WeatherConditionResponseCopyWith<$Res> {
 }
 
 /// @nodoc
-class _$WeatherConditionResponseCopyWithImpl<$Res,
-        $Val extends WeatherConditionResponse>
-    implements $WeatherConditionResponseCopyWith<$Res> {
-  _$WeatherConditionResponseCopyWithImpl(this._value, this._then);
+class _$WeatherResponseCopyWithImpl<$Res, $Val extends WeatherResponse>
+    implements $WeatherResponseCopyWith<$Res> {
+  _$WeatherResponseCopyWithImpl(this._value, this._then);
 
   // ignore: unused_field
   final $Val _value;
   // ignore: unused_field
   final $Res Function($Val) _then;
 
-  /// Create a copy of WeatherConditionResponse
+  /// Create a copy of WeatherResponse
   /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
@@ -86,7 +84,7 @@ class _$WeatherConditionResponseCopyWithImpl<$Res,
 
 /// @nodoc
 abstract class _$$WeatherConditionResponseImplCopyWith<$Res>
-    implements $WeatherConditionResponseCopyWith<$Res> {
+    implements $WeatherResponseCopyWith<$Res> {
   factory _$$WeatherConditionResponseImplCopyWith(
           _$WeatherConditionResponseImpl value,
           $Res Function(_$WeatherConditionResponseImpl) then) =
@@ -101,15 +99,14 @@ abstract class _$$WeatherConditionResponseImplCopyWith<$Res>
 
 /// @nodoc
 class __$$WeatherConditionResponseImplCopyWithImpl<$Res>
-    extends _$WeatherConditionResponseCopyWithImpl<$Res,
-        _$WeatherConditionResponseImpl>
+    extends _$WeatherResponseCopyWithImpl<$Res, _$WeatherConditionResponseImpl>
     implements _$$WeatherConditionResponseImplCopyWith<$Res> {
   __$$WeatherConditionResponseImplCopyWithImpl(
       _$WeatherConditionResponseImpl _value,
       $Res Function(_$WeatherConditionResponseImpl) _then)
       : super(_value, _then);
 
-  /// Create a copy of WeatherConditionResponse
+  /// Create a copy of WeatherResponse
   /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
@@ -155,7 +152,7 @@ class _$WeatherConditionResponseImpl implements _WeatherConditionResponse {
 
   @override
   String toString() {
-    return 'WeatherConditionResponse(weatherCondition: $weatherCondition, maxTemperature: $maxTemperature, minTemperature: $minTemperature)';
+    return 'WeatherResponse(weatherCondition: $weatherCondition, maxTemperature: $maxTemperature, minTemperature: $minTemperature)';
   }
 
   @override
@@ -176,7 +173,7 @@ class _$WeatherConditionResponseImpl implements _WeatherConditionResponse {
   int get hashCode => Object.hash(
       runtimeType, weatherCondition, maxTemperature, minTemperature);
 
-  /// Create a copy of WeatherConditionResponse
+  /// Create a copy of WeatherResponse
   /// with the given fields replaced by the non-null parameter values.
   @JsonKey(includeFromJson: false, includeToJson: false)
   @override
@@ -193,7 +190,7 @@ class _$WeatherConditionResponseImpl implements _WeatherConditionResponse {
   }
 }
 
-abstract class _WeatherConditionResponse implements WeatherConditionResponse {
+abstract class _WeatherConditionResponse implements WeatherResponse {
   const factory _WeatherConditionResponse(
       {required final WeatherCondition? weatherCondition,
       required final int? maxTemperature,
@@ -209,7 +206,7 @@ abstract class _WeatherConditionResponse implements WeatherConditionResponse {
   @override
   int? get minTemperature;
 
-  /// Create a copy of WeatherConditionResponse
+  /// Create a copy of WeatherResponse
   /// with the given fields replaced by the non-null parameter values.
   @override
   @JsonKey(includeFromJson: false, includeToJson: false)
