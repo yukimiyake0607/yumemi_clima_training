@@ -3,12 +3,12 @@ part 'weather_condition_request.freezed.dart';
 part 'weather_condition_request.g.dart';
 
 @freezed
-class WeatherConditionRequest with _$WeatherConditionRequest {
-  const factory WeatherConditionRequest({
+class WeatherRequest with _$WeatherRequest {
+  const factory WeatherRequest({
     required String area,
     required DateTime date,
-  }) = _WeatherConditionRequest;
+  }) = _WeatherRequest;
 
-  factory WeatherConditionRequest.fromJson(Map<String, dynamic> json) =>
-      _$WeatherConditionRequestFromJson(json);
+  factory WeatherRequest.fromJson(Map<String, dynamic> json) =>
+      _$WeatherRequestFromJson(json);
 }

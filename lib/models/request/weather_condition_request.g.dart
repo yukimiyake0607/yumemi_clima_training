@@ -8,13 +8,12 @@ part of 'weather_condition_request.dart';
 // JsonSerializableGenerator
 // **************************************************************************
 
-_$WeatherConditionRequestImpl _$$WeatherConditionRequestImplFromJson(
-        Map<String, dynamic> json) =>
+_$WeatherRequestImpl _$$WeatherRequestImplFromJson(Map<String, dynamic> json) =>
     $checkedCreate(
-      r'_$WeatherConditionRequestImpl',
+      r'_$WeatherRequestImpl',
       json,
       ($checkedConvert) {
-        final val = _$WeatherConditionRequestImpl(
+        final val = _$WeatherRequestImpl(
           area: $checkedConvert('area', (v) => v as String),
           date: $checkedConvert('date', (v) => DateTime.parse(v as String)),
         );
@@ -22,8 +21,8 @@ _$WeatherConditionRequestImpl _$$WeatherConditionRequestImplFromJson(
       },
     );
 
-Map<String, dynamic> _$$WeatherConditionRequestImplToJson(
-        _$WeatherConditionRequestImpl instance) =>
+Map<String, dynamic> _$$WeatherRequestImplToJson(
+        _$WeatherRequestImpl instance) =>
     <String, dynamic>{
       'area': instance.area,
       'date': instance.date.toIso8601String(),

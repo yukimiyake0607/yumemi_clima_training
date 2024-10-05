@@ -14,47 +14,45 @@ T _$identity<T>(T value) => value;
 final _privateConstructorUsedError = UnsupportedError(
     'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#adding-getters-and-methods-to-our-models');
 
-WeatherConditionRequest _$WeatherConditionRequestFromJson(
-    Map<String, dynamic> json) {
-  return _WeatherConditionRequest.fromJson(json);
+WeatherRequest _$WeatherRequestFromJson(Map<String, dynamic> json) {
+  return _WeatherRequest.fromJson(json);
 }
 
 /// @nodoc
-mixin _$WeatherConditionRequest {
+mixin _$WeatherRequest {
   String get area => throw _privateConstructorUsedError;
   DateTime get date => throw _privateConstructorUsedError;
 
-  /// Serializes this WeatherConditionRequest to a JSON map.
+  /// Serializes this WeatherRequest to a JSON map.
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
 
-  /// Create a copy of WeatherConditionRequest
+  /// Create a copy of WeatherRequest
   /// with the given fields replaced by the non-null parameter values.
   @JsonKey(includeFromJson: false, includeToJson: false)
-  $WeatherConditionRequestCopyWith<WeatherConditionRequest> get copyWith =>
+  $WeatherRequestCopyWith<WeatherRequest> get copyWith =>
       throw _privateConstructorUsedError;
 }
 
 /// @nodoc
-abstract class $WeatherConditionRequestCopyWith<$Res> {
-  factory $WeatherConditionRequestCopyWith(WeatherConditionRequest value,
-          $Res Function(WeatherConditionRequest) then) =
-      _$WeatherConditionRequestCopyWithImpl<$Res, WeatherConditionRequest>;
+abstract class $WeatherRequestCopyWith<$Res> {
+  factory $WeatherRequestCopyWith(
+          WeatherRequest value, $Res Function(WeatherRequest) then) =
+      _$WeatherRequestCopyWithImpl<$Res, WeatherRequest>;
   @useResult
   $Res call({String area, DateTime date});
 }
 
 /// @nodoc
-class _$WeatherConditionRequestCopyWithImpl<$Res,
-        $Val extends WeatherConditionRequest>
-    implements $WeatherConditionRequestCopyWith<$Res> {
-  _$WeatherConditionRequestCopyWithImpl(this._value, this._then);
+class _$WeatherRequestCopyWithImpl<$Res, $Val extends WeatherRequest>
+    implements $WeatherRequestCopyWith<$Res> {
+  _$WeatherRequestCopyWithImpl(this._value, this._then);
 
   // ignore: unused_field
   final $Val _value;
   // ignore: unused_field
   final $Res Function($Val) _then;
 
-  /// Create a copy of WeatherConditionRequest
+  /// Create a copy of WeatherRequest
   /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
@@ -76,28 +74,25 @@ class _$WeatherConditionRequestCopyWithImpl<$Res,
 }
 
 /// @nodoc
-abstract class _$$WeatherConditionRequestImplCopyWith<$Res>
-    implements $WeatherConditionRequestCopyWith<$Res> {
-  factory _$$WeatherConditionRequestImplCopyWith(
-          _$WeatherConditionRequestImpl value,
-          $Res Function(_$WeatherConditionRequestImpl) then) =
-      __$$WeatherConditionRequestImplCopyWithImpl<$Res>;
+abstract class _$$WeatherRequestImplCopyWith<$Res>
+    implements $WeatherRequestCopyWith<$Res> {
+  factory _$$WeatherRequestImplCopyWith(_$WeatherRequestImpl value,
+          $Res Function(_$WeatherRequestImpl) then) =
+      __$$WeatherRequestImplCopyWithImpl<$Res>;
   @override
   @useResult
   $Res call({String area, DateTime date});
 }
 
 /// @nodoc
-class __$$WeatherConditionRequestImplCopyWithImpl<$Res>
-    extends _$WeatherConditionRequestCopyWithImpl<$Res,
-        _$WeatherConditionRequestImpl>
-    implements _$$WeatherConditionRequestImplCopyWith<$Res> {
-  __$$WeatherConditionRequestImplCopyWithImpl(
-      _$WeatherConditionRequestImpl _value,
-      $Res Function(_$WeatherConditionRequestImpl) _then)
+class __$$WeatherRequestImplCopyWithImpl<$Res>
+    extends _$WeatherRequestCopyWithImpl<$Res, _$WeatherRequestImpl>
+    implements _$$WeatherRequestImplCopyWith<$Res> {
+  __$$WeatherRequestImplCopyWithImpl(
+      _$WeatherRequestImpl _value, $Res Function(_$WeatherRequestImpl) _then)
       : super(_value, _then);
 
-  /// Create a copy of WeatherConditionRequest
+  /// Create a copy of WeatherRequest
   /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
@@ -105,7 +100,7 @@ class __$$WeatherConditionRequestImplCopyWithImpl<$Res>
     Object? area = null,
     Object? date = null,
   }) {
-    return _then(_$WeatherConditionRequestImpl(
+    return _then(_$WeatherRequestImpl(
       area: null == area
           ? _value.area
           : area // ignore: cast_nullable_to_non_nullable
@@ -120,11 +115,11 @@ class __$$WeatherConditionRequestImplCopyWithImpl<$Res>
 
 /// @nodoc
 @JsonSerializable()
-class _$WeatherConditionRequestImpl implements _WeatherConditionRequest {
-  const _$WeatherConditionRequestImpl({required this.area, required this.date});
+class _$WeatherRequestImpl implements _WeatherRequest {
+  const _$WeatherRequestImpl({required this.area, required this.date});
 
-  factory _$WeatherConditionRequestImpl.fromJson(Map<String, dynamic> json) =>
-      _$$WeatherConditionRequestImplFromJson(json);
+  factory _$WeatherRequestImpl.fromJson(Map<String, dynamic> json) =>
+      _$$WeatherRequestImplFromJson(json);
 
   @override
   final String area;
@@ -133,14 +128,14 @@ class _$WeatherConditionRequestImpl implements _WeatherConditionRequest {
 
   @override
   String toString() {
-    return 'WeatherConditionRequest(area: $area, date: $date)';
+    return 'WeatherRequest(area: $area, date: $date)';
   }
 
   @override
   bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$WeatherConditionRequestImpl &&
+            other is _$WeatherRequestImpl &&
             (identical(other.area, area) || other.area == area) &&
             (identical(other.date, date) || other.date == date));
   }
@@ -149,40 +144,40 @@ class _$WeatherConditionRequestImpl implements _WeatherConditionRequest {
   @override
   int get hashCode => Object.hash(runtimeType, area, date);
 
-  /// Create a copy of WeatherConditionRequest
+  /// Create a copy of WeatherRequest
   /// with the given fields replaced by the non-null parameter values.
   @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   @pragma('vm:prefer-inline')
-  _$$WeatherConditionRequestImplCopyWith<_$WeatherConditionRequestImpl>
-      get copyWith => __$$WeatherConditionRequestImplCopyWithImpl<
-          _$WeatherConditionRequestImpl>(this, _$identity);
+  _$$WeatherRequestImplCopyWith<_$WeatherRequestImpl> get copyWith =>
+      __$$WeatherRequestImplCopyWithImpl<_$WeatherRequestImpl>(
+          this, _$identity);
 
   @override
   Map<String, dynamic> toJson() {
-    return _$$WeatherConditionRequestImplToJson(
+    return _$$WeatherRequestImplToJson(
       this,
     );
   }
 }
 
-abstract class _WeatherConditionRequest implements WeatherConditionRequest {
-  const factory _WeatherConditionRequest(
+abstract class _WeatherRequest implements WeatherRequest {
+  const factory _WeatherRequest(
       {required final String area,
-      required final DateTime date}) = _$WeatherConditionRequestImpl;
+      required final DateTime date}) = _$WeatherRequestImpl;
 
-  factory _WeatherConditionRequest.fromJson(Map<String, dynamic> json) =
-      _$WeatherConditionRequestImpl.fromJson;
+  factory _WeatherRequest.fromJson(Map<String, dynamic> json) =
+      _$WeatherRequestImpl.fromJson;
 
   @override
   String get area;
   @override
   DateTime get date;
 
-  /// Create a copy of WeatherConditionRequest
+  /// Create a copy of WeatherRequest
   /// with the given fields replaced by the non-null parameter values.
   @override
   @JsonKey(includeFromJson: false, includeToJson: false)
-  _$$WeatherConditionRequestImplCopyWith<_$WeatherConditionRequestImpl>
-      get copyWith => throw _privateConstructorUsedError;
+  _$$WeatherRequestImplCopyWith<_$WeatherRequestImpl> get copyWith =>
+      throw _privateConstructorUsedError;
 }

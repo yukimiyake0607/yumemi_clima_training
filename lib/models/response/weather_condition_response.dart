@@ -5,13 +5,13 @@ part 'weather_condition_response.freezed.dart';
 part 'weather_condition_response.g.dart';
 
 @freezed
-class WeatherConditionResponse with _$WeatherConditionResponse {
-  const factory WeatherConditionResponse({
-    required WeatherCondition weatherCondition,
-    required int maxTemperature,
-    required int minTemperature,
+class WeatherResponse with _$WeatherResponse {
+  const factory WeatherResponse({
+    required WeatherCondition? weatherCondition,
+    required int? maxTemperature,
+    required int? minTemperature,
   }) = _WeatherConditionResponse;
 
-  factory WeatherConditionResponse.fromJson(Map<String, dynamic> json) =>
-      _$WeatherConditionResponseFromJson(json);
+  factory WeatherResponse.fromJson(Map<String, dynamic> json) =>
+      _$WeatherResponseFromJson(json);
 }
