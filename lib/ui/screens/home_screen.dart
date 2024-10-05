@@ -13,14 +13,14 @@ class HomeScreen extends ConsumerWidget {
 
   Future<void> _showDialog(
     BuildContext context,
-    YumemiWeatherError errorMessage,
+    String errorMessage,
   ) async {
     await showDialog<void>(
       context: context,
       barrierDismissible: false,
       builder: (context) {
         return AlertDialog(
-          title: Text(errorMessage.message),
+          title: Text(errorMessage),
           actions: [
             TextButton(
               onPressed: () {
@@ -44,7 +44,7 @@ class HomeScreen extends ConsumerWidget {
         next.whenOrNull(
           error: (error, stackTrace) {
             if (error is YumemiWeatherError) {
-              _showDialog(context, error);
+              _showDialog(context, error.message);
             }
           },
         );
