@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:flutter_training/data/provider/weather_notifier_provider.dart';
 import 'package:flutter_training/models/response/weather_condition_response.dart';
 import 'package:flutter_training/ui/extensions/weather_condition_ext.dart';
 import 'package:flutter_training/ui/widgets/button_row.dart';
@@ -34,9 +33,7 @@ class WeatherWidget extends ConsumerWidget {
             _data.maxTemperature,
           ),
           const SizedBox(height: 80),
-          ButtonRow(
-            getWeather: ref.read(weatherNotifierProvider.notifier).getWeather,
-          ),
+          const ButtonRow(),
         ],
       ),
     );
