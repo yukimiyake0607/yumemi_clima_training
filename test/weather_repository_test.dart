@@ -47,13 +47,9 @@ void main() {
       final mockYumemiWeather = MockYumemiWeather();
       final weatherRepository = WeatherRepository(mockYumemiWeather);
 
-      // Act
-      // 無効な入力
-      const invalidData = 'invalid_data';
-
-      // Assert
+      // Act & Assert
       expect(
-        weatherRepository.toMap(invalidData),
+        () => weatherRepository.toMap('invalid_data'),
         throwsA(isA<FormatException>()),
       );
     });
