@@ -1,5 +1,8 @@
+import 'dart:async';
+
 import 'package:flutter_test/flutter_test.dart';
 import 'package:flutter_training/data/repository/weather_repository.dart';
+import 'package:flutter_training/models/weather_condition.dart';
 import 'package:flutter_training/models/weather_request.dart';
 import 'package:mockito/mockito.dart';
 import 'package:yumemi_weather/yumemi_weather.dart';
@@ -96,6 +99,31 @@ void main() {
           () async => weatherRepository.getWeather(weatherRequest),
           throwsA(isA<YumemiWeatherError>()),
         );
+      },
+    );
+
+    test(
+      'getWeather accurately returns weather data',
+      () async {
+        // Arrange
+        final mockYumemiWeather = MockYumemiWeather();
+        final weatherRepository = WeatherRepository(mockYumemiWeather);
+        final weatherRequest = WeatherRequest(
+          area: 'tokyo',
+          date: DateTime(2024, 10, 4),
+        );
+        const preparedWeatherData =
+            '{"weather_condition":"cloudy","max_temperature":25,"min_temperature":7}';
+
+        // Act
+        when(mockYumemiWeather.fetchWeather(any))
+            .thenReturn(preparedWeatherData);
+        final weatherData = await weatherRepository.getWeather(weatherRequest);
+
+        // Assert
+        expect(weatherData.weatherCondition, WeatherCondition.cloudy);
+        expect(weatherData.maxTemperature, 25);
+        expect(weatherData.minTemperature, 7);
       },
     );
   });
