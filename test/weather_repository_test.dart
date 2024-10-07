@@ -1,6 +1,8 @@
 import 'package:flutter_test/flutter_test.dart';
 import 'package:flutter_training/data/repository/weather_repository.dart';
 import 'package:flutter_training/models/weather_request.dart';
+import 'package:mockito/mockito.dart';
+import 'package:yumemi_weather/yumemi_weather.dart';
 import 'mock/mock.mocks.dart';
 
 void main() {
@@ -51,6 +53,28 @@ void main() {
       expect(
         () => weatherRepository.toMap('invalid_data'),
         throwsA(isA<FormatException>()),
+      );
+    });
+
+    test(
+        'When YumemiWeatherError.unknown is thrown, getWeather throws YumemiWeatherError.unknown',
+        () {
+      // Arrange
+      final mockYumemiWeather = MockYumemiWeather();
+      final weatherRepository = WeatherRepository(mockYumemiWeather);
+      final weatherRequest = WeatherRequest(
+        area: 'tokyo',
+        date: DateTime(2024, 10, 4),
+      );
+
+      // Act
+      when(mockYumemiWeather.fetchWeather(any))
+          .thenThrow(YumemiWeatherError.unknown);
+
+      // Assert
+      expect(
+        () async => weatherRepository.getWeather(weatherRequest),
+        throwsA(isA<YumemiWeatherError>()),
       );
     });
   });
