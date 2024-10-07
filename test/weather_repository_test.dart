@@ -77,5 +77,26 @@ void main() {
         throwsA(isA<YumemiWeatherError>()),
       );
     });
+
+    test(
+      'When YumemiWeatherError.invalidParameter is thrown, getWeather throws YumemiWeatherError.invalidParameter',
+      () {
+        // Arrange
+        final mockYumemiWeather = MockYumemiWeather();
+        final weatherRepository = WeatherRepository(mockYumemiWeather);
+        final weatherRequest =
+            WeatherRequest(area: 'tokyo', date: DateTime(2024, 10, 4));
+
+        // Act
+        when(mockYumemiWeather.fetchWeather(any))
+            .thenThrow(YumemiWeatherError.invalidParameter);
+
+        // Assert
+        expect(
+          () async => weatherRepository.getWeather(weatherRequest),
+          throwsA(isA<YumemiWeatherError>()),
+        );
+      },
+    );
   });
 }
