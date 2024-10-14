@@ -1,5 +1,3 @@
-import 'dart:async';
-
 import 'package:flutter_test/flutter_test.dart';
 import 'package:flutter_training/data/repository/weather_repository.dart';
 import 'package:flutter_training/models/weather_condition.dart';
