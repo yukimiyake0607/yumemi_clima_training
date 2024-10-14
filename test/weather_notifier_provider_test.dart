@@ -85,11 +85,17 @@ void main() {
             .getWeather(request);
 
         // Assert
-        verify(mockWeatherUsecase.getWeather(request)).called(1);
+        verifyInOrder([
+          listener(any, argThat(isA<AsyncLoading<WeatherConditionResponse>>())),
+          listener(any, argThat(isA<AsyncData<WeatherConditionResponse>>())),
+        ]);
 
         final finalState = container.read(weatherNotifierProvider);
         expect(finalState, isA<AsyncValue<WeatherConditionResponse>>());
         expect(finalState.value, response);
+
+        verify(mockWeatherUsecase.getWeather(request)).called(1);
+        verifyNoMoreInteractions(listener);
       },
     );
   });
