@@ -102,7 +102,10 @@ void main() {
 
   // エラー1パターン
   test(
-    'When YumemiWeatherError.unknown is returned, state is changed accordingly',
+    '''
+    When YumemiWeatherError.unknown is returned,
+    state changes to AsyncError containing it
+    ''',
     () async {
       // Arrange
       final mockWeatherUsecase = MockWeatherUsecase();
