@@ -3,7 +3,7 @@
 // ignore_for_file: type=lint
 // ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target, unnecessary_question_mark
 
-part of 'weather_condition_response.dart';
+part of 'weather_response.dart';
 
 // **************************************************************************
 // FreezedGenerator
@@ -15,7 +15,7 @@ final _privateConstructorUsedError = UnsupportedError(
     'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#adding-getters-and-methods-to-our-models');
 
 WeatherResponse _$WeatherResponseFromJson(Map<String, dynamic> json) {
-  return _WeatherConditionResponse.fromJson(json);
+  return _WeatherResponse.fromJson(json);
 }
 
 /// @nodoc
@@ -83,12 +83,11 @@ class _$WeatherResponseCopyWithImpl<$Res, $Val extends WeatherResponse>
 }
 
 /// @nodoc
-abstract class _$$WeatherConditionResponseImplCopyWith<$Res>
+abstract class _$$WeatherResponseImplCopyWith<$Res>
     implements $WeatherResponseCopyWith<$Res> {
-  factory _$$WeatherConditionResponseImplCopyWith(
-          _$WeatherConditionResponseImpl value,
-          $Res Function(_$WeatherConditionResponseImpl) then) =
-      __$$WeatherConditionResponseImplCopyWithImpl<$Res>;
+  factory _$$WeatherResponseImplCopyWith(_$WeatherResponseImpl value,
+          $Res Function(_$WeatherResponseImpl) then) =
+      __$$WeatherResponseImplCopyWithImpl<$Res>;
   @override
   @useResult
   $Res call(
@@ -98,12 +97,11 @@ abstract class _$$WeatherConditionResponseImplCopyWith<$Res>
 }
 
 /// @nodoc
-class __$$WeatherConditionResponseImplCopyWithImpl<$Res>
-    extends _$WeatherResponseCopyWithImpl<$Res, _$WeatherConditionResponseImpl>
-    implements _$$WeatherConditionResponseImplCopyWith<$Res> {
-  __$$WeatherConditionResponseImplCopyWithImpl(
-      _$WeatherConditionResponseImpl _value,
-      $Res Function(_$WeatherConditionResponseImpl) _then)
+class __$$WeatherResponseImplCopyWithImpl<$Res>
+    extends _$WeatherResponseCopyWithImpl<$Res, _$WeatherResponseImpl>
+    implements _$$WeatherResponseImplCopyWith<$Res> {
+  __$$WeatherResponseImplCopyWithImpl(
+      _$WeatherResponseImpl _value, $Res Function(_$WeatherResponseImpl) _then)
       : super(_value, _then);
 
   /// Create a copy of WeatherResponse
@@ -115,7 +113,7 @@ class __$$WeatherConditionResponseImplCopyWithImpl<$Res>
     Object? maxTemperature = freezed,
     Object? minTemperature = freezed,
   }) {
-    return _then(_$WeatherConditionResponseImpl(
+    return _then(_$WeatherResponseImpl(
       weatherCondition: freezed == weatherCondition
           ? _value.weatherCondition
           : weatherCondition // ignore: cast_nullable_to_non_nullable
@@ -134,14 +132,14 @@ class __$$WeatherConditionResponseImplCopyWithImpl<$Res>
 
 /// @nodoc
 @JsonSerializable()
-class _$WeatherConditionResponseImpl implements _WeatherConditionResponse {
-  const _$WeatherConditionResponseImpl(
+class _$WeatherResponseImpl implements _WeatherResponse {
+  const _$WeatherResponseImpl(
       {required this.weatherCondition,
       required this.maxTemperature,
       required this.minTemperature});
 
-  factory _$WeatherConditionResponseImpl.fromJson(Map<String, dynamic> json) =>
-      _$$WeatherConditionResponseImplFromJson(json);
+  factory _$WeatherResponseImpl.fromJson(Map<String, dynamic> json) =>
+      _$$WeatherResponseImplFromJson(json);
 
   @override
   final WeatherCondition? weatherCondition;
@@ -159,7 +157,7 @@ class _$WeatherConditionResponseImpl implements _WeatherConditionResponse {
   bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$WeatherConditionResponseImpl &&
+            other is _$WeatherResponseImpl &&
             (identical(other.weatherCondition, weatherCondition) ||
                 other.weatherCondition == weatherCondition) &&
             (identical(other.maxTemperature, maxTemperature) ||
@@ -178,26 +176,26 @@ class _$WeatherConditionResponseImpl implements _WeatherConditionResponse {
   @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   @pragma('vm:prefer-inline')
-  _$$WeatherConditionResponseImplCopyWith<_$WeatherConditionResponseImpl>
-      get copyWith => __$$WeatherConditionResponseImplCopyWithImpl<
-          _$WeatherConditionResponseImpl>(this, _$identity);
+  _$$WeatherResponseImplCopyWith<_$WeatherResponseImpl> get copyWith =>
+      __$$WeatherResponseImplCopyWithImpl<_$WeatherResponseImpl>(
+          this, _$identity);
 
   @override
   Map<String, dynamic> toJson() {
-    return _$$WeatherConditionResponseImplToJson(
+    return _$$WeatherResponseImplToJson(
       this,
     );
   }
 }
 
-abstract class _WeatherConditionResponse implements WeatherResponse {
-  const factory _WeatherConditionResponse(
+abstract class _WeatherResponse implements WeatherResponse {
+  const factory _WeatherResponse(
       {required final WeatherCondition? weatherCondition,
       required final int? maxTemperature,
-      required final int? minTemperature}) = _$WeatherConditionResponseImpl;
+      required final int? minTemperature}) = _$WeatherResponseImpl;
 
-  factory _WeatherConditionResponse.fromJson(Map<String, dynamic> json) =
-      _$WeatherConditionResponseImpl.fromJson;
+  factory _WeatherResponse.fromJson(Map<String, dynamic> json) =
+      _$WeatherResponseImpl.fromJson;
 
   @override
   WeatherCondition? get weatherCondition;
@@ -210,6 +208,6 @@ abstract class _WeatherConditionResponse implements WeatherResponse {
   /// with the given fields replaced by the non-null parameter values.
   @override
   @JsonKey(includeFromJson: false, includeToJson: false)
-  _$$WeatherConditionResponseImplCopyWith<_$WeatherConditionResponseImpl>
-      get copyWith => throw _privateConstructorUsedError;
+  _$$WeatherResponseImplCopyWith<_$WeatherResponseImpl> get copyWith =>
+      throw _privateConstructorUsedError;
 }
