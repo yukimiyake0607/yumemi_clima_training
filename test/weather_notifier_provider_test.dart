@@ -1,3 +1,4 @@
+import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:flutter_training/data/provider/weather_notifier_provider.dart';
@@ -100,7 +101,7 @@ void main() {
     );
   });
 
-  // エラー1パターン
+  // エラー1パターン:YumemiWeatherError.unknown
   test(
     '''
     When YumemiWeatherError.unknown is returned,
@@ -111,7 +112,7 @@ void main() {
       final mockWeatherUsecase = MockWeatherUsecase();
       final request =
           WeatherRequest(area: 'tokyo', date: DateTime(2024, 10, 4));
-      const nullResponse = WeatherConditionResponse(
+      const defaultResponse = WeatherConditionResponse(
         weatherCondition: null,
         maxTemperature: null,
         minTemperature: null,
@@ -135,12 +136,12 @@ void main() {
       );
 
       // この時点でListenerのデフォルト値が呼び出されているはず
-      verify(listener(null, const AsyncValue.data(nullResponse))).called(1);
+      verify(listener(null, const AsyncValue.data(defaultResponse))).called(1);
       verifyNoMoreInteractions(listener);
 
       expect(
         container.read(weatherNotifierProvider),
-        const AsyncValue.data(nullResponse),
+        const AsyncValue.data(defaultResponse),
       );
 
       // Act：getWeatherを実行
