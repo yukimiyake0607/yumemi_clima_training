@@ -1,4 +1,3 @@
-import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:flutter_training/data/provider/weather_notifier_provider.dart';
@@ -35,18 +34,18 @@ void main() {
           area: 'tokyo',
           date: DateTime(2024, 10, 4),
         );
-        const response = WeatherConditionResponse(
+        const response = WeatherResponse(
           weatherCondition: WeatherCondition.cloudy,
           maxTemperature: 30,
           minTemperature: 20,
         );
         // getWeatherの返り値を固定
         when(mockWeatherUsecase.getWeather(request)).thenAnswer(
-          (_) async => const Result<WeatherConditionResponse,
+          (_) async => const Result<WeatherResponse,
               YumemiWeatherError>.success(response),
         );
 
-        final listener = Listener<AsyncValue<WeatherConditionResponse>>();
+        final listener = Listener<AsyncValue<WeatherResponse>>();
         container.listen(
           weatherNotifierProvider,
           listener.call,
@@ -58,7 +57,7 @@ void main() {
           listener(
             null,
             const AsyncValue.data(
-              WeatherConditionResponse(
+              WeatherResponse(
                 weatherCondition: null,
                 maxTemperature: null,
                 minTemperature: null,
@@ -70,10 +69,10 @@ void main() {
 
         // weatherNotifierProviderの初期値を取得(nullであるかの確認)
         final initialState = container.read(weatherNotifierProvider);
-        expect(initialState, isA<AsyncData<WeatherConditionResponse>>());
+        expect(initialState, isA<AsyncData<WeatherResponse>>());
         expect(
           initialState.value,
-          const WeatherConditionResponse(
+          const WeatherResponse(
             weatherCondition: null,
             maxTemperature: null,
             minTemperature: null,
@@ -87,12 +86,12 @@ void main() {
 
         // Assert
         verifyInOrder([
-          listener(any, argThat(isA<AsyncLoading<WeatherConditionResponse>>())),
-          listener(any, argThat(isA<AsyncData<WeatherConditionResponse>>())),
+          listener(any, argThat(isA<AsyncLoading<WeatherResponse>>())),
+          listener(any, argThat(isA<AsyncData<WeatherResponse>>())),
         ]);
 
         final finalState = container.read(weatherNotifierProvider);
-        expect(finalState, isA<AsyncValue<WeatherConditionResponse>>());
+        expect(finalState, isA<AsyncValue<WeatherResponse>>());
         expect(finalState.value, response);
 
         verify(mockWeatherUsecase.getWeather(request)).called(1);
@@ -112,14 +111,14 @@ void main() {
       final mockWeatherUsecase = MockWeatherUsecase();
       final request =
           WeatherRequest(area: 'tokyo', date: DateTime(2024, 10, 4));
-      const defaultResponse = WeatherConditionResponse(
+      const defaultResponse = WeatherResponse(
         weatherCondition: null,
         maxTemperature: null,
         minTemperature: null,
       );
       when(mockWeatherUsecase.getWeather(request)).thenAnswer(
         (_) async =>
-            const Result<WeatherConditionResponse, YumemiWeatherError>.failure(
+            const Result<WeatherResponse, YumemiWeatherError>.failure(
           YumemiWeatherError.unknown,
         ),
       );
@@ -128,7 +127,7 @@ void main() {
           weatherUsecaseProvider.overrideWithValue(mockWeatherUsecase),
         ],
       );
-      final listener = Listener<AsyncValue<WeatherConditionResponse>>();
+      final listener = Listener<AsyncValue<WeatherResponse>>();
       container.listen(
         weatherNotifierProvider,
         listener.call,
@@ -153,12 +152,12 @@ void main() {
       final finalState = container.read(weatherNotifierProvider);
       expect(
         finalState,
-        isA<AsyncError<WeatherConditionResponse>>(),
+        isA<AsyncError<WeatherResponse>>(),
       );
       expect(finalState.error, YumemiWeatherError.unknown);
       verifyInOrder([
-        listener(any, argThat(isA<AsyncLoading<WeatherConditionResponse>>())),
-        listener(any, argThat(isA<AsyncError<WeatherConditionResponse>>())),
+        listener(any, argThat(isA<AsyncLoading<WeatherResponse>>())),
+        listener(any, argThat(isA<AsyncError<WeatherResponse>>())),
       ]);
       verifyNoMoreInteractions(listener);
     },
@@ -178,7 +177,7 @@ void main() {
         area: 'tokyo',
         date: DateTime(2024, 10, 4),
       );
-      const defaultResponse = WeatherConditionResponse(
+      const defaultResponse = WeatherResponse(
         weatherCondition: null,
         maxTemperature: null,
         minTemperature: null,
@@ -188,7 +187,7 @@ void main() {
       );
 
       // stateが変化するたびListenerを実行
-      final listener = Listener<AsyncValue<WeatherConditionResponse>>();
+      final listener = Listener<AsyncValue<WeatherResponse>>();
 
       // providerを監視できるようにProviderContainerを設定
       final container = ProviderContainer(
@@ -222,17 +221,17 @@ void main() {
 
       // Assert
       verify(
-        listener(any, argThat(isA<AsyncLoading<WeatherConditionResponse>>())),
+        listener(any, argThat(isA<AsyncLoading<WeatherResponse>>())),
       ).called(1);
       verify(
-        listener(any, argThat(isA<AsyncError<WeatherConditionResponse>>())),
+        listener(any, argThat(isA<AsyncError<WeatherResponse>>())),
       ).called(1);
       final finalState = container.read(weatherNotifierProvider);
 
       // AsyncErrorが獲得できているかチェック
       expect(
         finalState,
-        isA<AsyncError<WeatherConditionResponse>>(),
+        isA<AsyncError<WeatherResponse>>(),
       );
       expect(finalState.error, YumemiWeatherError.invalidParameter);
       verifyNoMoreInteractions(listener);

@@ -27,7 +27,7 @@ import 'package:mockito/src/dummies.dart' as _i6;
 // ignore_for_file: subtype_of_sealed_class
 
 class _FakeWeatherConditionResponse_0 extends _i1.SmartFake
-    implements _i2.WeatherConditionResponse {
+    implements _i2.WeatherResponse {
   _FakeWeatherConditionResponse_0(
     Object parent,
     Invocation parentInvocation,
@@ -42,14 +42,14 @@ class _FakeWeatherConditionResponse_0 extends _i1.SmartFake
 /// See the documentation for Mockito's code generation for more information.
 class MockWeatherRepository extends _i1.Mock implements _i3.WeatherRepository {
   @override
-  _i4.Future<_i2.WeatherConditionResponse> getWeather(
+  _i4.Future<_i2.WeatherResponse> getWeather(
           _i5.WeatherRequest? weatherRequest) =>
       (super.noSuchMethod(
         Invocation.method(
           #getWeather,
           [weatherRequest],
         ),
-        returnValue: _i4.Future<_i2.WeatherConditionResponse>.value(
+        returnValue: _i4.Future<_i2.WeatherResponse>.value(
             _FakeWeatherConditionResponse_0(
           this,
           Invocation.method(
@@ -58,7 +58,7 @@ class MockWeatherRepository extends _i1.Mock implements _i3.WeatherRepository {
           ),
         )),
         returnValueForMissingStub:
-            _i4.Future<_i2.WeatherConditionResponse>.value(
+            _i4.Future<_i2.WeatherResponse>.value(
                 _FakeWeatherConditionResponse_0(
           this,
           Invocation.method(
@@ -66,7 +66,7 @@ class MockWeatherRepository extends _i1.Mock implements _i3.WeatherRepository {
             [weatherRequest],
           ),
         )),
-      ) as _i4.Future<_i2.WeatherConditionResponse>);
+      ) as _i4.Future<_i2.WeatherResponse>);
 
   @override
   String toJsonString(_i5.WeatherRequest? weatherRequest) =>
