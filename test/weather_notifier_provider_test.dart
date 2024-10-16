@@ -162,5 +162,79 @@ void main() {
       verifyNoMoreInteractions(listener);
     },
   );
-  // エラー2パターン
+
+  // エラー2パターン:YumemiWeatherError.invalidParameter
+  test(
+    '''
+    When YumemiWeatherError.invalidParameter is returned,
+    state changes to AsyncError containing it
+    ''',
+    () async {
+      // Arrange
+      // mockWeatherUsecase.getWeatherが実行できるように設定
+      final mockWeatherUsecase = MockWeatherUsecase();
+      final request = WeatherRequest(
+        area: 'tokyo',
+        date: DateTime(2024, 10, 4),
+      );
+      const defaultResponse = WeatherConditionResponse(
+        weatherCondition: null,
+        maxTemperature: null,
+        minTemperature: null,
+      );
+      when(mockWeatherUsecase.getWeather(request)).thenAnswer(
+        (_) async => const Result.failure(YumemiWeatherError.invalidParameter),
+      );
+
+      // stateが変化するたびListenerを実行
+      final listener = Listener<AsyncValue<WeatherConditionResponse>>();
+
+      // providerを監視できるようにProviderContainerを設定
+      final container = ProviderContainer(
+        overrides: [
+          weatherUsecaseProvider.overrideWithValue(mockWeatherUsecase),
+        ],
+      );
+      container.listen(
+        weatherNotifierProvider,
+        listener.call,
+        fireImmediately: true,
+      );
+
+      // この時点でListenerのデフォルト値が呼び出されているはず
+      verify(
+        listener(
+          null,
+          const AsyncData(defaultResponse),
+        ),
+      ).called(1);
+      verifyNoMoreInteractions(listener);
+      expect(
+        container.read(weatherNotifierProvider),
+        const AsyncData(defaultResponse),
+      );
+
+      // Act：weatherNotifierProvider.getWeatherを実行
+      await container
+          .read(weatherNotifierProvider.notifier)
+          .getWeather(request);
+
+      // Assert
+      verify(
+        listener(any, argThat(isA<AsyncLoading<WeatherConditionResponse>>())),
+      ).called(1);
+      verify(
+        listener(any, argThat(isA<AsyncError<WeatherConditionResponse>>())),
+      ).called(1);
+      final finalState = container.read(weatherNotifierProvider);
+
+      // AsyncErrorが獲得できているかチェック
+      expect(
+        finalState,
+        isA<AsyncError<WeatherConditionResponse>>(),
+      );
+      expect(finalState.error, YumemiWeatherError.invalidParameter);
+      verifyNoMoreInteractions(listener);
+    },
+  );
 }
