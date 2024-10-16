@@ -14,79 +14,77 @@ T _$identity<T>(T value) => value;
 final _privateConstructorUsedError = UnsupportedError(
     'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#adding-getters-and-methods-to-our-models');
 
-WeatherConditionResponse _$WeatherConditionResponseFromJson(
-    Map<String, dynamic> json) {
+WeatherResponse _$WeatherResponseFromJson(Map<String, dynamic> json) {
   return _WeatherConditionResponse.fromJson(json);
 }
 
 /// @nodoc
-mixin _$WeatherConditionResponse {
-  WeatherCondition get weatherCondition => throw _privateConstructorUsedError;
-  int get maxTemperature => throw _privateConstructorUsedError;
-  int get minTemperature => throw _privateConstructorUsedError;
+mixin _$WeatherResponse {
+  WeatherCondition? get weatherCondition => throw _privateConstructorUsedError;
+  int? get maxTemperature => throw _privateConstructorUsedError;
+  int? get minTemperature => throw _privateConstructorUsedError;
 
-  /// Serializes this WeatherConditionResponse to a JSON map.
+  /// Serializes this WeatherResponse to a JSON map.
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
 
-  /// Create a copy of WeatherConditionResponse
+  /// Create a copy of WeatherResponse
   /// with the given fields replaced by the non-null parameter values.
   @JsonKey(includeFromJson: false, includeToJson: false)
-  $WeatherConditionResponseCopyWith<WeatherConditionResponse> get copyWith =>
+  $WeatherResponseCopyWith<WeatherResponse> get copyWith =>
       throw _privateConstructorUsedError;
 }
 
 /// @nodoc
-abstract class $WeatherConditionResponseCopyWith<$Res> {
-  factory $WeatherConditionResponseCopyWith(WeatherConditionResponse value,
-          $Res Function(WeatherConditionResponse) then) =
-      _$WeatherConditionResponseCopyWithImpl<$Res, WeatherConditionResponse>;
+abstract class $WeatherResponseCopyWith<$Res> {
+  factory $WeatherResponseCopyWith(
+          WeatherResponse value, $Res Function(WeatherResponse) then) =
+      _$WeatherResponseCopyWithImpl<$Res, WeatherResponse>;
   @useResult
   $Res call(
-      {WeatherCondition weatherCondition,
-      int maxTemperature,
-      int minTemperature});
+      {WeatherCondition? weatherCondition,
+      int? maxTemperature,
+      int? minTemperature});
 }
 
 /// @nodoc
-class _$WeatherConditionResponseCopyWithImpl<$Res,
-        $Val extends WeatherConditionResponse>
-    implements $WeatherConditionResponseCopyWith<$Res> {
-  _$WeatherConditionResponseCopyWithImpl(this._value, this._then);
+class _$WeatherResponseCopyWithImpl<$Res, $Val extends WeatherResponse>
+    implements $WeatherResponseCopyWith<$Res> {
+  _$WeatherResponseCopyWithImpl(this._value, this._then);
 
   // ignore: unused_field
   final $Val _value;
   // ignore: unused_field
   final $Res Function($Val) _then;
 
-  /// Create a copy of WeatherConditionResponse
+  /// Create a copy of WeatherResponse
   /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? weatherCondition = null,
-    Object? maxTemperature = null,
-    Object? minTemperature = null,
+    Object? weatherCondition = freezed,
+    Object? maxTemperature = freezed,
+    Object? minTemperature = freezed,
   }) {
     return _then(_value.copyWith(
-      weatherCondition: null == weatherCondition
+      weatherCondition: freezed == weatherCondition
           ? _value.weatherCondition
           : weatherCondition // ignore: cast_nullable_to_non_nullable
-              as WeatherCondition,
-      maxTemperature: null == maxTemperature
+              as WeatherCondition?,
+      maxTemperature: freezed == maxTemperature
           ? _value.maxTemperature
           : maxTemperature // ignore: cast_nullable_to_non_nullable
-              as int,
-      minTemperature: null == minTemperature
+              as int?,
+      minTemperature: freezed == minTemperature
           ? _value.minTemperature
           : minTemperature // ignore: cast_nullable_to_non_nullable
-              as int,
+              as int?,
     ) as $Val);
   }
 }
 
 /// @nodoc
 abstract class _$$WeatherConditionResponseImplCopyWith<$Res>
-    implements $WeatherConditionResponseCopyWith<$Res> {
+    implements $WeatherResponseCopyWith<$Res> {
   factory _$$WeatherConditionResponseImplCopyWith(
           _$WeatherConditionResponseImpl value,
           $Res Function(_$WeatherConditionResponseImpl) then) =
@@ -94,43 +92,42 @@ abstract class _$$WeatherConditionResponseImplCopyWith<$Res>
   @override
   @useResult
   $Res call(
-      {WeatherCondition weatherCondition,
-      int maxTemperature,
-      int minTemperature});
+      {WeatherCondition? weatherCondition,
+      int? maxTemperature,
+      int? minTemperature});
 }
 
 /// @nodoc
 class __$$WeatherConditionResponseImplCopyWithImpl<$Res>
-    extends _$WeatherConditionResponseCopyWithImpl<$Res,
-        _$WeatherConditionResponseImpl>
+    extends _$WeatherResponseCopyWithImpl<$Res, _$WeatherConditionResponseImpl>
     implements _$$WeatherConditionResponseImplCopyWith<$Res> {
   __$$WeatherConditionResponseImplCopyWithImpl(
       _$WeatherConditionResponseImpl _value,
       $Res Function(_$WeatherConditionResponseImpl) _then)
       : super(_value, _then);
 
-  /// Create a copy of WeatherConditionResponse
+  /// Create a copy of WeatherResponse
   /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? weatherCondition = null,
-    Object? maxTemperature = null,
-    Object? minTemperature = null,
+    Object? weatherCondition = freezed,
+    Object? maxTemperature = freezed,
+    Object? minTemperature = freezed,
   }) {
     return _then(_$WeatherConditionResponseImpl(
-      weatherCondition: null == weatherCondition
+      weatherCondition: freezed == weatherCondition
           ? _value.weatherCondition
           : weatherCondition // ignore: cast_nullable_to_non_nullable
-              as WeatherCondition,
-      maxTemperature: null == maxTemperature
+              as WeatherCondition?,
+      maxTemperature: freezed == maxTemperature
           ? _value.maxTemperature
           : maxTemperature // ignore: cast_nullable_to_non_nullable
-              as int,
-      minTemperature: null == minTemperature
+              as int?,
+      minTemperature: freezed == minTemperature
           ? _value.minTemperature
           : minTemperature // ignore: cast_nullable_to_non_nullable
-              as int,
+              as int?,
     ));
   }
 }
@@ -147,15 +144,15 @@ class _$WeatherConditionResponseImpl implements _WeatherConditionResponse {
       _$$WeatherConditionResponseImplFromJson(json);
 
   @override
-  final WeatherCondition weatherCondition;
+  final WeatherCondition? weatherCondition;
   @override
-  final int maxTemperature;
+  final int? maxTemperature;
   @override
-  final int minTemperature;
+  final int? minTemperature;
 
   @override
   String toString() {
-    return 'WeatherConditionResponse(weatherCondition: $weatherCondition, maxTemperature: $maxTemperature, minTemperature: $minTemperature)';
+    return 'WeatherResponse(weatherCondition: $weatherCondition, maxTemperature: $maxTemperature, minTemperature: $minTemperature)';
   }
 
   @override
@@ -176,7 +173,7 @@ class _$WeatherConditionResponseImpl implements _WeatherConditionResponse {
   int get hashCode => Object.hash(
       runtimeType, weatherCondition, maxTemperature, minTemperature);
 
-  /// Create a copy of WeatherConditionResponse
+  /// Create a copy of WeatherResponse
   /// with the given fields replaced by the non-null parameter values.
   @JsonKey(includeFromJson: false, includeToJson: false)
   @override
@@ -193,23 +190,23 @@ class _$WeatherConditionResponseImpl implements _WeatherConditionResponse {
   }
 }
 
-abstract class _WeatherConditionResponse implements WeatherConditionResponse {
+abstract class _WeatherConditionResponse implements WeatherResponse {
   const factory _WeatherConditionResponse(
-      {required final WeatherCondition weatherCondition,
-      required final int maxTemperature,
-      required final int minTemperature}) = _$WeatherConditionResponseImpl;
+      {required final WeatherCondition? weatherCondition,
+      required final int? maxTemperature,
+      required final int? minTemperature}) = _$WeatherConditionResponseImpl;
 
   factory _WeatherConditionResponse.fromJson(Map<String, dynamic> json) =
       _$WeatherConditionResponseImpl.fromJson;
 
   @override
-  WeatherCondition get weatherCondition;
+  WeatherCondition? get weatherCondition;
   @override
-  int get maxTemperature;
+  int? get maxTemperature;
   @override
-  int get minTemperature;
+  int? get minTemperature;
 
-  /// Create a copy of WeatherConditionResponse
+  /// Create a copy of WeatherResponse
   /// with the given fields replaced by the non-null parameter values.
   @override
   @JsonKey(includeFromJson: false, includeToJson: false)

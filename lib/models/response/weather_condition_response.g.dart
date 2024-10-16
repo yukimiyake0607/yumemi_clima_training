@@ -16,11 +16,11 @@ _$WeatherConditionResponseImpl _$$WeatherConditionResponseImplFromJson(
       ($checkedConvert) {
         final val = _$WeatherConditionResponseImpl(
           weatherCondition: $checkedConvert('weather_condition',
-              (v) => $enumDecode(_$WeatherConditionEnumMap, v)),
+              (v) => $enumDecodeNullable(_$WeatherConditionEnumMap, v)),
           maxTemperature:
-              $checkedConvert('max_temperature', (v) => (v as num).toInt()),
+              $checkedConvert('max_temperature', (v) => (v as num?)?.toInt()),
           minTemperature:
-              $checkedConvert('min_temperature', (v) => (v as num).toInt()),
+              $checkedConvert('min_temperature', (v) => (v as num?)?.toInt()),
         );
         return val;
       },
@@ -34,8 +34,7 @@ _$WeatherConditionResponseImpl _$$WeatherConditionResponseImplFromJson(
 Map<String, dynamic> _$$WeatherConditionResponseImplToJson(
         _$WeatherConditionResponseImpl instance) =>
     <String, dynamic>{
-      'weather_condition':
-          _$WeatherConditionEnumMap[instance.weatherCondition]!,
+      'weather_condition': _$WeatherConditionEnumMap[instance.weatherCondition],
       'max_temperature': instance.maxTemperature,
       'min_temperature': instance.minTemperature,
     };
