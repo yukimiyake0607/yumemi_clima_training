@@ -1,6 +1,6 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
-part 'weather_condition_request.freezed.dart';
-part 'weather_condition_request.g.dart';
+part 'weather_request.freezed.dart';
+part 'weather_request.g.dart';
 
 @freezed
 class WeatherRequest with _$WeatherRequest {

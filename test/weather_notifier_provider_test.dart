@@ -2,7 +2,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:flutter_training/data/provider/weather_notifier_provider.dart';
 import 'package:flutter_training/data/usecase/weather_usecase.dart';
-import 'package:flutter_training/models/response/weather_condition_response.dart';
+import 'package:flutter_training/models/response/weather_response.dart';
 import 'package:flutter_training/models/result/result.dart';
 import 'package:flutter_training/models/weather_condition.dart';
 import 'package:flutter_training/models/weather_request.dart';
