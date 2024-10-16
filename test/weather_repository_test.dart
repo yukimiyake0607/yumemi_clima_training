@@ -27,8 +27,9 @@ void main() {
 
     test('toMap is decoded correctly', () {
       // Arrange
-      const weatherDataOfJson =
-          '{"weather_condition":"cloudy","max_temperature":25,"min_temperature":7,"date":"2020-04-01T12:00:00+09:00"}';
+      const weatherDataOfJson = '''
+          {"weather_condition":"cloudy","max_temperature":25,"min_temperature":7,"date":"2020-04-01T12:00:00+09:00"}
+          ''';
       final mockYumemiWeather = MockYumemiWeather();
       final weatherRepository = WeatherRepository(mockYumemiWeather);
 
@@ -58,7 +59,7 @@ void main() {
     });
 
     test(
-        'When YumemiWeatherError.unknown is thrown, getWeather throws YumemiWeatherError.unknown',
+        '''When YumemiWeatherError.unknown is thrown, getWeather throws YumemiWeatherError.unknown''',
         () {
       // Arrange
       final mockYumemiWeather = MockYumemiWeather();
@@ -80,7 +81,7 @@ void main() {
     });
 
     test(
-      'When YumemiWeatherError.invalidParameter is thrown, getWeather throws YumemiWeatherError.invalidParameter',
+      '''When YumemiWeatherError.invalidParameter is thrown, getWeather throws YumemiWeatherError.invalidParameter''',
       () {
         // Arrange
         final mockYumemiWeather = MockYumemiWeather();
@@ -111,7 +112,7 @@ void main() {
           date: DateTime(2024, 10, 4),
         );
         const preparedWeatherData =
-            '{"weather_condition":"cloudy","max_temperature":25,"min_temperature":7}';
+            '''{"weather_condition":"cloudy","max_temperature":25,"min_temperature":7}''';
 
         // Act
         when(mockYumemiWeather.fetchWeather(any))
