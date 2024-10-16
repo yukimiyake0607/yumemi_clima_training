@@ -26,9 +26,9 @@ import 'package:mockito/src/dummies.dart' as _i6;
 // ignore_for_file: camel_case_types
 // ignore_for_file: subtype_of_sealed_class
 
-class _FakeWeatherConditionResponse_0 extends _i1.SmartFake
+class _FakeWeatherResponse_0 extends _i1.SmartFake
     implements _i2.WeatherResponse {
-  _FakeWeatherConditionResponse_0(
+  _FakeWeatherResponse_0(
     Object parent,
     Invocation parentInvocation,
   ) : super(
@@ -49,8 +49,8 @@ class MockWeatherRepository extends _i1.Mock implements _i3.WeatherRepository {
           #getWeather,
           [weatherRequest],
         ),
-        returnValue: _i4.Future<_i2.WeatherResponse>.value(
-            _FakeWeatherConditionResponse_0(
+        returnValue:
+            _i4.Future<_i2.WeatherResponse>.value(_FakeWeatherResponse_0(
           this,
           Invocation.method(
             #getWeather,
@@ -58,8 +58,7 @@ class MockWeatherRepository extends _i1.Mock implements _i3.WeatherRepository {
           ),
         )),
         returnValueForMissingStub:
-            _i4.Future<_i2.WeatherResponse>.value(
-                _FakeWeatherConditionResponse_0(
+            _i4.Future<_i2.WeatherResponse>.value(_FakeWeatherResponse_0(
           this,
           Invocation.method(
             #getWeather,

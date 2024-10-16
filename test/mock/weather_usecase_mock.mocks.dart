@@ -68,8 +68,7 @@ class MockWeatherUsecase extends _i1.Mock implements _i4.WeatherUsecase {
 
   @override
   _i5.Future<
-      _i3
-      .Result<_i6.WeatherResponse, _i7.YumemiWeatherError>> getWeather(
+      _i3.Result<_i6.WeatherResponse, _i7.YumemiWeatherError>> getWeather(
           _i8.WeatherRequest? request) =>
       (super.noSuchMethod(
         Invocation.method(
@@ -77,8 +76,7 @@ class MockWeatherUsecase extends _i1.Mock implements _i4.WeatherUsecase {
           [request],
         ),
         returnValue: _i5.Future<
-                _i3.Result<_i6.WeatherResponse,
-                    _i7.YumemiWeatherError>>.value(
+                _i3.Result<_i6.WeatherResponse, _i7.YumemiWeatherError>>.value(
             _FakeResult_1<_i6.WeatherResponse, _i7.YumemiWeatherError>(
           this,
           Invocation.method(
@@ -87,8 +85,7 @@ class MockWeatherUsecase extends _i1.Mock implements _i4.WeatherUsecase {
           ),
         )),
         returnValueForMissingStub: _i5.Future<
-                _i3.Result<_i6.WeatherResponse,
-                    _i7.YumemiWeatherError>>.value(
+                _i3.Result<_i6.WeatherResponse, _i7.YumemiWeatherError>>.value(
             _FakeResult_1<_i6.WeatherResponse, _i7.YumemiWeatherError>(
           this,
           Invocation.method(
@@ -96,6 +93,5 @@ class MockWeatherUsecase extends _i1.Mock implements _i4.WeatherUsecase {
             [request],
           ),
         )),
-      ) as _i5.Future<
-          _i3.Result<_i6.WeatherResponse, _i7.YumemiWeatherError>>);
+      ) as _i5.Future<_i3.Result<_i6.WeatherResponse, _i7.YumemiWeatherError>>);
 }
