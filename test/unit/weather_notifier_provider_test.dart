@@ -197,13 +197,13 @@ void main() {
         );
 
         when(mockWeatherUsecase.getWeather(request)).thenAnswer(
-          (_) async => Result<WeatherResponse, CustomWeatherError>.failure(
+          (_) async => Result<WeatherResponse, Exception>.failure(
             expectedError,
             stackTrace,
           ),
         );
 
-        // Act
+        // Act：getWeatherを実行
         await container
             .read(weatherNotifierProvider.notifier)
             .getWeather(request);
@@ -215,7 +215,6 @@ void main() {
         final actualError = finalState.error! as CustomWeatherError;
         expect(actualError.error, equals(YumemiWeatherError.unknown));
         expect(actualError.stackTrace, equals(stackTrace));
-
         verifyInOrder([
           listener(any, argThat(isA<AsyncLoading<WeatherResponse>>())),
           listener(any, argThat(isA<AsyncError<WeatherResponse>>())),
@@ -236,7 +235,7 @@ void main() {
         );
 
         when(mockWeatherUsecase.getWeather(request)).thenAnswer(
-          (_) async => Result<WeatherResponse, CustomWeatherError>.failure(
+          (_) async => Result<WeatherResponse, Exception>.failure(
             expectedError,
             stackTrace,
           ),
