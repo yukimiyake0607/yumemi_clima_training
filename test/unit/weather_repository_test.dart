@@ -1,11 +1,10 @@
 import 'package:flutter_test/flutter_test.dart';
 import 'package:flutter_training/data/repository/weather_repository.dart';
-import 'package:flutter_training/models/error/custom_weather_error.dart';
-import 'package:flutter_training/models/weather/weather_condition.dart';
-import 'package:flutter_training/models/weather/weather_request.dart';
+import 'package:flutter_training/models/weather_condition.dart';
+import 'package:flutter_training/models/weather_request.dart';
 import 'package:mockito/mockito.dart';
 import 'package:yumemi_weather/yumemi_weather.dart';
-import '../mock/yumemi_weather_mock.mocks.dart';
+import '../mock/mock.mocks.dart';
 
 void main() {
   group('WeatherRepository tests group', () {
@@ -81,7 +80,7 @@ void main() {
         // Assert
         expect(
           () async => weatherRepository.getWeather(weatherRequest),
-          throwsA(isA<CustomWeatherError>()),
+          throwsA(isA<YumemiWeatherError>()),
         );
       },
     );
