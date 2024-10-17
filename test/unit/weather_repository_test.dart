@@ -159,6 +159,55 @@ void main() {
     },
   );
 
+  test('getWeather accurately returns weather data', () async {
+    // Arrange
+    final mockYumemiWeather = MockYumemiWeather();
+    final weatherRepository = WeatherRepository(mockYumemiWeather);
+    final weatherRequest = WeatherRequest(
+      area: 'tokyo',
+      date: DateTime(2024, 10, 4),
+    );
+
+    // Act
+    when(mockYumemiWeather.fetchWeather(any)).thenThrow(
+      CustomWeatherError(
+        YumemiWeatherError.unknown,
+        StackTrace.current,
+      ),
+    );
+
+    // Assert
+    expect(
+      () async => weatherRepository.getWeather(weatherRequest),
+      throwsA(isA<CustomWeatherError>()),
+    );
+  });
+
+  test(
+    '''When YumemiWeatherError.invalidParameter is thrown, getWeather throws YumemiWeatherError.invalidParameter''',
+    () {
+      // Arrange
+      final mockYumemiWeather = MockYumemiWeather();
+      final weatherRepository = WeatherRepository(mockYumemiWeather);
+      final weatherRequest =
+          WeatherRequest(area: 'tokyo', date: DateTime(2024, 10, 4));
+
+      // Act
+      when(mockYumemiWeather.fetchWeather(any)).thenThrow(
+        CustomWeatherError(
+          YumemiWeatherError.invalidParameter,
+          StackTrace.current,
+        ),
+      );
+
+      // Assert
+      expect(
+        () async => weatherRepository.getWeather(weatherRequest),
+        throwsA(isA<CustomWeatherError>()),
+      );
+    },
+  );
+
   test(
     'getWeather accurately returns weather data',
     () async {
