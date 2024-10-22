@@ -15,48 +15,50 @@ import '../mock/weather_usecase_mock.mocks.dart';
 final mockWeatherUsecase = MockWeatherUsecase();
 
 void main() {
-  testWidgets('Display a sunny image', (tester) async {
-    // Arrange
-    const weatherResponse = WeatherResponse(
-      weatherCondition: WeatherCondition.sunny,
-      maxTemperature: 20,
-      minTemperature: 30,
-    );
+  group('description', () {
+    testWidgets('Display a sunny image', (tester) async {
+      // Arrange
+      const weatherResponse = WeatherResponse(
+        weatherCondition: WeatherCondition.sunny,
+        maxTemperature: 20,
+        minTemperature: 30,
+      );
 
-    // weatherUsecaseProviderが呼び出された場合の挙動を設定
-    when(mockWeatherUsecase.getWeather(any)).thenAnswer(
-      (_) async => const Result<WeatherResponse, YumemiWeatherError>.success(
-        weatherResponse,
-      ),
-    );
-
-    // HomeScreenのインスタンスを生成
-    await tester.pumpWidget(
-      ProviderScope(
-        overrides: [
-          weatherUsecaseProvider.overrideWithValue(mockWeatherUsecase),
-        ],
-        child: const MaterialApp(
-          home: HomeScreen(),
+      // weatherUsecaseProviderが呼び出された場合の挙動を設定
+      when(mockWeatherUsecase.getWeather(any)).thenAnswer(
+        (_) async => const Result<WeatherResponse, YumemiWeatherError>.success(
+          weatherResponse,
         ),
-      ),
-    );
+      );
 
-    // 初期状態を確認
-    expect(find.byType(Placeholder), findsOneWidget);
+      // HomeScreenのインスタンスを生成
+      await tester.pumpWidget(
+        ProviderScope(
+          overrides: [
+            weatherUsecaseProvider.overrideWithValue(mockWeatherUsecase),
+          ],
+          child: const MaterialApp(
+            home: HomeScreen(),
+          ),
+        ),
+      );
 
-    // Act
-    await tester.tap(find.widgetWithText(TextButton, 'Reload'));
+      // 初期状態を確認
+      expect(find.byType(Placeholder), findsOneWidget);
 
-    await tester.pump();
+      // Act
+      await tester.tap(find.widgetWithText(TextButton, 'Reload'));
 
-    // Assert
-    // 晴れの画像が表示されているかの確認
-    final svgPicture = tester.widget<SvgPicture>(find.byType(SvgPicture));
-    expect(svgPicture.bytesLoader, isA<SvgAssetLoader>());
-    expect(
-      (svgPicture.bytesLoader as SvgAssetLoader).assetName,
-      equals('assets/sunny.svg'),
-    );
+      await tester.pump();
+
+      // Assert
+      // 晴れの画像が表示されているかの確認
+      final svgPicture = tester.widget<SvgPicture>(find.byType(SvgPicture));
+      expect(svgPicture.bytesLoader, isA<SvgAssetLoader>());
+      expect(
+        (svgPicture.bytesLoader as SvgAssetLoader).assetName,
+        equals('assets/sunny.svg'),
+      );
+    });
   });
 }
