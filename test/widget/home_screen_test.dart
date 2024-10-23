@@ -105,4 +105,44 @@ void main() {
       expect(svgAsset.assetName, equals('assets/cloudy.svg'));
     });
   });
+
+  testWidgets('display a rainy image', (tester) async {
+    // Arrange
+    // テスト環境にウィジェットツリーを生成
+    await tester.pumpWidget(
+      ProviderScope(
+        overrides: [
+          weatherUsecaseProvider.overrideWithValue(mockWeatherUsecase),
+        ],
+        child: const MaterialApp(
+          home: HomeScreen(),
+        ),
+      ),
+    );
+
+    // ウィジェット内にPlaceholderが生成されているか
+    expect(find.byType(Placeholder), findsOneWidget);
+
+    // Reloadボタンを押した時の返り値を設定
+    const response = WeatherResponse(
+      weatherCondition: WeatherCondition.rainy,
+      maxTemperature: 30,
+      minTemperature: 20,
+    );
+    when(mockWeatherUsecase.getWeather(any))
+        .thenAnswer((_) async => const Result.success(response));
+
+    // Act
+    await tester.tap(find.widgetWithText(TextButton, 'Reload'));
+    await tester.pump();
+
+    // Assert
+    // SvgPictureを確認
+    expect(find.byType(SvgPicture), findsOneWidget);
+    // rainy.svgが表示されているか確認
+    final svgWidget = tester.widget<SvgPicture>(find.byType(SvgPicture));
+    expect(svgWidget.bytesLoader, isA<SvgAssetLoader>());
+    final svgAsset = svgWidget.bytesLoader as SvgAssetLoader;
+    expect(svgAsset.assetName, equals('assets/rainy.svg'));
+  });
 }
