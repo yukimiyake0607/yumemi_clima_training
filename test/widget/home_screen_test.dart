@@ -177,4 +177,34 @@ void main() {
     // 最高気温が表示されているか確認
     expect(find.text('30℃'), findsOneWidget);
   });
+
+  testWidgets('display a min temperature', (tester) async {
+    // Arrange
+    await tester.pumpWidget(
+      ProviderScope(
+        overrides: [
+          weatherUsecaseProvider.overrideWithValue(mockWeatherUsecase),
+        ],
+        child: const MaterialApp(
+          home: HomeScreen(),
+        ),
+      ),
+    );
+
+    // プロバイダーの返り値を設定
+    const response = WeatherResponse(
+      weatherCondition: WeatherCondition.sunny,
+      maxTemperature: 30,
+      minTemperature: 20,
+    );
+    when(mockWeatherUsecase.getWeather(any))
+        .thenAnswer((_) async => const Result.success(response));
+
+    // Act
+    await tester.tap(find.widgetWithText(TextButton, 'Reload'));
+    await tester.pump();
+
+    // Assert
+    expect(find.text('20℃'), findsOneWidget);
+  });
 }
