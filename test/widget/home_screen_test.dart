@@ -145,4 +145,36 @@ void main() {
     final svgAsset = svgWidget.bytesLoader as SvgAssetLoader;
     expect(svgAsset.assetName, equals('assets/rainy.svg'));
   });
+
+  testWidgets('display a max temperature', (tester) async {
+    // Arrange
+    // テスト環境にウィジェットツリー生成
+    await tester.pumpWidget(
+      ProviderScope(
+        overrides: [
+          weatherUsecaseProvider.overrideWithValue(mockWeatherUsecase),
+        ],
+        child: const MaterialApp(
+          home: HomeScreen(),
+        ),
+      ),
+    );
+
+    // プロバイダーの返り値を設定
+    const response = WeatherResponse(
+      weatherCondition: WeatherCondition.sunny,
+      maxTemperature: 30,
+      minTemperature: 20,
+    );
+    when(mockWeatherUsecase.getWeather(any))
+        .thenAnswer((_) async => const Result.success(response));
+
+    // Act
+    await tester.tap(find.widgetWithText(TextButton, 'Reload'));
+    await tester.pump();
+
+    // Assert
+    // 最高気温が表示されているか確認
+    expect(find.text('30℃'), findsOneWidget);
+  });
 }
