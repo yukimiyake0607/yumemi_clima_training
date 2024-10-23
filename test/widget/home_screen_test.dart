@@ -239,4 +239,38 @@ void main() {
       expect(find.text(YumemiWeatherError.unknown.message), findsOneWidget);
     },
   );
+
+  testWidgets(
+    'a display when YumemiWeatherError.invalidParameter is received',
+    (tester) async {
+      // Arrange
+      // テスト環境にウィジェットツリーを生成
+      await tester.pumpWidget(
+        ProviderScope(
+          overrides: [
+            weatherUsecaseProvider.overrideWithValue(mockWeatherUsecase),
+          ],
+          child: const MaterialApp(
+            home: HomeScreen(),
+          ),
+        ),
+      );
+
+      // プロバイダーの戻り値を設定
+      when(mockWeatherUsecase.getWeather(any)).thenAnswer(
+        (_) async => const Result.failure(YumemiWeatherError.invalidParameter),
+      );
+
+      // Act
+      await tester.tap(find.widgetWithText(TextButton, 'Reload'));
+      await tester.pump();
+
+      // Assert
+      expect(find.byType(AlertDialog), findsOneWidget);
+      expect(
+        find.text(YumemiWeatherError.invalidParameter.message),
+        findsOneWidget,
+      );
+    },
+  );
 }
