@@ -2,7 +2,7 @@
 
 // ignore_for_file: type=lint
 
-part of 'weather_condition_request.dart';
+part of 'weather_request.dart';
 
 // **************************************************************************
 // JsonSerializableGenerator
