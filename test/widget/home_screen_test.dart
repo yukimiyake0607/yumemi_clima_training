@@ -6,6 +6,7 @@ import 'package:flutter_training/data/usecase/weather_usecase.dart';
 import 'package:flutter_training/models/response/weather_response.dart';
 import 'package:flutter_training/models/result/result.dart';
 import 'package:flutter_training/models/weather_condition.dart';
+import 'package:flutter_training/ui/extensions/api_error_ext.dart';
 import 'package:flutter_training/ui/screens/home_screen.dart';
 import 'package:mockito/mockito.dart';
 import 'package:yumemi_weather/yumemi_weather.dart';
@@ -207,4 +208,35 @@ void main() {
     // Assert
     expect(find.text('20℃'), findsOneWidget);
   });
+
+  testWidgets(
+    'a display when YumemiWeatherError.unknown is received',
+    (tester) async {
+      // Arrange
+      // テスト環境にウィジェットツリーを生成
+      await tester.pumpWidget(
+        ProviderScope(
+          overrides: [
+            weatherUsecaseProvider.overrideWithValue(mockWeatherUsecase),
+          ],
+          child: const MaterialApp(
+            home: HomeScreen(),
+          ),
+        ),
+      );
+
+      // プロバイダーの戻り値をYumemiWeatherError.unknownに設定
+      when(mockWeatherUsecase.getWeather(any)).thenAnswer(
+        (_) async => const Result.failure(YumemiWeatherError.unknown),
+      );
+
+      // Act
+      await tester.tap(find.widgetWithText(TextButton, 'Reload'));
+      await tester.pump();
+
+      // Assert
+      expect(find.byType(AlertDialog), findsOneWidget);
+      expect(find.text(YumemiWeatherError.unknown.message), findsOneWidget);
+    },
+  );
 }
