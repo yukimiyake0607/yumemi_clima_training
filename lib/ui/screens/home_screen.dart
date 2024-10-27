@@ -41,7 +41,7 @@ class HomeScreen extends ConsumerWidget {
     return showDialog<void>(
       context: context,
       barrierDismissible: false,
-      builder: (context) => const Center(
+      builder: (_) => const Center(
         child: CircularProgressIndicator(),
       ),
     );
@@ -55,8 +55,8 @@ class HomeScreen extends ConsumerWidget {
       weatherNotifierProvider,
       (_, next) async {
         next.when(
-          data: (response) => Navigator.of(context).pop(),
-          error: (error, stackTrace) {
+          data: (_) => Navigator.of(context).pop(),
+          error: (error, _) {
             if (error is YumemiWeatherError) {
               _showErrorDialog(context, error.message);
             }
@@ -69,7 +69,7 @@ class HomeScreen extends ConsumerWidget {
       body: Center(
         child: weatherData.when(
           data: (weatherData) => WeatherWidget(data: weatherData),
-          error: (error, stackTrace) {
+          error: (error, _) {
             return weatherData.value != null
                 ? WeatherWidget(data: weatherData.value!)
                 : null;
