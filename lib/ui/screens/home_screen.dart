@@ -11,26 +11,28 @@ import 'package:yumemi_weather/yumemi_weather.dart';
 class HomeScreen extends ConsumerWidget {
   const HomeScreen({super.key});
 
-  Future<void> _showErrorDialog(
+  void _showErrorDialog(
     BuildContext context,
     String errorMessage,
-  ) async {
-    await showDialog<void>(
-      context: context,
-      barrierDismissible: false,
-      builder: (context) {
-        return AlertDialog(
-          title: Text(errorMessage),
-          actions: [
-            TextButton(
-              onPressed: () {
-                Navigator.of(context).pop();
-              },
-              child: const Text('OK'),
-            ),
-          ],
-        );
-      },
+  ) {
+    Navigator.of(context).pop();
+    unawaited(
+      showDialog<void>(
+        context: context,
+        barrierDismissible: false,
+        builder: (context) {
+          return AlertDialog(
+            title: Text(errorMessage),
+            actions: [
+              TextButton(
+                onPressed: () {
+                  Navigator.of(context).pop();
+                },
+                child: const Text('OK'),
+              ),
+            ],
+          );
+        },
     );
   }
 
