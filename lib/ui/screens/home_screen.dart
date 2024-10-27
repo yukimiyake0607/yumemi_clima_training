@@ -33,6 +33,17 @@ class HomeScreen extends ConsumerWidget {
             ],
           );
         },
+      ),
+    );
+  }
+
+  Future<void> _showLoadingDialog(BuildContext context) {
+    return showDialog<void>(
+      context: context,
+      barrierDismissible: false,
+      builder: (context) => const Center(
+        child: CircularProgressIndicator(),
+      ),
     );
   }
 
@@ -43,12 +54,14 @@ class HomeScreen extends ConsumerWidget {
     ref.listen<AsyncValue<WeatherResponse>>(
       weatherNotifierProvider,
       (_, next) async {
-        next.whenOrNull(
+        next.when(
+          data: (response) => Navigator.of(context).pop(),
           error: (error, stackTrace) {
             if (error is YumemiWeatherError) {
               _showErrorDialog(context, error.message);
             }
           },
+          loading: () => _showLoadingDialog(context),
         );
       },
     );
@@ -61,7 +74,11 @@ class HomeScreen extends ConsumerWidget {
                 ? WeatherWidget(data: weatherData.value!)
                 : null;
           },
-          loading: () => const CircularProgressIndicator(),
+          loading: () {
+            return weatherData.value != null
+                ? WeatherWidget(data: weatherData.value!)
+                : null;
+          },
         ),
       ),
     );
