@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:flutter/foundation.dart';
 import 'package:flutter_training/models/response/weather_response.dart';
 import 'package:flutter_training/models/weather_request.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
@@ -20,7 +21,8 @@ class WeatherRepository {
     WeatherRequest weatherRequest,
   ) async {
     final request = toJsonString(weatherRequest);
-    final weatherDataOfJson = _yumemiWeather.fetchWeather(request);
+    final weatherDataOfJson =
+        await compute(_yumemiWeather.syncFetchWeather, request);
     final response = toMap(weatherDataOfJson);
     final weatherData = WeatherResponse.fromJson(response);
     return weatherData;
