@@ -70,7 +70,7 @@ void main() {
       );
 
       // Act
-      when(mockYumemiWeather.fetchWeather(any))
+      when(mockYumemiWeather.syncFetchWeather(any))
           .thenThrow(YumemiWeatherError.unknown);
 
       // Assert
@@ -90,7 +90,7 @@ void main() {
             WeatherRequest(area: 'tokyo', date: DateTime(2024, 10, 4));
 
         // Act
-        when(mockYumemiWeather.fetchWeather(any))
+        when(mockYumemiWeather.syncFetchWeather(any))
             .thenThrow(YumemiWeatherError.invalidParameter);
 
         // Assert
@@ -115,7 +115,7 @@ void main() {
             '''{"weather_condition":"cloudy","max_temperature":25,"min_temperature":7}''';
 
         // Act
-        when(mockYumemiWeather.fetchWeather(any))
+        when(mockYumemiWeather.syncFetchWeather(any))
             .thenReturn(preparedWeatherData);
         final weatherData = await weatherRepository.getWeather(weatherRequest);
 
