@@ -273,5 +273,48 @@ void main() {
         );
       },
     );
+
+    testWidgets(
+      '''
+        The CircularProgressIndicator is displayed on the screen when data is being acquired
+        ''',
+      (tester) async {
+        // Arrange
+        await tester.pumpWidget(
+          ProviderScope(
+            overrides: [
+              weatherUsecaseProvider.overrideWithValue(mockWeatherUsecase),
+            ],
+            child: const MaterialApp(
+              home: HomeScreen(),
+            ),
+          ),
+        );
+
+        when(mockWeatherUsecase.getWeather(any)).thenAnswer((_) async {
+          await Future<void>.delayed(const Duration(milliseconds: 500));
+          return const Result.success(
+            WeatherResponse(
+              weatherCondition: WeatherCondition.cloudy,
+              maxTemperature: 30,
+              minTemperature: 20,
+            ),
+          );
+        });
+
+        // この時点でCircularProgressIndicatorは表示されていない
+        expect(find.byType(CircularProgressIndicator), findsNothing);
+
+        // Act
+        await tester.tap(find.widgetWithText(TextButton, 'Reload'));
+        await tester.pump();
+
+        // Assert
+        expect(find.byType(CircularProgressIndicator), findsOneWidget);
+
+        // 非同期処理の完了を待つ
+        await tester.pumpAndSettle();
+      },
+    );
   });
 }
