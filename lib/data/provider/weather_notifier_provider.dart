@@ -21,13 +21,20 @@ class WeatherNotifier extends _$WeatherNotifier {
     final usecase = ref.read(weatherUsecaseProvider);
     final result = await usecase.getWeather(weatherRequest);
 
-    state = result.when(
-      success: (data) {
-        return AsyncValue.data(data);
-      },
-      failure: (exception, stackTrace) {
-        return AsyncValue.error(exception, stackTrace);
-      },
-    );
+    try {
+      state = result.when(
+        success: (data) {
+          return AsyncValue.data(data);
+        },
+        failure: (customWeatherError) {
+          return AsyncValue.error(
+            customWeatherError.error,
+            customWeatherError.stackTrace,
+          );
+        },
+      );
+    } on Exception catch (e, stackTrace) {
+      state = AsyncValue.error(e, stackTrace);
+    }
   }
 }
