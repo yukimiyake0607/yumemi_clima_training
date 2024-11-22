@@ -1,6 +1,5 @@
 import 'dart:convert';
 
-import 'package:flutter/widgets.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_training/models/error/custom_weather_error.dart';
 import 'package:flutter_training/models/response/weather_response.dart';
