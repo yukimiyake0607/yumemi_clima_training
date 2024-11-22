@@ -8,7 +8,7 @@ import 'dart:async' as _i4;
 import 'package:flutter_training/data/repository/weather_repository.dart'
     as _i3;
 import 'package:flutter_training/models/response/weather_response.dart' as _i2;
-import 'package:flutter_training/models/weather_request.dart' as _i5;
+import 'package:flutter_training/models/weather/weather_request.dart' as _i5;
 import 'package:mockito/mockito.dart' as _i1;
 import 'package:mockito/src/dummies.dart' as _i6;
 

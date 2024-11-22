@@ -8,11 +8,11 @@ import 'dart:async' as _i5;
 import 'package:flutter_training/data/repository/weather_repository.dart'
     as _i2;
 import 'package:flutter_training/data/usecase/weather_usecase.dart' as _i4;
+import 'package:flutter_training/models/error/custom_weather_error.dart' as _i7;
 import 'package:flutter_training/models/response/weather_response.dart' as _i6;
 import 'package:flutter_training/models/result/result.dart' as _i3;
-import 'package:flutter_training/models/weather_request.dart' as _i8;
+import 'package:flutter_training/models/weather/weather_request.dart' as _i8;
 import 'package:mockito/mockito.dart' as _i1;
-import 'package:yumemi_weather/yumemi_weather.dart' as _i7;
 
 // ignore_for_file: type=lint
 // ignore_for_file: avoid_redundant_argument_values
@@ -67,7 +67,7 @@ class MockWeatherUsecase extends _i1.Mock implements _i4.WeatherUsecase {
 
   @override
   _i5.Future<
-      _i3.Result<_i6.WeatherResponse, _i7.YumemiWeatherError>> getWeather(
+      _i3.Result<_i6.WeatherResponse, _i7.CustomWeatherError>> getWeather(
           _i8.WeatherRequest? request) =>
       (super.noSuchMethod(
         Invocation.method(
@@ -75,8 +75,8 @@ class MockWeatherUsecase extends _i1.Mock implements _i4.WeatherUsecase {
           [request],
         ),
         returnValue: _i5.Future<
-                _i3.Result<_i6.WeatherResponse, _i7.YumemiWeatherError>>.value(
-            _FakeResult_1<_i6.WeatherResponse, _i7.YumemiWeatherError>(
+                _i3.Result<_i6.WeatherResponse, _i7.CustomWeatherError>>.value(
+            _FakeResult_1<_i6.WeatherResponse, _i7.CustomWeatherError>(
           this,
           Invocation.method(
             #getWeather,
@@ -84,13 +84,13 @@ class MockWeatherUsecase extends _i1.Mock implements _i4.WeatherUsecase {
           ),
         )),
         returnValueForMissingStub: _i5.Future<
-                _i3.Result<_i6.WeatherResponse, _i7.YumemiWeatherError>>.value(
-            _FakeResult_1<_i6.WeatherResponse, _i7.YumemiWeatherError>(
+                _i3.Result<_i6.WeatherResponse, _i7.CustomWeatherError>>.value(
+            _FakeResult_1<_i6.WeatherResponse, _i7.CustomWeatherError>(
           this,
           Invocation.method(
             #getWeather,
             [request],
           ),
         )),
-      ) as _i5.Future<_i3.Result<_i6.WeatherResponse, _i7.YumemiWeatherError>>);
+      ) as _i5.Future<_i3.Result<_i6.WeatherResponse, _i7.CustomWeatherError>>);
 }
