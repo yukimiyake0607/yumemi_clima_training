@@ -1,4 +1,4 @@
-import 'package:flutter_training/models/weather_condition.dart';
+import 'package:flutter_training/models/weather/weather_condition.dart';
 
 extension WeatherConditionExt on WeatherCondition {
   String get svgAsset {
