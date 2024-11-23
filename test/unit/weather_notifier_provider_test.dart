@@ -93,7 +93,7 @@ void main() {
         listener(any, argThat(isA<AsyncLoading<WeatherResponse>>())),
         listener(any, argThat(isA<AsyncData<WeatherResponse>>())),
       ]);
-
+      
       final finalState = container.read(weatherNotifierProvider);
       expect(finalState, isA<AsyncValue<WeatherResponse>>());
       expect(finalState.value, response);
