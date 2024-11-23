@@ -1,5 +1,6 @@
 import 'package:flutter_test/flutter_test.dart';
 import 'package:flutter_training/data/repository/weather_repository.dart';
+import 'package:flutter_training/models/error/custom_weather_error.dart';
 import 'package:flutter_training/models/weather/weather_condition.dart';
 import 'package:flutter_training/models/weather/weather_request.dart';
 import 'package:mockito/mockito.dart';
@@ -70,13 +71,17 @@ void main() {
       );
 
       // Act
-      when(mockYumemiWeather.fetchWeather(any))
-          .thenThrow(YumemiWeatherError.unknown);
+      when(mockYumemiWeather.fetchWeather(any)).thenThrow(
+        CustomWeatherError(
+          YumemiWeatherError.unknown,
+          StackTrace.current,
+        ),
+      );
 
       // Assert
       expect(
         () async => weatherRepository.getWeather(weatherRequest),
-        throwsA(isA<YumemiWeatherError>()),
+        throwsA(isA<CustomWeatherError>()),
       );
     });
 
@@ -90,13 +95,17 @@ void main() {
             WeatherRequest(area: 'tokyo', date: DateTime(2024, 10, 4));
 
         // Act
-        when(mockYumemiWeather.fetchWeather(any))
-            .thenThrow(YumemiWeatherError.invalidParameter);
+        when(mockYumemiWeather.fetchWeather(any)).thenThrow(
+          CustomWeatherError(
+            YumemiWeatherError.invalidParameter,
+            StackTrace.current,
+          ),
+        );
 
         // Assert
         expect(
           () async => weatherRepository.getWeather(weatherRequest),
-          throwsA(isA<YumemiWeatherError>()),
+          throwsA(isA<CustomWeatherError>()),
         );
       },
     );
