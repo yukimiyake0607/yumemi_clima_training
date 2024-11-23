@@ -42,8 +42,9 @@ void main() {
         );
         // getWeatherの返り値を固定
         when(mockWeatherUsecase.getWeather(request)).thenAnswer(
-          (_) async => const Result<WeatherResponse,
-              YumemiWeatherError>.success(response),
+          (_) async =>
+              const Result<WeatherResponse, CustomWeatherError>.success(
+                  response),
         );
 
         final listener = Listener<AsyncValue<WeatherResponse>>();
@@ -118,9 +119,8 @@ void main() {
         minTemperature: null,
       );
       when(mockWeatherUsecase.getWeather(request)).thenAnswer(
-        (_) async =>
-            const Result<WeatherResponse, YumemiWeatherError>.failure(
-          YumemiWeatherError.unknown,
+        (_) async => Result<WeatherResponse, CustomWeatherError>.failure(
+          CustomWeatherError(YumemiWeatherError.unknown, StackTrace.current),
         ),
       );
       final container = ProviderContainer(
@@ -184,7 +184,12 @@ void main() {
         minTemperature: null,
       );
       when(mockWeatherUsecase.getWeather(request)).thenAnswer(
-        (_) async => const Result.failure(YumemiWeatherError.invalidParameter),
+        (_) async => Result<WeatherResponse, CustomWeatherError>.failure(
+          CustomWeatherError(
+            YumemiWeatherError.invalidParameter,
+            StackTrace.current,
+          ),
+        ),
       );
 
       // stateが変化するたびListenerを実行
