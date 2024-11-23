@@ -100,9 +100,6 @@ void main() {
 
       verify(mockWeatherUsecase.getWeather(request)).called(1);
       verifyNoMoreInteractions(listener);
-
-      // containerを破棄
-      addTearDown(container.dispose);
     },
   );
 
