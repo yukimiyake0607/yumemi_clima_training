@@ -1,5 +1,6 @@
 import 'package:flutter_test/flutter_test.dart';
 import 'package:flutter_training/data/repository/weather_repository.dart';
+import 'package:flutter_training/models/error/custom_weather_error.dart';
 import 'package:flutter_training/models/weather/weather_condition.dart';
 import 'package:flutter_training/models/weather/weather_request.dart';
 import 'package:mockito/mockito.dart';
@@ -76,7 +77,7 @@ void main() {
       // Assert
       expect(
         () async => weatherRepository.getWeather(weatherRequest),
-        throwsA(isA<YumemiWeatherError>()),
+        throwsA(isA<CustomWeatherError>()),
       );
     });
 
@@ -96,7 +97,7 @@ void main() {
         // Assert
         expect(
           () async => weatherRepository.getWeather(weatherRequest),
-          throwsA(isA<YumemiWeatherError>()),
+          throwsA(isA<CustomWeatherError>()),
         );
       },
     );
