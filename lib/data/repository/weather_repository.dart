@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:flutter/widgets.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_training/models/error/custom_weather_error.dart';
 import 'package:flutter_training/models/response/weather_response.dart';
@@ -29,11 +30,13 @@ class WeatherRepository {
     return weatherData;
   }
 
+  @visibleForTesting
   String toJsonString(WeatherRequest weatherRequest) {
     final request = jsonEncode(weatherRequest);
     return request;
   }
 
+  @visibleForTesting
   Map<String, dynamic> toMap(String weatherDataOfJson) {
     final response = jsonDecode(weatherDataOfJson) as Map<String, dynamic>;
     return response;
