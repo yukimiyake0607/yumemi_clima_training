@@ -26,6 +26,67 @@ void main() {
     maxTemperature: null,
     minTemperature: null,
   );
+  // エラー1パターン:YumemiWeatherError.unknown
+  test(
+    '''
+    When YumemiWeatherError.unknown is returned,
+    state changes to AsyncError containing it
+    ''',
+    () async {
+      // Arrange
+      final mockWeatherUsecase = MockWeatherUsecase();
+      final request =
+          WeatherRequest(area: 'tokyo', date: DateTime(2024, 10, 4));
+      const defaultResponse = WeatherResponse(
+        weatherCondition: null,
+        maxTemperature: null,
+        minTemperature: null,
+      );
+      when(mockWeatherUsecase.getWeather(request)).thenAnswer(
+        (_) async => Result<WeatherResponse, CustomWeatherError>.failure(
+          CustomWeatherError(YumemiWeatherError.unknown, StackTrace.current),
+        ),
+      );
+      final container = ProviderContainer(
+        overrides: [
+          weatherUsecaseProvider.overrideWithValue(mockWeatherUsecase),
+        ],
+      );
+      final listener = Listener<AsyncValue<WeatherResponse>>();
+      container.listen(
+        weatherNotifierProvider,
+        listener.call,
+        fireImmediately: true,
+      );
+
+      // この時点でListenerのデフォルト値が呼び出されているはず
+      verify(listener(null, const AsyncValue.data(defaultResponse))).called(1);
+      verifyNoMoreInteractions(listener);
+
+      expect(
+        container.read(weatherNotifierProvider),
+        const AsyncValue.data(defaultResponse),
+      );
+
+      // Act：getWeatherを実行
+      await container
+          .read(weatherNotifierProvider.notifier)
+          .getWeather(request);
+
+      // Assert
+      final finalState = container.read(weatherNotifierProvider);
+      expect(
+        finalState,
+        isA<AsyncError<WeatherResponse>>(),
+      );
+      expect(finalState.error, YumemiWeatherError.unknown);
+      verifyInOrder([
+        listener(any, argThat(isA<AsyncLoading<WeatherResponse>>())),
+        listener(any, argThat(isA<AsyncError<WeatherResponse>>())),
+      ]);
+      verifyNoMoreInteractions(listener);
+    },
+  );
 
   setUp(() {
     mockWeatherUsecase = MockWeatherUsecase();
