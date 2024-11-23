@@ -97,6 +97,9 @@ void main() {
 
       verify(mockWeatherUsecase.getWeather(request)).called(1);
       verifyNoMoreInteractions(listener);
+
+      // containerを破棄
+      addTearDown(container.dispose);
     },
   );
 
@@ -159,6 +162,9 @@ void main() {
         listener(any, argThat(isA<AsyncError<WeatherResponse>>())),
       ]);
       verifyNoMoreInteractions(listener);
+
+      // containerを破棄
+      addTearDown(container.dispose);
     },
   );
 
@@ -239,6 +245,9 @@ void main() {
       );
       expect(finalState.error, YumemiWeatherError.invalidParameter);
       verifyNoMoreInteractions(listener);
+
+      // containerを破棄
+      addTearDown(container.dispose);
     },
   );
 }
