@@ -44,7 +44,8 @@ void main() {
         when(mockWeatherUsecase.getWeather(request)).thenAnswer(
           (_) async =>
               const Result<WeatherResponse, CustomWeatherError>.success(
-                  response),
+            response,
+          ),
         );
 
         final listener = Listener<AsyncValue<WeatherResponse>>();
