@@ -45,7 +45,23 @@ flowchart TB
   weatherRepositoryProvider ==> weatherUsecaseProvider;
 ```
 
-### HomeScreen
-- weatherNotifierProviderをreadして、getWeatherを実行
-- weatherNotifierProviderをwatchして、データの取得に成功すると返されたweatherDataを基に画面を更新
-- weatherNotifierProviderをlistenして、error時にエラーダイアログを表示
+### UI
+- HomeScreen
+  - weatherNotifierProviderをreadして、getWeatherを実行
+  - weatherNotifierProviderをwatchして、データの取得に成功すると返されたweatherDataを基に画面を更新
+  - weatherNotifierProviderをlistenして、error時にエラーダイアログを表示
+- ButtonRow
+  - weatherNotifierProviderをreadしてgetWeatherを実行
+
+### Data
+#### Repository
+- YumemiWeatherAPIからデータを取得する
+- jsonデータをWeatherResponseに変換してusecaseに返す
+- YumemiWeatherErrorを検出したらCustomWeatherErrorでラップしてthrowする
+#### Usecase
+- repositoryからデータを取得する
+  - WeatherResponseの場合、Result.successでラップして返す
+  - CustomWeatherErrorの場合、Result.failureでラップする
+#### Provider
+- usecaseからデータを取得する
+- 取得したデータによってProviderを更新
