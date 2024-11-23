@@ -2,6 +2,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:flutter_training/data/provider/weather_notifier_provider.dart';
 import 'package:flutter_training/data/usecase/weather_usecase.dart';
+import 'package:flutter_training/models/error/custom_weather_error.dart';
 import 'package:flutter_training/models/response/weather_response.dart';
 import 'package:flutter_training/models/result/result.dart';
 import 'package:flutter_training/models/weather/weather_condition.dart';
@@ -41,8 +42,9 @@ void main() {
         );
         // getWeatherの返り値を固定
         when(mockWeatherUsecase.getWeather(request)).thenAnswer(
-          (_) async => const Result<WeatherResponse,
-              YumemiWeatherError>.success(response),
+          (_) async =>
+              const Result<WeatherResponse, CustomWeatherError>.success(
+                  response),
         );
 
         final listener = Listener<AsyncValue<WeatherResponse>>();
@@ -117,9 +119,8 @@ void main() {
         minTemperature: null,
       );
       when(mockWeatherUsecase.getWeather(request)).thenAnswer(
-        (_) async =>
-            const Result<WeatherResponse, YumemiWeatherError>.failure(
-          YumemiWeatherError.unknown,
+        (_) async => Result<WeatherResponse, CustomWeatherError>.failure(
+          CustomWeatherError(YumemiWeatherError.unknown, StackTrace.current),
         ),
       );
       final container = ProviderContainer(
@@ -183,7 +184,12 @@ void main() {
         minTemperature: null,
       );
       when(mockWeatherUsecase.getWeather(request)).thenAnswer(
-        (_) async => const Result.failure(YumemiWeatherError.invalidParameter),
+        (_) async => Result<WeatherResponse, CustomWeatherError>.failure(
+          CustomWeatherError(
+            YumemiWeatherError.invalidParameter,
+            StackTrace.current,
+          ),
+        ),
       );
 
       // stateが変化するたびListenerを実行
