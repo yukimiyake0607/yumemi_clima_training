@@ -106,29 +106,35 @@ void main() {
   group('Error cases', () {
     // エラー1パターン:YumemiWeatherError.unknown
     test(
-      '''
-    YumemiWeatherError.unknown returns AsyncError state.
-    ''',
+      'YumemiWeatherError.unknown returns AsyncError state.',
       () async {
         // Arrange
+        final stackTrace = StackTrace.current;
+        final expectedError = CustomWeatherError(
+          YumemiWeatherError.unknown,
+          stackTrace,
+        );
+
         when(mockWeatherUsecase.getWeather(request)).thenAnswer(
-          (_) async => Result<WeatherResponse, CustomWeatherError>.failure(
-            CustomWeatherError(YumemiWeatherError.unknown, StackTrace.current),
+          (_) async => Result<WeatherResponse, Exception>.failure(
+            expectedError,
+            stackTrace,
           ),
         );
 
-        // Act：getWeatherを実行
+        // Act
         await container
             .read(weatherNotifierProvider.notifier)
             .getWeather(request);
 
         // Assert
         final finalState = container.read(weatherNotifierProvider);
-        expect(
-          finalState,
-          isA<AsyncError<WeatherResponse>>(),
-        );
-        expect(finalState.error, YumemiWeatherError.unknown);
+        expect(finalState, isA<AsyncError<WeatherResponse>>());
+
+        final actualError = finalState.error! as CustomWeatherError;
+        expect(actualError.error, equals(YumemiWeatherError.unknown));
+        expect(actualError.stackTrace, equals(stackTrace));
+
         verifyInOrder([
           listener(any, argThat(isA<AsyncLoading<WeatherResponse>>())),
           listener(any, argThat(isA<AsyncError<WeatherResponse>>())),
@@ -139,40 +145,39 @@ void main() {
 
     // エラー2パターン:YumemiWeatherError.invalidParameter
     test(
-      '''
-      YumemiWeatherError.invalidParameter returns AsyncError state
-    ''',
+      'YumemiWeatherError.unknown returns AsyncError state.',
       () async {
         // Arrange
+        final stackTrace = StackTrace.current;
+        final expectedError = CustomWeatherError(
+          YumemiWeatherError.invalidParameter,
+          stackTrace,
+        );
+
         when(mockWeatherUsecase.getWeather(request)).thenAnswer(
-          (_) async => Result<WeatherResponse, CustomWeatherError>.failure(
-            CustomWeatherError(
-              YumemiWeatherError.invalidParameter,
-              StackTrace.current,
-            ),
+          (_) async => Result<WeatherResponse, Exception>.failure(
+            expectedError,
+            stackTrace,
           ),
         );
 
-        // Act：weatherNotifierProvider.getWeatherを実行
+        // Act
         await container
             .read(weatherNotifierProvider.notifier)
             .getWeather(request);
 
         // Assert
-        verify(
-          listener(any, argThat(isA<AsyncLoading<WeatherResponse>>())),
-        ).called(1);
-        verify(
-          listener(any, argThat(isA<AsyncError<WeatherResponse>>())),
-        ).called(1);
-
         final finalState = container.read(weatherNotifierProvider);
-        // AsyncErrorが獲得できているかチェック
-        expect(
-          finalState,
-          isA<AsyncError<WeatherResponse>>(),
-        );
-        expect(finalState.error, YumemiWeatherError.invalidParameter);
+        expect(finalState, isA<AsyncError<WeatherResponse>>());
+
+        final actualError = finalState.error! as CustomWeatherError;
+        expect(actualError.error, equals(YumemiWeatherError.invalidParameter));
+        expect(actualError.stackTrace, equals(stackTrace));
+
+        verifyInOrder([
+          listener(any, argThat(isA<AsyncLoading<WeatherResponse>>())),
+          listener(any, argThat(isA<AsyncError<WeatherResponse>>())),
+        ]);
         verifyNoMoreInteractions(listener);
       },
     );
