@@ -8,7 +8,7 @@ part of 'weather_notifier_provider.dart';
 // RiverpodGenerator
 // **************************************************************************
 
-String _$weatherNotifierHash() => r'c429a9a55ec852b13a5bf547f8322c7ee6a3594c';
+String _$weatherNotifierHash() => r'5e2c77232711cee3e3fa38147fce967f8c9da26f';
 
 /// See also [WeatherNotifier].
 @ProviderFor(WeatherNotifier)
@@ -24,4 +24,5 @@ final weatherNotifierProvider =
 );
 
 typedef _$WeatherNotifier = AutoDisposeAsyncNotifier<WeatherResponse>;
+// ignore_for_file: type=lint
 // ignore_for_file: subtype_of_sealed_class, invalid_use_of_internal_member, invalid_use_of_visible_for_testing_member
