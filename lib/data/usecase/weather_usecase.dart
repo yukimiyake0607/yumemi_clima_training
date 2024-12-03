@@ -17,8 +17,7 @@ class WeatherUsecase {
   const WeatherUsecase(this.weatherRepository);
   final WeatherRepository weatherRepository;
 
-  Future<Result<WeatherResponse, CustomWeatherError>> getWeather(
-
+  Future<Result<WeatherResponse, Exception>> getWeather(
     WeatherRequest request,
   ) async {
     try {
