@@ -14,6 +14,7 @@ import 'package:yumemi_weather/yumemi_weather.dart';
 import '../mock/weather_usecase_mock.mocks.dart';
 
 final mockWeatherUsecase = MockWeatherUsecase();
+const _reloadButtonText = 'Reload';
 
 void main() {
   group('WidgetTests of Home Screen', () {
@@ -48,7 +49,7 @@ void main() {
       expect(find.byType(Placeholder), findsOneWidget);
 
       // Act
-      await tester.tap(find.widgetWithText(TextButton, 'Reload'));
+      await tester.tap(find.widgetWithText(TextButton, _reloadButtonText));
 
       await tester.pump();
 
@@ -91,7 +92,7 @@ void main() {
       expect(find.byType(Placeholder), findsOneWidget);
 
       // Act
-      await tester.tap(find.widgetWithText(TextButton, 'Reload'));
+      await tester.tap(find.widgetWithText(TextButton, _reloadButtonText));
       await tester.pump();
 
       // Assert
@@ -106,7 +107,111 @@ void main() {
       expect(svgAsset.assetName, equals('assets/cloudy.svg'));
     });
 
-    testWidgets('display a rainy image', (tester) async {
+  testWidgets('display a rainy image', (tester) async {
+    // Arrange
+    // テスト環境にウィジェットツリーを生成
+    await tester.pumpWidget(
+      ProviderScope(
+        overrides: [
+          weatherUsecaseProvider.overrideWithValue(mockWeatherUsecase),
+        ],
+        child: const MaterialApp(
+          home: HomeScreen(),
+        ),
+      ),
+    );
+
+    // ウィジェット内にPlaceholderが生成されているか
+    expect(find.byType(Placeholder), findsOneWidget);
+
+    // Reloadボタンを押した時の返り値を設定
+    const response = WeatherResponse(
+      weatherCondition: WeatherCondition.rainy,
+      maxTemperature: 30,
+      minTemperature: 20,
+    );
+    when(mockWeatherUsecase.getWeather(any))
+        .thenAnswer((_) async => const Result.success(response));
+
+    // Act
+    await tester.tap(find.widgetWithText(TextButton, _reloadButtonText));
+    await tester.pump();
+
+    // Assert
+    // SvgPictureを確認
+    expect(find.byType(SvgPicture), findsOneWidget);
+    // rainy.svgが表示されているか確認
+    final svgWidget = tester.widget<SvgPicture>(find.byType(SvgPicture));
+    expect(svgWidget.bytesLoader, isA<SvgAssetLoader>());
+    final svgAsset = svgWidget.bytesLoader as SvgAssetLoader;
+    expect(svgAsset.assetName, equals('assets/rainy.svg'));
+  });
+
+  testWidgets('display a max temperature', (tester) async {
+    // Arrange
+    // テスト環境にウィジェットツリー生成
+    await tester.pumpWidget(
+      ProviderScope(
+        overrides: [
+          weatherUsecaseProvider.overrideWithValue(mockWeatherUsecase),
+        ],
+        child: const MaterialApp(
+          home: HomeScreen(),
+        ),
+      ),
+    );
+
+    // プロバイダーの返り値を設定
+    const response = WeatherResponse(
+      weatherCondition: WeatherCondition.sunny,
+      maxTemperature: 30,
+      minTemperature: 20,
+    );
+    when(mockWeatherUsecase.getWeather(any))
+        .thenAnswer((_) async => const Result.success(response));
+
+    // Act
+    await tester.tap(find.widgetWithText(TextButton, _reloadButtonText));
+    await tester.pump();
+
+    // Assert
+    // 最高気温が表示されているか確認
+    expect(find.text('30℃'), findsOneWidget);
+  });
+
+  testWidgets('display a min temperature', (tester) async {
+    // Arrange
+    await tester.pumpWidget(
+      ProviderScope(
+        overrides: [
+          weatherUsecaseProvider.overrideWithValue(mockWeatherUsecase),
+        ],
+        child: const MaterialApp(
+          home: HomeScreen(),
+        ),
+      ),
+    );
+
+    // プロバイダーの返り値を設定
+    const response = WeatherResponse(
+      weatherCondition: WeatherCondition.sunny,
+      maxTemperature: 30,
+      minTemperature: 20,
+    );
+    when(mockWeatherUsecase.getWeather(any))
+        .thenAnswer((_) async => const Result.success(response));
+
+    // Act
+    await tester.tap(find.widgetWithText(TextButton, _reloadButtonText));
+    await tester.pump();
+
+    // Assert
+    expect(find.text('20℃'), findsOneWidget);
+  });
+
+  testWidgets(
+    'a display when YumemiWeatherError.unknown is received',
+    (tester) async {
       // Arrange
       // テスト環境にウィジェットツリーを生成
       await tester.pumpWidget(
@@ -133,7 +238,7 @@ void main() {
           .thenAnswer((_) async => const Result.success(response));
 
       // Act
-      await tester.tap(find.widgetWithText(TextButton, 'Reload'));
+      await tester.tap(find.widgetWithText(TextButton, _reloadButtonText));
       await tester.pump();
 
       // Assert
@@ -170,7 +275,7 @@ void main() {
           .thenAnswer((_) async => const Result.success(response));
 
       // Act
-      await tester.tap(find.widgetWithText(TextButton, 'Reload'));
+      await tester.tap(find.widgetWithText(TextButton, _reloadButtonText));
       await tester.pump();
 
       // Assert
