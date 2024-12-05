@@ -10,7 +10,7 @@ import 'package:flutter_training/models/weather/weather_request.dart';
 import 'package:mockito/mockito.dart';
 import 'package:yumemi_weather/yumemi_weather.dart';
 
-import 'mock/weather_usecase_mock.mocks.dart';
+import '../mock/weather_usecase_mock.mocks.dart';
 
 class Listener<T> extends Mock {
   void call(T? previous, T? current);
