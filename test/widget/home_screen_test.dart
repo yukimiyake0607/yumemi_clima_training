@@ -3,9 +3,10 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:flutter_training/data/usecase/weather_usecase.dart';
+import 'package:flutter_training/models/error/custom_weather_error.dart';
 import 'package:flutter_training/models/response/weather_response.dart';
 import 'package:flutter_training/models/result/result.dart';
-import 'package:flutter_training/models/weather_condition.dart';
+import 'package:flutter_training/models/weather/weather_condition.dart';
 import 'package:flutter_training/ui/extensions/api_error_ext.dart';
 import 'package:flutter_training/ui/screens/home_screen.dart';
 import 'package:mockito/mockito.dart';
@@ -28,7 +29,7 @@ void main() {
 
       // weatherUsecaseProviderが呼び出された場合の挙動を設定
       when(mockWeatherUsecase.getWeather(any)).thenAnswer(
-        (_) async => const Result<WeatherResponse, YumemiWeatherError>.success(
+        (_) async => const Result<WeatherResponse, Exception>.success(
           weatherResponse,
         ),
       );
@@ -84,8 +85,7 @@ void main() {
         minTemperature: 20,
       );
       when(mockWeatherUsecase.getWeather(any)).thenAnswer(
-        (_) async =>
-            const Result<WeatherResponse, YumemiWeatherError>.success(response),
+        (_) async => const Result<WeatherResponse, Exception>.success(response),
       );
 
       // 初期状態のHomeScreenにPlaceholderが表示されているか確認
