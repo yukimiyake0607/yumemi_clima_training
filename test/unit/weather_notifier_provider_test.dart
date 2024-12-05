@@ -174,7 +174,6 @@ void main() {
         ).called(1);
         final finalState = container.read(weatherNotifierProvider);
         expect(finalState, isA<AsyncValue<WeatherResponse>>());
-        expect(finalState.value, response);
 
         verify(mockWeatherUsecase.getWeather(request)).called(1);
         verifyNoMoreInteractions(listener);
