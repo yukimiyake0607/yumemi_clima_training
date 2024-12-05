@@ -274,9 +274,13 @@ void main() {
       when(mockWeatherUsecase.getWeather(any))
           .thenAnswer((_) async => const Result.success(response));
 
-      // Act
+      // Act & Assert
+      expect(find.byType(AlertDialog), findsNothing);
+
+      // Reloadボタンをタップ
       await tester.tap(find.widgetWithText(TextButton, _reloadButtonText));
       await tester.pump();
+      await tester.pumpAndSettle();
 
       // Assert
       // 最高気温が表示されているか確認
