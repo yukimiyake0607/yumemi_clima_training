@@ -251,7 +251,6 @@ void main() {
     'a display when YumemiWeatherError.invalidParameter is received',
     (tester) async {
       // Arrange
-      // テスト環境にウィジェットツリーを生成
       await tester.pumpWidget(
         ProviderScope(
           overrides: [
@@ -263,9 +262,8 @@ void main() {
         ),
       );
 
-      // プロバイダーの戻り値を設定
       when(mockWeatherUsecase.getWeather(any)).thenAnswer(
-        (_) async => Result.failure(
+        (_) async => Result<WeatherResponse, Exception>.failure(
           CustomWeatherError(
             YumemiWeatherError.invalidParameter,
             StackTrace.current,
@@ -274,16 +272,27 @@ void main() {
         ),
       );
 
-      // Act
+      // Act & Assert
+      expect(find.byType(AlertDialog), findsNothing);
+
+      // Reloadボタンをタップ
       await tester.tap(find.widgetWithText(TextButton, _reloadButtonText));
       await tester.pump();
+      await tester.pumpAndSettle();
 
-      // Assert
+      // ダイアログの表示を確認
       expect(find.byType(AlertDialog), findsOneWidget);
       expect(
         find.text(YumemiWeatherError.invalidParameter.message),
         findsOneWidget,
       );
+
+      // OKボタンをタップしてダイアログを閉じる
+      await tester.tap(find.widgetWithText(TextButton, 'OK'));
+      await tester.pumpAndSettle();
+
+      // ダイアログが閉じたことを確認
+      expect(find.byType(AlertDialog), findsNothing);
     },
   );
 }
