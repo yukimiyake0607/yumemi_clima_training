@@ -14,6 +14,7 @@ import 'package:yumemi_weather/yumemi_weather.dart';
 import '../mock/weather_usecase_mock.mocks.dart';
 
 final mockWeatherUsecase = MockWeatherUsecase();
+const _reloadButtonText = 'Reload';
 
 void main() {
   group('WidgetTests of Home Screen', () {
@@ -48,7 +49,7 @@ void main() {
       expect(find.byType(Placeholder), findsOneWidget);
 
       // Act
-      await tester.tap(find.widgetWithText(TextButton, 'Reload'));
+      await tester.tap(find.widgetWithText(TextButton, _reloadButtonText));
 
       await tester.pump();
 
@@ -91,7 +92,7 @@ void main() {
       expect(find.byType(Placeholder), findsOneWidget);
 
       // Act
-      await tester.tap(find.widgetWithText(TextButton, 'Reload'));
+      await tester.tap(find.widgetWithText(TextButton, _reloadButtonText));
       await tester.pump();
 
       // Assert
@@ -134,7 +135,7 @@ void main() {
         .thenAnswer((_) async => const Result.success(response));
 
     // Act
-    await tester.tap(find.widgetWithText(TextButton, 'Reload'));
+    await tester.tap(find.widgetWithText(TextButton, _reloadButtonText));
     await tester.pump();
 
     // Assert
@@ -171,7 +172,7 @@ void main() {
         .thenAnswer((_) async => const Result.success(response));
 
     // Act
-    await tester.tap(find.widgetWithText(TextButton, 'Reload'));
+    await tester.tap(find.widgetWithText(TextButton, _reloadButtonText));
     await tester.pump();
 
     // Assert
@@ -202,7 +203,7 @@ void main() {
         .thenAnswer((_) async => const Result.success(response));
 
     // Act
-    await tester.tap(find.widgetWithText(TextButton, 'Reload'));
+    await tester.tap(find.widgetWithText(TextButton, _reloadButtonText));
     await tester.pump();
 
     // Assert
@@ -231,7 +232,7 @@ void main() {
       );
 
       // Act
-      await tester.tap(find.widgetWithText(TextButton, 'Reload'));
+      await tester.tap(find.widgetWithText(TextButton, _reloadButtonText));
       await tester.pump();
 
       // Assert
@@ -262,7 +263,7 @@ void main() {
       );
 
       // Act
-      await tester.tap(find.widgetWithText(TextButton, 'Reload'));
+      await tester.tap(find.widgetWithText(TextButton, _reloadButtonText));
       await tester.pump();
 
       // Assert
