@@ -2,26 +2,25 @@
 
 // ignore_for_file: type=lint
 
-part of 'weather_repository.dart';
+part of 'weather_usecase.dart';
 
 // **************************************************************************
 // RiverpodGenerator
 // **************************************************************************
 
-String _$weatherRepositoryHash() => r'f7cf936f5d6508f97661d792eaf4eaeb27848639';
+String _$weatherUsecaseHash() => r'c434f94caff5ea2b87f02c79813f7c4270d8486d';
 
-/// See also [weatherRepository].
-@ProviderFor(weatherRepository)
-final weatherRepositoryProvider =
-    AutoDisposeProvider<WeatherRepository>.internal(
-  weatherRepository,
-  name: r'weatherRepositoryProvider',
+/// See also [weatherUsecase].
+@ProviderFor(weatherUsecase)
+final weatherUsecaseProvider = AutoDisposeProvider<WeatherUsecase>.internal(
+  weatherUsecase,
+  name: r'weatherUsecaseProvider',
   debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
       ? null
-      : _$weatherRepositoryHash,
+      : _$weatherUsecaseHash,
   dependencies: null,
   allTransitiveDependencies: null,
 );
 
-typedef WeatherRepositoryRef = AutoDisposeProviderRef<WeatherRepository>;
+typedef WeatherUsecaseRef = AutoDisposeProviderRef<WeatherUsecase>;
 // ignore_for_file: subtype_of_sealed_class, invalid_use_of_internal_member, invalid_use_of_visible_for_testing_member
