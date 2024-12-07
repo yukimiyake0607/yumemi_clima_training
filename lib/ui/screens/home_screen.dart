@@ -3,10 +3,10 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_training/data/provider/weather_notifier_provider.dart';
+import 'package:flutter_training/models/error/custom_weather_error.dart';
 import 'package:flutter_training/models/response/weather_response.dart';
 import 'package:flutter_training/ui/extensions/api_error_ext.dart';
 import 'package:flutter_training/ui/widgets/weather_widget.dart';
-import 'package:yumemi_weather/yumemi_weather.dart';
 
 class HomeScreen extends ConsumerWidget {
   const HomeScreen({super.key});
@@ -43,8 +43,8 @@ class HomeScreen extends ConsumerWidget {
       (_, next) async {
         next.whenOrNull(
           error: (error, stackTrace) {
-            if (error is YumemiWeatherError) {
-              _showErrorDialog(context, error.message);
+            if (error is CustomWeatherError) {
+              _showErrorDialog(context, error.error.message);
             }
           },
         );
