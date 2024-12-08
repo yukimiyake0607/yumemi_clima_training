@@ -1,8 +1,7 @@
 import 'dart:convert';
 
-import 'package:flutter/widgets.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:flutter_training/models/error/custom_weather_error.dart';
 import 'package:flutter_training/models/response/weather_response.dart';
 import 'package:flutter_training/models/weather/weather_request.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
@@ -22,15 +21,12 @@ class WeatherRepository {
   Future<WeatherResponse> getWeather(
     WeatherRequest weatherRequest,
   ) async {
-    try {
-      final request = toJsonString(weatherRequest);
-      final weatherDataOfJson = _yumemiWeather.fetchWeather(request);
-      final response = toMap(weatherDataOfJson);
-      final weatherData = WeatherResponse.fromJson(response);
-      return weatherData;
-    } on YumemiWeatherError catch (e, stackTrace) {
-      throw CustomWeatherError(e, stackTrace);
-    }
+    final request = toJsonString(weatherRequest);
+    final weatherDataOfJson =
+        await compute(_yumemiWeather.syncFetchWeather, request);
+    final response = toMap(weatherDataOfJson);
+    final weatherData = WeatherResponse.fromJson(response);
+    return weatherData;
   }
 
   @visibleForTesting
