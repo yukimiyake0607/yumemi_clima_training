@@ -5,6 +5,7 @@ import 'package:flutter_training/models/weather/weather_condition.dart';
 import 'package:flutter_training/models/weather/weather_request.dart';
 import 'package:mockito/mockito.dart';
 import 'package:yumemi_weather/yumemi_weather.dart';
+
 import '../mock/yumemi_weather_mock.mocks.dart';
 
 void main() {
@@ -143,6 +144,7 @@ void main() {
   test(
     '''When YumemiWeatherError.unknown is thrown, getWeather throws YumemiWeatherError.unknown''',
     () {
+
       // Arrange
       final mockYumemiWeather = MockYumemiWeather();
       final weatherRepository = WeatherRepository(mockYumemiWeather);
@@ -150,6 +152,8 @@ void main() {
         area: 'tokyo',
         date: DateTime(2024, 10, 4),
       );
+      const preparedWeatherData =
+          '''{"weather_condition":"cloudy","max_temperature":25,"min_temperature":7}''';
 
       // Act
       when(mockYumemiWeather.syncFetchWeather(any))
