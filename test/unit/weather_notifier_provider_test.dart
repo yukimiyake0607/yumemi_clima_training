@@ -5,7 +5,6 @@ import 'package:flutter_training/data/usecase/weather_usecase.dart';
 import 'package:flutter_training/models/error/custom_weather_error.dart';
 import 'package:flutter_training/models/response/weather_response.dart';
 import 'package:flutter_training/models/result/result.dart';
-import 'package:flutter_training/models/weather/weather_condition.dart';
 import 'package:flutter_training/models/weather/weather_request.dart';
 import 'package:mockito/mockito.dart';
 import 'package:yumemi_weather/yumemi_weather.dart';
@@ -17,6 +16,44 @@ class Listener<T> extends Mock {
 }
 
 void main() {
+  late MockWeatherUsecase mockWeatherUsecase;
+  late ProviderContainer container;
+  late Listener<AsyncValue<WeatherResponse>> listener;
+  late WeatherRequest request;
+  const defaultResponse = WeatherResponse(
+    weatherCondition: null,
+    maxTemperature: null,
+    minTemperature: null,
+  );
+
+  setUp(() {
+    mockWeatherUsecase = MockWeatherUsecase();
+    request = WeatherRequest(
+      area: 'tokyo',
+      date: DateTime(2024, 10, 4),
+    );
+    container = ProviderContainer(
+      overrides: [
+        weatherUsecaseProvider.overrideWithValue(mockWeatherUsecase),
+      ],
+    );
+    listener = Listener<AsyncValue<WeatherResponse>>();
+
+    container.listen(
+      weatherNotifierProvider,
+      listener.call,
+      fireImmediately: true,
+    );
+
+    verify(
+      listener(null, const AsyncValue.data(defaultResponse)),
+    ).called(1);
+    verifyNoMoreInteractions(listener);
+  });
+
+  tearDown(() {
+    container.dispose();
+  });
   group('WeatherNotifierProvider tests group', () {
     // データ取得に成功パターン
     test(
@@ -160,16 +197,15 @@ void main() {
             .read(weatherNotifierProvider.notifier)
             .getWeather(request);
 
-      // Assert
-      verify(
-        listener(any, argThat(isA<AsyncLoading<WeatherResponse>>())),
-      ).called(1);
-      verify(
-        listener(any, argThat(isA<AsyncError<WeatherResponse>>())),
-      ).called(1);
-      final finalState = container.read(weatherNotifierProvider);
-
+        // Assert
+        verify(
+          listener(any, argThat(isA<AsyncLoading<WeatherResponse>>())),
+        ).called(1);
+        verify(
+          listener(any, argThat(isA<AsyncError<WeatherResponse>>())),
+        ).called(1);
         final finalState = container.read(weatherNotifierProvider);
+
         expect(finalState, isA<AsyncError<WeatherResponse>>());
 
         final actualError = finalState.error! as CustomWeatherError;

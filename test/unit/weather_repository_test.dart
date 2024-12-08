@@ -85,64 +85,64 @@ void main() {
   });
 
   test(
-    '''When YumemiWeatherError.invalidParameter is thrown, getWeather throws YumemiWeatherError.invalidParameter''',
-    () {
-      // Arrange
-      final mockYumemiWeather = MockYumemiWeather();
-      final weatherRepository = WeatherRepository(mockYumemiWeather);
-      final weatherRequest =
-          WeatherRequest(area: 'tokyo', date: DateTime(2024, 10, 4));
+      '''When YumemiWeatherError.invalidParameter is thrown, getWeather throws YumemiWeatherError.invalidParameter''',
+      () {
+    // Arrange
+    final mockYumemiWeather = MockYumemiWeather();
+    final weatherRepository = WeatherRepository(mockYumemiWeather);
+    final weatherRequest =
+        WeatherRequest(area: 'tokyo', date: DateTime(2024, 10, 4));
 
-      //Act
-      final weatherJsonData = weatherRepository.toJsonString(weatherRequest);
+    //Act
+    final weatherJsonData = weatherRepository.toJsonString(weatherRequest);
 
-      // Assert
-      expect(
-        weatherJsonData,
-        '{"area":"tokyo","date":"2024-10-04 00:00:00.000"}',
-      );
-    });
+    // Assert
+    expect(
+      weatherJsonData,
+      '{"area":"tokyo","date":"2024-10-04 00:00:00.000"}',
+    );
+  });
 
-    test('toMap is decoded correctly', () {
-      // Arrange
-      const weatherDataOfJson = '''
+  test('toMap is decoded correctly', () {
+    // Arrange
+    const weatherDataOfJson = '''
           {"weather_condition":"cloudy","max_temperature":25,"min_temperature":7,"date":"2020-04-01T12:00:00+09:00"}
           ''';
-      final mockYumemiWeather = MockYumemiWeather();
-      final weatherRepository = WeatherRepository(mockYumemiWeather);
+    final mockYumemiWeather = MockYumemiWeather();
+    final weatherRepository = WeatherRepository(mockYumemiWeather);
 
-      // Act
-      final request = weatherRepository.toMap(weatherDataOfJson);
+    // Act
+    final request = weatherRepository.toMap(weatherDataOfJson);
 
-      // Assert
-      final matcher = {
-        'weather_condition': 'cloudy',
-        'max_temperature': 25,
-        'min_temperature': 7,
-        'date': '2020-04-01T12:00:00+09:00',
-      };
-      expect(request, matcher);
-    });
+    // Assert
+    final matcher = {
+      'weather_condition': 'cloudy',
+      'max_temperature': 25,
+      'min_temperature': 7,
+      'date': '2020-04-01T12:00:00+09:00',
+    };
+    expect(request, matcher);
+  });
 
-    test('If invalid data is entered, toMap will throw an exception', () {
-      // Arrange
-      final mockYumemiWeather = MockYumemiWeather();
-      final weatherRepository = WeatherRepository(mockYumemiWeather);
+  test('If invalid data is entered, toMap will throw an exception', () {
+    // Arrange
+    final mockYumemiWeather = MockYumemiWeather();
+    final weatherRepository = WeatherRepository(mockYumemiWeather);
 
-      // Act
-      when(mockYumemiWeather.syncFetchWeather(any))
-          .thenThrow(YumemiWeatherError.unknown);
+    // Act
+    when(mockYumemiWeather.syncFetchWeather(any))
+        .thenThrow(YumemiWeatherError.unknown);
 
-      // Assert
-      expect(
-        () => weatherRepository.toMap('invalid_data'),
-        throwsA(isA<FormatException>()),
-      );
-    });
+    // Assert
+    expect(
+      () => weatherRepository.toMap('invalid_data'),
+      throwsA(isA<FormatException>()),
+    );
+  });
 
-    test(
-        '''When YumemiWeatherError.unknown is thrown, getWeather throws YumemiWeatherError.unknown''',
-        () {
+  test(
+    '''When YumemiWeatherError.unknown is thrown, getWeather throws YumemiWeatherError.unknown''',
+    () {
       // Arrange
       final mockYumemiWeather = MockYumemiWeather();
       final weatherRepository = WeatherRepository(mockYumemiWeather);
@@ -151,41 +151,40 @@ void main() {
         date: DateTime(2024, 10, 4),
       );
 
-        // Act
-        when(mockYumemiWeather.syncFetchWeather(any))
-            .thenThrow(YumemiWeatherError.invalidParameter);
+      // Act
+      when(mockYumemiWeather.syncFetchWeather(any))
+          .thenThrow(YumemiWeatherError.invalidParameter);
 
-        // Assert
-        expect(
-          () async => weatherRepository.getWeather(weatherRequest),
-          throwsA(isA<CustomWeatherError>()),
-        );
-      },
-    );
+      // Assert
+      expect(
+        () async => weatherRepository.getWeather(weatherRequest),
+        throwsA(isA<CustomWeatherError>()),
+      );
+    },
+  );
 
-    test(
-      'getWeather accurately returns weather data',
-      () async {
-        // Arrange
-        final mockYumemiWeather = MockYumemiWeather();
-        final weatherRepository = WeatherRepository(mockYumemiWeather);
-        final weatherRequest = WeatherRequest(
-          area: 'tokyo',
-          date: DateTime(2024, 10, 4),
-        );
-        const preparedWeatherData =
-            '''{"weather_condition":"cloudy","max_temperature":25,"min_temperature":7}''';
+  test(
+    'getWeather accurately returns weather data',
+    () async {
+      // Arrange
+      final mockYumemiWeather = MockYumemiWeather();
+      final weatherRepository = WeatherRepository(mockYumemiWeather);
+      final weatherRequest = WeatherRequest(
+        area: 'tokyo',
+        date: DateTime(2024, 10, 4),
+      );
+      const preparedWeatherData =
+          '''{"weather_condition":"cloudy","max_temperature":25,"min_temperature":7}''';
 
-        // Act
-        when(mockYumemiWeather.syncFetchWeather(any))
-            .thenReturn(preparedWeatherData);
-        final weatherData = await weatherRepository.getWeather(weatherRequest);
+      // Act
+      when(mockYumemiWeather.syncFetchWeather(any))
+          .thenReturn(preparedWeatherData);
+      final weatherData = await weatherRepository.getWeather(weatherRequest);
 
-        // Assert
-        expect(weatherData.weatherCondition, WeatherCondition.cloudy);
-        expect(weatherData.maxTemperature, 25);
-        expect(weatherData.minTemperature, 7);
-      },
-    );
-  });
+      // Assert
+      expect(weatherData.weatherCondition, WeatherCondition.cloudy);
+      expect(weatherData.maxTemperature, 25);
+      expect(weatherData.minTemperature, 7);
+    },
+  );
 }

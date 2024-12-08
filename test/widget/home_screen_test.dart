@@ -231,7 +231,10 @@ void main() {
 
         // プロバイダーの戻り値をYumemiWeatherError.unknownに設定
         when(mockWeatherUsecase.getWeather(any)).thenAnswer(
-          (_) async => const Result.failure(YumemiWeatherError.unknown),
+          (_) async => Result.failure(
+            CustomWeatherError(YumemiWeatherError.unknown, StackTrace.current),
+            StackTrace.current,
+          ),
         );
 
         // Act
@@ -262,8 +265,13 @@ void main() {
 
         // プロバイダーの戻り値を設定
         when(mockWeatherUsecase.getWeather(any)).thenAnswer(
-          (_) async =>
-              const Result.failure(YumemiWeatherError.invalidParameter),
+          (_) async => Result.failure(
+            CustomWeatherError(
+              YumemiWeatherError.invalidParameter,
+              StackTrace.current,
+            ),
+            StackTrace.current,
+          ),
         );
 
         // Act
