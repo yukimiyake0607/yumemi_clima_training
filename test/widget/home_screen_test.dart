@@ -148,17 +148,16 @@ void main() {
     expect(svgAsset.assetName, equals('assets/rainy.svg'));
   });
 
-    testWidgets('display a rainy image', (tester) async {
-      // Arrange
-      // テスト環境にウィジェットツリーを生成
-      await tester.pumpWidget(
-        ProviderScope(
-          overrides: [
-            weatherUsecaseProvider.overrideWithValue(mockWeatherUsecase),
-          ],
-          child: const MaterialApp(
-            home: HomeScreen(),
-          ),
+  testWidgets('display a max temperature', (tester) async {
+    // Arrange
+    // テスト環境にウィジェットツリー生成
+    await tester.pumpWidget(
+      ProviderScope(
+        overrides: [
+          weatherUsecaseProvider.overrideWithValue(mockWeatherUsecase),
+        ],
+        child: const MaterialApp(
+          home: HomeScreen(),
         ),
       ),
     );
@@ -180,35 +179,42 @@ void main() {
     // 最高気温が表示されているか確認
     expect(find.text('30℃'), findsOneWidget);
   });
-      // ウィジェット内にPlaceholderが生成されているか
-      expect(find.byType(Placeholder), findsOneWidget);
 
-      // Reloadボタンを押した時の返り値を設定
-      const response = WeatherResponse(
-        weatherCondition: WeatherCondition.rainy,
-        maxTemperature: 30,
-        minTemperature: 20,
-      );
-      when(mockWeatherUsecase.getWeather(any))
-          .thenAnswer((_) async => const Result.success(response));
+  testWidgets('display a min temperature', (tester) async {
+    // Arrange
+    await tester.pumpWidget(
+      ProviderScope(
+        overrides: [
+          weatherUsecaseProvider.overrideWithValue(mockWeatherUsecase),
+        ],
+        child: const MaterialApp(
+          home: HomeScreen(),
+        ),
+      ),
+    );
+
+    // プロバイダーの返り値を設定
+    const response = WeatherResponse(
+      weatherCondition: WeatherCondition.sunny,
+      maxTemperature: 30,
+      minTemperature: 20,
+    );
+    when(mockWeatherUsecase.getWeather(any))
+        .thenAnswer((_) async => const Result.success(response));
 
     // Act
     await tester.tap(find.widgetWithText(TextButton, _reloadButtonText));
     await tester.pump();
 
-      // Assert
-      // SvgPictureを確認
-      expect(find.byType(SvgPicture), findsOneWidget);
-      // rainy.svgが表示されているか確認
-      final svgWidget = tester.widget<SvgPicture>(find.byType(SvgPicture));
-      expect(svgWidget.bytesLoader, isA<SvgAssetLoader>());
-      final svgAsset = svgWidget.bytesLoader as SvgAssetLoader;
-      expect(svgAsset.assetName, equals('assets/rainy.svg'));
-    });
+    // Assert
+    expect(find.text('20℃'), findsOneWidget);
+  });
 
-    testWidgets('display a max temperature', (tester) async {
+  testWidgets(
+    'a display when YumemiWeatherError.unknown is received',
+    (tester) async {
       // Arrange
-      // テスト環境にウィジェットツリー生成
+      // テスト環境にウィジェットツリーを生成
       await tester.pumpWidget(
         ProviderScope(
           overrides: [
@@ -230,20 +236,20 @@ void main() {
           StackTrace.current,
         ),
       );
-      when(mockWeatherUsecase.getWeather(any))
-          .thenAnswer((_) async => const Result.success(response));
 
       // Act
       await tester.tap(find.widgetWithText(TextButton, _reloadButtonText));
       await tester.pump();
-      await tester.pumpAndSettle();
 
       // Assert
-      // 最高気温が表示されているか確認
-      expect(find.text('30℃'), findsOneWidget);
-    });
+      expect(find.byType(AlertDialog), findsOneWidget);
+      expect(find.text(YumemiWeatherError.unknown.message), findsOneWidget);
+    },
+  );
 
-    testWidgets('display a min temperature', (tester) async {
+  testWidgets(
+    'a display when YumemiWeatherError.invalidParameter is received',
+    (tester) async {
       // Arrange
       await tester.pumpWidget(
         ProviderScope(
@@ -265,8 +271,6 @@ void main() {
           StackTrace.current,
         ),
       );
-      when(mockWeatherUsecase.getWeather(any))
-          .thenAnswer((_) async => const Result.success(response));
 
       // Act & Assert
       expect(find.byType(AlertDialog), findsNothing);
@@ -276,125 +280,62 @@ void main() {
       await tester.pump();
       await tester.pumpAndSettle();
 
-      // Assert
-      expect(find.text('20℃'), findsOneWidget);
-    });
+      // ダイアログの表示を確認
+      expect(find.byType(AlertDialog), findsOneWidget);
+      expect(
+        find.text(YumemiWeatherError.invalidParameter.message),
+        findsOneWidget,
+      );
 
-    testWidgets(
-      'a display when YumemiWeatherError.unknown is received',
-      (tester) async {
-        // Arrange
-        // テスト環境にウィジェットツリーを生成
-        await tester.pumpWidget(
-          ProviderScope(
-            overrides: [
-              weatherUsecaseProvider.overrideWithValue(mockWeatherUsecase),
-            ],
-            child: const MaterialApp(
-              home: HomeScreen(),
-            ),
-          ),
-        );
+      // OKボタンをタップしてダイアログを閉じる
+      await tester.tap(find.widgetWithText(TextButton, 'OK'));
+      await tester.pumpAndSettle();
 
-        // プロバイダーの戻り値をYumemiWeatherError.unknownに設定
-        when(mockWeatherUsecase.getWeather(any)).thenAnswer(
-          (_) async => Result.failure(
-            CustomWeatherError(YumemiWeatherError.unknown, StackTrace.current),
-            StackTrace.current,
-          ),
-        );
+      // ダイアログが閉じたことを確認
+      expect(find.byType(AlertDialog), findsNothing);
+    },
+  );
 
-        // Act
-        await tester.tap(find.widgetWithText(TextButton, 'Reload'));
-        await tester.pump();
-
-        // Assert
-        expect(find.byType(AlertDialog), findsOneWidget);
-        expect(find.text(YumemiWeatherError.unknown.message), findsOneWidget);
-      },
-    );
-
-    testWidgets(
-      'a display when YumemiWeatherError.invalidParameter is received',
-      (tester) async {
-        // Arrange
-        // テスト環境にウィジェットツリーを生成
-        await tester.pumpWidget(
-          ProviderScope(
-            overrides: [
-              weatherUsecaseProvider.overrideWithValue(mockWeatherUsecase),
-            ],
-            child: const MaterialApp(
-              home: HomeScreen(),
-            ),
-          ),
-        );
-
-        // プロバイダーの戻り値を設定
-        when(mockWeatherUsecase.getWeather(any)).thenAnswer(
-          (_) async => Result.failure(
-            CustomWeatherError(
-              YumemiWeatherError.invalidParameter,
-              StackTrace.current,
-            ),
-            StackTrace.current,
-          ),
-        );
-
-        // Act
-        await tester.tap(find.widgetWithText(TextButton, 'Reload'));
-        await tester.pump();
-
-        // Assert
-        expect(find.byType(AlertDialog), findsOneWidget);
-        expect(
-          find.text(YumemiWeatherError.invalidParameter.message),
-          findsOneWidget,
-        );
-      },
-    );
-
-    testWidgets(
-      '''
+  testWidgets(
+    '''
         The CircularProgressIndicator is displayed on the screen when data is being acquired
         ''',
-      (tester) async {
-        // Arrange
-        await tester.pumpWidget(
-          ProviderScope(
-            overrides: [
-              weatherUsecaseProvider.overrideWithValue(mockWeatherUsecase),
-            ],
-            child: const MaterialApp(
-              home: HomeScreen(),
-            ),
+    (tester) async {
+      // Arrange
+      await tester.pumpWidget(
+        ProviderScope(
+          overrides: [
+            weatherUsecaseProvider.overrideWithValue(mockWeatherUsecase),
+          ],
+          child: const MaterialApp(
+            home: HomeScreen(),
+          ),
+        ),
+      );
+
+      when(mockWeatherUsecase.getWeather(any)).thenAnswer((_) async {
+        await Future<void>.delayed(const Duration(milliseconds: 500));
+        return const Result.success(
+          WeatherResponse(
+            weatherCondition: WeatherCondition.cloudy,
+            maxTemperature: 30,
+            minTemperature: 20,
           ),
         );
+      });
 
-        when(mockWeatherUsecase.getWeather(any)).thenAnswer((_) async {
-          await Future<void>.delayed(const Duration(milliseconds: 500));
-          return const Result.success(
-            WeatherResponse(
-              weatherCondition: WeatherCondition.cloudy,
-              maxTemperature: 30,
-              minTemperature: 20,
-            ),
-          );
-        });
+      // この時点でCircularProgressIndicatorは表示されていない
+      expect(find.byType(CircularProgressIndicator), findsNothing);
 
-        // この時点でCircularProgressIndicatorは表示されていない
-        expect(find.byType(CircularProgressIndicator), findsNothing);
+      // Act
+      await tester.tap(find.widgetWithText(TextButton, 'Reload'));
+      await tester.pump();
 
-        // Act
-        await tester.tap(find.widgetWithText(TextButton, 'Reload'));
-        await tester.pump();
+      // Assert
+      expect(find.byType(CircularProgressIndicator), findsOneWidget);
 
-        // Assert
-        expect(find.byType(CircularProgressIndicator), findsOneWidget);
-
-        // 非同期処理の完了を待つ
-        await tester.pumpAndSettle();
-      },
-    );
-  });
+      // 非同期処理の完了を待つ
+      await tester.pumpAndSettle();
+    },
+  );
 }

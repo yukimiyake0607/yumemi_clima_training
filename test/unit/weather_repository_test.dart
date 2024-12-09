@@ -152,8 +152,7 @@ void main() {
         area: 'tokyo',
         date: DateTime(2024, 10, 4),
       );
-      const preparedWeatherData =
-          '''{"weather_condition":"cloudy","max_temperature":25,"min_temperature":7}''';
+
 
       // Act
       when(mockYumemiWeather.syncFetchWeather(any))

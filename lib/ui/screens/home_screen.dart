@@ -54,7 +54,7 @@ class HomeScreen extends ConsumerWidget {
     ref.listen<AsyncValue<WeatherResponse>>(
       weatherNotifierProvider,
       (_, next) async {
-        next.whenOrNull(
+        await next.whenOrNull(
           error: (error, stackTrace) {
             if (error is CustomWeatherError) {
               _showErrorDialog(context, error.error.message);
