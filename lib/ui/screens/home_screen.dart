@@ -11,6 +11,10 @@ import 'package:flutter_training/ui/widgets/weather_widget.dart';
 class HomeScreen extends ConsumerWidget {
   const HomeScreen({super.key});
 
+  void _closedLoading(BuildContext context) {
+    Navigator.of(context).pop();
+  }
+
   void _showErrorDialog(
     BuildContext context,
     String errorMessage,
@@ -54,13 +58,14 @@ class HomeScreen extends ConsumerWidget {
     ref.listen<AsyncValue<WeatherResponse>>(
       weatherNotifierProvider,
       (_, next) async {
-        await next.whenOrNull(
+        next.when(
           error: (error, stackTrace) {
             if (error is CustomWeatherError) {
               _showErrorDialog(context, error.error.message);
             }
           },
           loading: () => _showLoadingDialog(context),
+          data: (_) => _closedLoading(context),
         );
       },
     );

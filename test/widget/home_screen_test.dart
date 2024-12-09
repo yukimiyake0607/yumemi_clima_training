@@ -297,9 +297,7 @@ void main() {
   );
 
   testWidgets(
-    '''
-        The CircularProgressIndicator is displayed on the screen when data is being acquired
-        ''',
+    'Loading dialog is displayed when data is being acquired',
     (tester) async {
       // Arrange
       await tester.pumpWidget(
@@ -324,17 +322,16 @@ void main() {
         );
       });
 
-      // この時点でCircularProgressIndicatorは表示されていない
+      // 初期状態を確認
       expect(find.byType(CircularProgressIndicator), findsNothing);
 
-      // Act
+      // Act：データ取得を開始
       await tester.tap(find.widgetWithText(TextButton, 'Reload'));
-      await tester.pump();
+      await tester.pump(); // loadingを表示
 
-      // Assert
+      // Assert：ローディングダイアログの表示を確認
       expect(find.byType(CircularProgressIndicator), findsOneWidget);
 
-      // 非同期処理の完了を待つ
       await tester.pumpAndSettle();
     },
   );
