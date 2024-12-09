@@ -11,26 +11,43 @@ import 'package:flutter_training/ui/widgets/weather_widget.dart';
 class HomeScreen extends ConsumerWidget {
   const HomeScreen({super.key});
 
-  Future<void> _showErrorDialog(
+  void _closedLoading(BuildContext context) {
+    Navigator.of(context).pop();
+  }
+
+  void _showErrorDialog(
     BuildContext context,
     String errorMessage,
-  ) async {
-    await showDialog<void>(
+  ) {
+    Navigator.of(context).pop();
+    unawaited(
+      showDialog<void>(
+        context: context,
+        barrierDismissible: false,
+        builder: (context) {
+          return AlertDialog(
+            title: Text(errorMessage),
+            actions: [
+              TextButton(
+                onPressed: () {
+                  Navigator.of(context).pop();
+                },
+                child: const Text('OK'),
+              ),
+            ],
+          );
+        },
+      ),
+    );
+  }
+
+  Future<void> _showLoadingDialog(BuildContext context) {
+    return showDialog<void>(
       context: context,
       barrierDismissible: false,
-      builder: (context) {
-        return AlertDialog(
-          title: Text(errorMessage),
-          actions: [
-            TextButton(
-              onPressed: () {
-                Navigator.of(context).pop();
-              },
-              child: const Text('OK'),
-            ),
-          ],
-        );
-      },
+      builder: (_) => const Center(
+        child: CircularProgressIndicator(),
+      ),
     );
   }
 
@@ -41,12 +58,14 @@ class HomeScreen extends ConsumerWidget {
     ref.listen<AsyncValue<WeatherResponse>>(
       weatherNotifierProvider,
       (_, next) async {
-        next.whenOrNull(
+        next.when(
           error: (error, stackTrace) {
             if (error is CustomWeatherError) {
               _showErrorDialog(context, error.error.message);
             }
           },
+          loading: () => _showLoadingDialog(context),
+          data: (_) => _closedLoading(context),
         );
       },
     );
@@ -54,12 +73,16 @@ class HomeScreen extends ConsumerWidget {
       body: Center(
         child: weatherData.when(
           data: (weatherData) => WeatherWidget(data: weatherData),
-          error: (error, stackTrace) {
+          error: (error, _) {
             return weatherData.value != null
                 ? WeatherWidget(data: weatherData.value!)
                 : null;
           },
-          loading: () => const CircularProgressIndicator(),
+          loading: () {
+            return weatherData.value != null
+                ? WeatherWidget(data: weatherData.value!)
+                : null;
+          },
         ),
       ),
     );

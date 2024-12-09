@@ -295,4 +295,44 @@ void main() {
       expect(find.byType(AlertDialog), findsNothing);
     },
   );
+
+  testWidgets(
+    'Loading dialog is displayed when data is being acquired',
+    (tester) async {
+      // Arrange
+      await tester.pumpWidget(
+        ProviderScope(
+          overrides: [
+            weatherUsecaseProvider.overrideWithValue(mockWeatherUsecase),
+          ],
+          child: const MaterialApp(
+            home: HomeScreen(),
+          ),
+        ),
+      );
+
+      when(mockWeatherUsecase.getWeather(any)).thenAnswer((_) async {
+        await Future<void>.delayed(const Duration(milliseconds: 500));
+        return const Result.success(
+          WeatherResponse(
+            weatherCondition: WeatherCondition.cloudy,
+            maxTemperature: 30,
+            minTemperature: 20,
+          ),
+        );
+      });
+
+      // 初期状態を確認
+      expect(find.byType(CircularProgressIndicator), findsNothing);
+
+      // Act：データ取得を開始
+      await tester.tap(find.widgetWithText(TextButton, 'Reload'));
+      await tester.pump(); // loadingを表示
+
+      // Assert：ローディングダイアログの表示を確認
+      expect(find.byType(CircularProgressIndicator), findsOneWidget);
+
+      await tester.pumpAndSettle();
+    },
+  );
 }

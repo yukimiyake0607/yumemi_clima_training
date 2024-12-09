@@ -5,7 +5,9 @@ import 'package:flutter_training/data/usecase/weather_usecase.dart';
 import 'package:flutter_training/models/error/custom_weather_error.dart';
 import 'package:flutter_training/models/response/weather_response.dart';
 import 'package:flutter_training/models/result/result.dart';
+
 import 'package:flutter_training/models/weather/weather_condition.dart';
+
 import 'package:flutter_training/models/weather/weather_request.dart';
 import 'package:mockito/mockito.dart';
 import 'package:yumemi_weather/yumemi_weather.dart';
