@@ -1,22 +1,23 @@
 # [株式会社ゆめみ Flutter研修](https://github.com/yumemi-inc/flutter-training-template)
 
-<img src="https://img.shields.io/badge/-Dart-02569B.svg?logo=dart&style=plastic">
-<img src="https://img.shields.io/badge/-Flutter-02569B.svg?logo=flutter&style=plastic">
+<img src="https://img.shields.io/badge/-Dart-02569B.svg?logo=dart&style=plastic"> <img src="https://img.shields.io/badge/-Flutter-02569B.svg?logo=flutter&style=plastic">
 
 ## 概要
 [YumemiWeather API](https://yumemi-inc.github.io/flutter-training-template/)を利用して天気情報を表示するアプリです。株式会社ゆめみのFlutterエンジニアコードチェック課題の要件を満たすように実装しています。
 本アプリを通して自分なりの最適なアーキテクチャを確立することを目的としています。
 
 ## 天気予報アプリ
-| ケース1 | ケース2 |
+| 初期状態 | ローディング時 |
 |:---:|:---:|
-| ![初期状態](assets/image01.png) | ![ローディング時](assets/image02.png) |
+| <img src="assets/image01.png" width="230"> | <img src="assets/image02.png" width="230"> |
 
-| ケース3 | ケース4 |
+| 天気取得時 | エラー時 |
 |:---:|:---:|
-| ![天気取得時](assets/image03.png) | ![エラー時](assets/image04.png) |
+| <img src="assets/image03.png" width="230"> | <img src="assets/image04.png" width="230"> |
 
-![](assets/movie01.gif)
+<p align="center">
+  <img src="assets/movie01.gif" width="230">
+</p>
 
 ## 環境構築
 ### リポジトリをクローン
